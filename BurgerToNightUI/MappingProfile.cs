@@ -7,12 +7,12 @@ namespace BurgerToNightUI
     {
         public MappingProfile()
         {
-            CreateMap<BCategoryDTO, BCategoryUpdateDTO>().ReverseMap();
+            CreateMap<BCategoryDTO, BCategoryEditDTO>().ReverseMap();
             CreateMap<BCategoryCreateDTO, BCategoryDTO>().ReverseMap();
 
 
             CreateMap<BProductCreateDTO, BProductDTO>().ReverseMap();
-            CreateMap<BProductUpdateDTO, BProductDTO>().ReverseMap();
+            CreateMap<BProductEditDTO, BProductDTO>().ReverseMap();
             CreateMap<BProductDeleteDTO, BProductDTO>().ReverseMap();
         }
     }

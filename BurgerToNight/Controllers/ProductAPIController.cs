@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Net;
 
@@ -20,10 +21,13 @@ namespace BurgerToNight.Controllers
 		protected APIResponse _response;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
-		public ProductAPIController(IUnitOfWork unitOfWork, IMapper mapper)
+		private readonly IFileRepo _fileRepo;
+
+		public ProductAPIController(IUnitOfWork unitOfWork, IMapper mapper,IFileRepo fileRepo)
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
+			_fileRepo = fileRepo;
 			_response = new();
 		}
 
@@ -79,43 +83,48 @@ namespace BurgerToNight.Controllers
 			}
 			return _response;
 		}
-		[HttpPost]
+		[HttpPost(Name ="CreateProduct")]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<APIResponse>> CreateProduct([FromBody] BProductPostDTO createDTO)
-		{
-			try
-			{
-				if (createDTO == null)
-				{
-					_response.IsSuccess = false;
-					_response.ErrorMessages.Add("Invalid input data.");
-					return BadRequest(_response);
-				}
+        public async Task<ActionResult<APIResponse>> CreateProduct([FromBody] BProductPostDTO createDTO)
+        {
+            try
+            {
+                if (createDTO == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.ErrorMessages.Add("Invalid input data.");
+                    return BadRequest(_response);
+                }
+                if (await _unitOfWork.BProducts.GetAsync(u => u.Name.ToLower() == createDTO.Name.ToLower()) != null)
+                {
+                    ModelState.AddModelError("ErrorMessages", "Product already exists!");
+                    _response.IsSuccess = false;
+                    _response.ErrorMessages.Add("Product already exists.");
+                    return BadRequest(_response);
+                }
 
-				if (await _unitOfWork.BProducts.GetAsync(u => u.Name.ToLower() == createDTO.Name.ToLower()) != null)
-				{
-					ModelState.AddModelError("ErrorMessages", "Product already exists!");
-					_response.IsSuccess = false;
-					_response.ErrorMessages.Add("Product already exists.");
-					return BadRequest(_response);
-				}
-				BurgerProduct burgerProduct = _mapper.Map<BurgerProduct>(createDTO);
-				await _unitOfWork.BProducts.CreateAsync(burgerProduct);
-				_response.Result = _mapper.Map<BProductGetDTO>(burgerProduct);
-				_response.StatusCode = HttpStatusCode.Created;
-				return CreatedAtRoute("GetBurger", new { id = burgerProduct.Id }, _response);
-			}
-			catch (Exception ex)
-			{
-				_response.IsSuccess = false;
-				_response.ErrorMessages
-					 = new List<string>() { ex.ToString() };
-			}
-			return _response;
-		}
-		[ProducesResponseType(StatusCodes.Status200OK)]
+                var burgerProduct = _mapper.Map<BurgerProduct>(createDTO);
+
+                if (!string.IsNullOrEmpty(createDTO.Image))
+                {
+                    burgerProduct.Image = createDTO.Image;
+                }
+
+                await _unitOfWork.BProducts.CreateAsync(burgerProduct);
+                _response.Result = _mapper.Map<BProductGetDTO>(burgerProduct);
+                _response.StatusCode = HttpStatusCode.Created;
+                return CreatedAtRoute("GetBurger", new { id = burgerProduct.Id }, _response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+                return _response;
+            }
+        }
+        [ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[HttpDelete("{id:int}", Name = "DeleteProduct")]
@@ -156,9 +165,12 @@ namespace BurgerToNight.Controllers
 				if (updateDTO == null || id != updateDTO.Id)
                 {
                     return BadRequest();
+				}
+				var model = _mapper.Map<BurgerProduct>(updateDTO);
+                if (!string.IsNullOrEmpty(updateDTO.Image))
+                {
+					model.Image = updateDTO.Image;
                 }
-                var model = _mapper.Map<BurgerProduct>(updateDTO);
-
                 await _unitOfWork.BProducts.UpdateAsync(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
 				_response.IsSuccess = true;
@@ -173,7 +185,5 @@ namespace BurgerToNight.Controllers
             }
             return _response;
         }
-
-
     }
 }

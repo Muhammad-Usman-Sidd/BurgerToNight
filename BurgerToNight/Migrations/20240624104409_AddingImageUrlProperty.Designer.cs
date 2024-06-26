@@ -4,6 +4,7 @@ using BurgerToNight.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BurgerToNight.Migrations
 {
     [DbContext(typeof(BurgerDbContext))]
-    partial class BurgerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240624104409_AddingImageUrlProperty")]
+    partial class AddingImageUrlProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,28 +52,28 @@ namespace BurgerToNight.Migrations
                         new
                         {
                             Id = 1,
-                            CreationCategoryTime = new DateTime(2024, 6, 24, 19, 8, 42, 389, DateTimeKind.Local).AddTicks(8478),
+                            CreationCategoryTime = new DateTime(2024, 6, 24, 15, 44, 8, 753, DateTimeKind.Local).AddTicks(9553),
                             Description = "BBQ burger are made with highly care and in check environment",
                             Title = "BBQ"
                         },
                         new
                         {
                             Id = 2,
-                            CreationCategoryTime = new DateTime(2024, 6, 24, 19, 8, 42, 389, DateTimeKind.Local).AddTicks(8494),
+                            CreationCategoryTime = new DateTime(2024, 6, 24, 15, 44, 8, 753, DateTimeKind.Local).AddTicks(9574),
                             Description = "Grilled burger Patty are made in hygenic and clean Oven",
                             Title = "Grilled"
                         },
                         new
                         {
                             Id = 3,
-                            CreationCategoryTime = new DateTime(2024, 6, 24, 19, 8, 42, 389, DateTimeKind.Local).AddTicks(8497),
+                            CreationCategoryTime = new DateTime(2024, 6, 24, 15, 44, 8, 753, DateTimeKind.Local).AddTicks(9576),
                             Description = "Crunch buger patty are made With best breadcrumbs and fresh and clean oil",
                             Title = "Crunch"
                         },
                         new
                         {
                             Id = 4,
-                            CreationCategoryTime = new DateTime(2024, 6, 24, 19, 8, 42, 389, DateTimeKind.Local).AddTicks(8499),
+                            CreationCategoryTime = new DateTime(2024, 6, 24, 15, 44, 8, 753, DateTimeKind.Local).AddTicks(9578),
                             Description = "Our most favourite and yet the best one!",
                             Title = "Special"
                         });
@@ -93,7 +96,7 @@ namespace BurgerToNight.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -117,9 +120,9 @@ namespace BurgerToNight.Migrations
                         {
                             Id = 1,
                             BCategoryId = 3,
-                            CreationDate = new DateTime(2024, 6, 24, 14, 8, 42, 389, DateTimeKind.Utc).AddTicks(8776),
+                            CreationDate = new DateTime(2024, 6, 24, 10, 44, 8, 753, DateTimeKind.Utc).AddTicks(9818),
                             Description = "",
-                            Image = "",
+                            ImageUrl = "",
                             Name = "Mighty Zinger",
                             PreparingTime = 10,
                             Price = 20
@@ -128,9 +131,9 @@ namespace BurgerToNight.Migrations
                         {
                             Id = 2,
                             BCategoryId = 2,
-                            CreationDate = new DateTime(2024, 6, 24, 14, 8, 42, 389, DateTimeKind.Utc).AddTicks(8782),
+                            CreationDate = new DateTime(2024, 6, 24, 10, 44, 8, 753, DateTimeKind.Utc).AddTicks(9822),
                             Description = "",
-                            Image = "",
+                            ImageUrl = "",
                             Name = "Big Ben",
                             PreparingTime = 10,
                             Price = 18
@@ -139,9 +142,9 @@ namespace BurgerToNight.Migrations
                         {
                             Id = 3,
                             BCategoryId = 4,
-                            CreationDate = new DateTime(2024, 6, 24, 14, 8, 42, 389, DateTimeKind.Utc).AddTicks(8785),
+                            CreationDate = new DateTime(2024, 6, 24, 10, 44, 8, 753, DateTimeKind.Utc).AddTicks(9825),
                             Description = "",
-                            Image = "",
+                            ImageUrl = "",
                             Name = "Big Bang",
                             PreparingTime = 10,
                             Price = 40
@@ -150,9 +153,9 @@ namespace BurgerToNight.Migrations
                         {
                             Id = 4,
                             BCategoryId = 1,
-                            CreationDate = new DateTime(2024, 6, 24, 14, 8, 42, 389, DateTimeKind.Utc).AddTicks(8788),
+                            CreationDate = new DateTime(2024, 6, 24, 10, 44, 8, 753, DateTimeKind.Utc).AddTicks(9828),
                             Description = "",
-                            Image = "",
+                            ImageUrl = "",
                             Name = "Super BBQ",
                             PreparingTime = 10,
                             Price = 30

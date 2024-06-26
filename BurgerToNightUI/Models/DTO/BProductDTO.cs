@@ -22,6 +22,7 @@ namespace BurgerToNightUI.Models.DTO
         public string TimeInMinutes => PreparingTime.ToMinutes();
         [Range(5, 60)]
         public int PreparingTime { get; set; }
+        public string? Image { get; set; }
 
     }
 }

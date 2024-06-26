@@ -16,5 +16,6 @@ namespace BurgerToNightUI.Models.DTO
         public BurgerCategory burgerCategory { get; set; }
         public int Price { get; set; }
         public string PriceInCurrency => Price.ToCurrency();
+        public string? ExistingImage { get; set; }
     }
 }

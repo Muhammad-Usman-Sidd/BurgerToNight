@@ -13,7 +13,7 @@ namespace BurgerToNightUI.Services.IServices
         Task<T> GetAllAsync<T>();
         Task<T> GetAsync<T>(int id);
         Task<T> CreateAsync<T>(BCategoryCreateDTO dto);
-        Task<T> UpdateAsync<T>(BCategoryUpdateDTO dto);
+        Task<T> UpdateAsync<T>(BCategoryEditDTO dto);
         Task<T> DeleteAsync<T>(int id);
     }
 

@@ -56,7 +56,7 @@ namespace BurgerToNightUI.Services
             });
         }
 
-        public Task<T> UpdateAsync<T>(BCategoryUpdateDTO dto)
+        public Task<T> UpdateAsync<T>(BCategoryEditDTO dto)
         {
             return SendAsync<T>(new APIRequest()
             {

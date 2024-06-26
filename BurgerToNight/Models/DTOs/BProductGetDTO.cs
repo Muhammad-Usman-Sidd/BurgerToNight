@@ -14,6 +14,7 @@ namespace BurgerToNight.Models.DTOs
         [Range(5, 200)]
         public int Price { get; set; }
         public int? PreparingTime { get; set; }
+        public string? Image { get; set; }
 
     }
 }

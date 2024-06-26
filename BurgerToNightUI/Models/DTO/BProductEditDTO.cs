@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace BurgerToNightUI.Models.DTO
 {
-    public class BProductUpdateDTO
+    public class BProductEditDTO
     {
 
         public int Id { get; set; }
@@ -19,10 +19,12 @@ namespace BurgerToNightUI.Models.DTO
         public BCategoryDTO burgerCategory { get; set; }
         [Range(5, 200)]
         public int Price { get; set; }
-
         [Range(5, 60)]
         public int PreparingTime { get; set; }
 
         public string Description { get; set; }
+        public string? Image { get; set; }
+        public string? ExistingImage { get; set; }
+        public string? ExistingImageType { get; set; }
     }
 }

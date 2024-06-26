@@ -1,6 +1,6 @@
 ﻿@model BurgerToNightUI.Models.VM.BProductCreateVM
 
-<form asp-action="CreateProduct">
+<form asp-action="CreateProduct" enctype="multipart/form-data">
     <br />
     <div class="container border p-3">
         <h1 class="text-primary">Create Product</h1>
@@ -49,9 +49,13 @@
                     <input asp-for="BProduct.PreparingTime" class="form-control" />
                     <span asp-validation-for="BProduct.PreparingTime" class="text-danger"></span>
                 </div>
+                <div>
+                    <label asp-for="BProduct.Image"></label>
+                    <input type="file" asp-for="BProduct.Image" class="form-control" />
+                </div>
             </div>
             <div class="col-5 offset-2">
-                <a asp-action="IndexProduct" asp-controller="Product" class="btn-primary btn form-control ">Back to List</a>
+                <a asp-action="IndexProduct" asp-controller="BProduct" class="btn-primary btn form-control ">Back to List</a>
             </div>
             <div class="col-5">
                 <input type="submit" value="Create" class="btn btn-success form-control" />

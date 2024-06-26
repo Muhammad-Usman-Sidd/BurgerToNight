@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\BProduct\UpdateProduct.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NPOI" Version="2.7.0" />
@@ -15,6 +19,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BurgerToNight.Utility\BurgerToNight.Utility.csproj" />
     <ProjectReference Include="..\BurgerToNight\BurgerToNightAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="images\" />
   </ItemGroup>
 
 </Project>

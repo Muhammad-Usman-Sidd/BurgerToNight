@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BurgerToNightUI.Models.VM
 {
-    public class BProductUpdateVM
+    public class BProductEditVM
     {
-        public BProductUpdateVM()
+        public BProductEditVM()
         {
-            BProduct = new BProductUpdateDTO();
+            BProduct = new BProductEditDTO();
         }
-        public BProductUpdateDTO BProduct { get; set; }
+        public BProductEditDTO BProduct { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
     }

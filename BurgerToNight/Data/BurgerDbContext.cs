@@ -20,10 +20,10 @@ namespace BurgerToNight.Data
                 new BurgerCategory { Id = 4, Title = "Special", Description = "Our most favourite and yet the best one!",CreationCategoryTime = DateTime.Now }
                 );
             modelBuilder.Entity<BurgerProduct>().HasData(
-                new BurgerProduct { Id =1,Name="Mighty Zinger", BCategoryId =3,Description="",Price=20,CreationDate=DateTime.UtcNow,PreparingTime=10},
-                new BurgerProduct { Id =2, Name ="Big Ben", BCategoryId=2, Description = "", Price =18, CreationDate = DateTime.UtcNow, PreparingTime = 10 },
-                new BurgerProduct { Id =3, Name ="Big Bang", BCategoryId =4, Description = "", Price =40, CreationDate = DateTime.UtcNow ,PreparingTime = 10 },
-                new BurgerProduct { Id =4, Name ="Super BBQ", BCategoryId =1, Description = "", Price =30, CreationDate = DateTime.UtcNow ,PreparingTime = 10 }
+                new BurgerProduct { Id =1,Name="Mighty Zinger", BCategoryId =3,Description="",Price=20,CreationDate=DateTime.UtcNow,PreparingTime=10,Image=""},
+                new BurgerProduct { Id =2, Name ="Big Ben", BCategoryId=2, Description = "", Price =18, CreationDate = DateTime.UtcNow, PreparingTime = 10,Image = "" },
+                new BurgerProduct { Id =3, Name ="Big Bang", BCategoryId =4, Description = "", Price =40, CreationDate = DateTime.UtcNow ,PreparingTime = 10, Image = "" },
+                new BurgerProduct { Id =4, Name ="Super BBQ", BCategoryId =1, Description = "", Price =30, CreationDate = DateTime.UtcNow ,PreparingTime = 10, Image = "" }
                 );
         }
     }

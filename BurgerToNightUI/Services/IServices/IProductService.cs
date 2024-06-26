@@ -1,5 +1,7 @@
 ﻿using BurgerToNightUI.Models.DTO;
 using BurgerToNightUI.Models;
+using BurgerToNightUI.Models.VM;
+using BurgerToNight.Models.DTOs;
 
 namespace BurgerToNightUI.Services.IServices
 {
@@ -7,8 +9,8 @@ namespace BurgerToNightUI.Services.IServices
     {
         Task<T> GetAllAsync<T>();
         Task<T> GetAsync<T>(int id);
-        Task<T> CreateAsync<T>(BProductCreateDTO dto);
-        Task<T> UpdateAsync<T>(BProductUpdateDTO dto);
+        Task<T> CreateAsync<T>(BProductPostDTO dto);
+        Task<T> UpdateAsync<T>(BProductEditDTO dto);
         Task<T> DeleteAsync<T>(int id);
     }
 }

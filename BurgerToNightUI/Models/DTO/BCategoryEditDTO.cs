@@ -2,7 +2,7 @@
 
 namespace BurgerToNightUI.Models.DTO
 {
-    public class BCategoryUpdateDTO
+    public class BCategoryEditDTO
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Title is required")]

@@ -53,20 +53,20 @@ namespace BurgerToNightUI.Controllers
             TempData["error"] = "Error encountered.";
             return View(model);
         }
-        public async Task<IActionResult> UpdateCategory(int id)
+        public async Task<IActionResult> EditCategory(int id)
         {
             var response = await _categoryService.GetAsync<APIResponse>(id);
             if (response != null && response.IsSuccess)
             {
 
                 BCategoryDTO model = JsonConvert.DeserializeObject<BCategoryDTO>(Convert.ToString(response.Result));
-                return View(_mapper.Map<BCategoryUpdateDTO>(model));
+                return View(_mapper.Map<BCategoryEditDTO>(model));
             }
             return NotFound();
         }
-        [HttpPost(Name ="UpdateCategory")]
+        [HttpPost(Name ="EditCategory")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateCategory(BCategoryUpdateDTO model)
+        public async Task<IActionResult> EditCategory(BCategoryEditDTO model)
         {
             if (ModelState.IsValid)
             {

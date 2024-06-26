@@ -22,6 +22,7 @@ namespace BurgerToNight.Models
         public int Price { get; set; }
         public DateTime CreationDate { get; set; }
         public int? PreparingTime { get; set; }
+        public string? Image { get; set; }
 
     }
 }

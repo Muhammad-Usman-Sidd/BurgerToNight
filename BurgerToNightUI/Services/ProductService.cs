@@ -1,6 +1,8 @@
-﻿using BurgerToNight.Utility;
+﻿using BurgerToNight.Models.DTOs;
+using BurgerToNight.Utility;
 using BurgerToNightUI.Models;
 using BurgerToNightUI.Models.DTO;
+using BurgerToNightUI.Models.VM;
 using BurgerToNightUI.Services;
 using BurgerToNightUI.Services.IServices;
 using Newtonsoft.Json.Linq;
@@ -19,7 +21,7 @@ namespace BurgerToNightUI.Services
 
         }
 
-        public Task<T> CreateAsync<T>(BProductCreateDTO dto)
+        public Task<T> CreateAsync<T>(BProductPostDTO dto)
         {
             return SendAsync<T>(new APIRequest()
             {
@@ -56,7 +58,7 @@ namespace BurgerToNightUI.Services
             });
         }
 
-        public Task<T> UpdateAsync<T>(BProductUpdateDTO dto)
+        public Task<T> UpdateAsync<T>(BProductEditDTO dto)
         {
             return SendAsync<T>(new APIRequest()
             {
