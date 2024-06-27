@@ -23,7 +23,8 @@ namespace BurgerToNightUI.Models.DTO
         public int PreparingTime { get; set; }
 
         public string Description { get; set; }
-        public string? Image { get; set; }
+        [NotMapped]
+        public IFormFile? Image { get; set; }
         public string? ExistingImage { get; set; }
         public string? ExistingImageType { get; set; }
     }

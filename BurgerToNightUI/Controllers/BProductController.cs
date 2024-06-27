@@ -120,7 +120,6 @@ namespace BurgerToNightUI.Controllers
             if (response != null && response.IsSuccess)
             {
                 BProductDTO model = JsonConvert.DeserializeObject<BProductDTO>(Convert.ToString(response.Result));
-                productVM.BProduct = _mapper.Map<BProductEditDTO>(model);
                 if (model.Image != null)
                 {
                     var type = "image";
@@ -132,9 +131,11 @@ namespace BurgerToNightUI.Controllers
                     {
                         type = "image/png";
                     }
-                    productVM.BProduct.ExistingImage = model.Image;
-                    productVM.BProduct.ExistingImageType = type;
+                    model.ExistingImage = model.Image;
+                    model.ExistingImageType = type;
+                    model.Image = null;
                 }
+                productVM.BProduct = _mapper.Map<BProductEditDTO>(model);
             }
 
             var responsecategory = await _categoryService.GetAllAsync<APIResponse>();
@@ -157,7 +158,28 @@ namespace BurgerToNightUI.Controllers
             if (ModelState.IsValid)
             {
                 var product = model.BProduct;
-                var response = await _productService.UpdateAsync<APIResponse>(product);
+                string base64Image = null;
+
+                if (product.Image != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await product.Image.CopyToAsync(memoryStream);
+                        byte[] imageBytes = memoryStream.ToArray();
+                        base64Image = Convert.ToBase64String(imageBytes);
+                    }
+                }
+                var updateDTO = new BProductUpdateDTO
+                {
+                    Id=product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    BCategoryId = product.BCategoryId,
+                    Description = product.Description,
+                    PreparingTime = product.PreparingTime,
+                    Image = base64Image,
+                };
+                var response = await _productService.UpdateAsync<APIResponse>(updateDTO);
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(IndexProduct));

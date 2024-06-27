@@ -23,7 +23,8 @@ namespace BurgerToNightUI.Models.DTO
         [Range(5, 60)]
         public int PreparingTime { get; set; }
         public string? Image { get; set; }
-
+        public string? ExistingImage { get; set; }
+        public string? ExistingImageType { get; set; }
     }
 }
 

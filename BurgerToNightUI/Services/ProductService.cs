@@ -58,7 +58,7 @@ namespace BurgerToNightUI.Services
             });
         }
 
-        public Task<T> UpdateAsync<T>(BProductEditDTO dto)
+        public Task<T> UpdateAsync<T>(BProductUpdateDTO dto)
         {
             return SendAsync<T>(new APIRequest()
             {
