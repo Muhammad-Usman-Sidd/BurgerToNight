@@ -119,19 +119,22 @@ namespace BurgerToNightUI.Controllers
 
             if (response != null && response.IsSuccess)
             {
-                BProductUpdateDTO model = JsonConvert.DeserializeObject<BProductUpdateDTO>(Convert.ToString(response.Result));
+                BProductDTO model = JsonConvert.DeserializeObject<BProductDTO>(Convert.ToString(response.Result));
                 productVM.BProduct = _mapper.Map<BProductEditDTO>(model);
-                var type = "image";
-                if (model.Image.StartsWith("/9j/4AAQ"))
+                if (model.Image != null)
                 {
-                    type = "image/jpeg";
+                    var type = "image";
+                    if (model.Image.StartsWith("/9j/4AAQ"))
+                    {
+                        type = "image/jpeg";
+                    }
+                    else if (model.Image.StartsWith("iVBORw0KGgo"))
+                    {
+                        type = "image/png";
+                    }
+                    productVM.BProduct.ExistingImage = model.Image;
+                    productVM.BProduct.ExistingImageType = type;
                 }
-                else if (model.Image.StartsWith("iVBORw0KGgo"))
-                {
-                    type = "image/png";
-                }
-                productVM.BProduct.ExistingImageType = type;
-                productVM.BProduct.ExistingImage = model.Image;
             }
 
             var responsecategory = await _categoryService.GetAllAsync<APIResponse>();
@@ -145,9 +148,6 @@ namespace BurgerToNightUI.Controllers
                     });
                 return View(productVM);
             }
-            
-
-
             return NotFound();
         }
         [HttpPost(Name ="EditProduct")]
@@ -156,7 +156,8 @@ namespace BurgerToNightUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _productService.UpdateAsync<APIResponse>(model.BProduct);
+                var product = model.BProduct;
+                var response = await _productService.UpdateAsync<APIResponse>(product);
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(IndexProduct));
@@ -210,7 +211,7 @@ namespace BurgerToNightUI.Controllers
                         }
                     }
                 }
-            }   // Return the view model to the view
+            }
           return View(productVM);
         }
         [HttpPost(Name ="DeleteProduct")]

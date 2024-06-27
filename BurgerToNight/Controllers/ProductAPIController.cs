@@ -158,7 +158,7 @@ namespace BurgerToNight.Controllers
 		[HttpPut("{id:int}", Name = "UpdateProduct")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdateProduct(int id, [FromBody] BProductUpdateDTO updateDTO)
+        public async Task<ActionResult<APIResponse>> UpdateProduct(int id, [FromForm] BProductUpdateDTO updateDTO)
         {
 			try
 			{
