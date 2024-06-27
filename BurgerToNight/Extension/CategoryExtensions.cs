@@ -1,4 +1,4 @@
-﻿namespace BurgerToNightUI.Extension
+﻿namespace BurgerToNightAPI.Extension
 {
     public static class CategoryExtensions
     {

@@ -215,7 +215,7 @@ namespace BurgerToNightUI.Controllers
             {
                 var productJson = Convert.ToString(response.Result);
                 BProductDeleteDTO product = JsonConvert.DeserializeObject<BProductDeleteDTO>(productJson);
-                productVM.BProduct =_mapper.Map<BProductDTO>(product);
+                productVM.BProduct =product;
 
                 // checking if the product has a valid category id
                 if (product != null && product.BCategoryId > 0)

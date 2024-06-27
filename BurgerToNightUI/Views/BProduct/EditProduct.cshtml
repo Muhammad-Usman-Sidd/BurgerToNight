@@ -16,28 +16,40 @@
                         <div class="form-floating py-2 col-12">
                             <input asp-for="BProduct.Name" class="form-control border-0 shadow" />
                             <label asp-for="BProduct.Name" class="ms-2"></label>
+                            <span asp-validation-for="BProduct.Name" class="text-danger"></span>
+
                         </div>
                         <div class="py-2 col-12">
                             <label asp-for="BProduct.Description" class="ms-2 text-muted"></label>
                             <textarea asp-for="BProduct.Description" class="form-control border-0 shadow"></textarea>
+                            <span asp-validation-for="BProduct.Description" class="text-danger"></span>
+
                         </div>
+
                         <div class="form-floating py-2 col-12">
                             <input asp-for="BProduct.Price" class="form-control border-0 shadow" />
                             <label asp-for="BProduct.Price" class="ms-2"></label>
+                            <span asp-validation-for="BProduct.Price" class="text-danger"></span>
+
                         </div>
                         <div class="form-floating py-2 col-12">
                             <input type="file" name="BProduct.Image" class="form-control border-0 shadow" />
                             <label asp-for="BProduct.Image" class="ms-2"></label>
+
                         </div>
                         <div class="form-floating py-2 col-12">
                             <select asp-for="@Model.BProduct.BCategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow">
                                 <option disabled selected>--Select Category--</option>
                             </select>
                             <label asp-for="@Model.BProduct.BCategoryId" class="ms-2"></label>
+                            <span asp-validation-for="BProduct.BCategoryId" class="text-danger"></span>
+
                         </div>
                         <div class="form-floating py-2 col-12">
                             <input asp-for="BProduct.PreparingTime" class="form-control border-0 shadow" />
                             <label asp-for="BProduct.PreparingTime" class="ms-2"></label>
+                            <span asp-validation-for="BProduct.PreparingTime" class="text-danger"></span>
+
                         </div>
                         <div class="row pt-2">
                             <div class="col-6 col-md-3">

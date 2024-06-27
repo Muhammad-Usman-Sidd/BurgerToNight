@@ -13,9 +13,10 @@ namespace BurgerToNightUI.Models.DTO
         public int BCategoryId { get; set; }
         [ForeignKey("BCategoryId")]
         [ValidateNever]
-        public BurgerCategory burgerCategory { get; set; }
+        public BCategoryDTO burgerCategory { get; set; }
         public int Price { get; set; }
         public string PriceInCurrency => Price.ToCurrency();
-        public string? ExistingImage { get; set; }
+        public int PreparingTime { get; set; }
+        public string TimeInMinutes => PreparingTime.ToMinutes();
     }
 }

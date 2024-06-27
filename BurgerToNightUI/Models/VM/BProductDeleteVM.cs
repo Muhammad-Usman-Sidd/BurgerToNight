@@ -8,9 +8,9 @@ namespace BurgerToNightUI.Models.VM
     {
         public BProductDeleteVM()
         {
-            BProduct = new BProductDTO();
+            BProduct = new BProductDeleteDTO();
         }
-        public BProductDTO BProduct { get; set; }
+        public BProductDeleteDTO BProduct { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
         
