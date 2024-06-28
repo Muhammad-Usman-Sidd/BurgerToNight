@@ -21,13 +21,11 @@ namespace BurgerToNight.Controllers
 		protected APIResponse _response;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
-		private readonly IFileRepo _fileRepo;
 
-		public ProductAPIController(IUnitOfWork unitOfWork, IMapper mapper,IFileRepo fileRepo)
+		public ProductAPIController(IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
-			_fileRepo = fileRepo;
 			_response = new();
 		}
 

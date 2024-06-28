@@ -2,7 +2,7 @@ using BurgerToNight;
 using BurgerToNight.Data;
 using BurgerToNight.Repository;
 using BurgerToNight.Repository.IRepository;
-using BurgerToNightAPI.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,8 +17,14 @@ builder.Services.AddDbContext<BurgerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IFileRepo,FileRepo>();
 builder.Services.AddAutoMapper(typeof(MapProfile));
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        return new BadRequestResult();
+    };
+});
 
 var app = builder.Build();
 

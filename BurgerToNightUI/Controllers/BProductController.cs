@@ -23,14 +23,12 @@ namespace BurgerToNightUI.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHost;
-        private readonly IFileService _fileService;
-        public BProductController(IProductService productService, IMapper mapper, ICategoryService categoryService,IWebHostEnvironment webHost,IFileService fileService)
+        public BProductController(IProductService productService, IMapper mapper, ICategoryService categoryService,IWebHostEnvironment webHost)
         {
             _productService = productService;
             _mapper = mapper;
             _categoryService = categoryService;
             _webHost = webHost;
-            _fileService = fileService;
         }
         public async Task<IActionResult> IndexProduct()
         {

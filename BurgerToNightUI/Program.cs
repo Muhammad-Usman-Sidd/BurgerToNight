@@ -12,8 +12,6 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddHttpClient<IProductService, ProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IFileService, FileService>();
-
 builder.Services.AddHttpClient();
 var app = builder.Build();
 
