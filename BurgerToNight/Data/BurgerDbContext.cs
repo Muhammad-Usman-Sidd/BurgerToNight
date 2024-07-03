@@ -27,10 +27,10 @@ namespace BurgerToNightAPI.Data
                 );
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<BurgerProduct>().HasData(
-                new BurgerProduct { Id =1,Name="Mighty Zinger", BCategoryId =3,Description="",Price=20,CreationDate=DateTime.UtcNow,PreparingTime=10,Image=""},
-                new BurgerProduct { Id =2, Name ="Big Ben", BCategoryId=2, Description = "", Price =18, CreationDate = DateTime.UtcNow, PreparingTime = 10,Image = "" },
-                new BurgerProduct { Id =3, Name ="Big Bang", BCategoryId =4, Description = "", Price =40, CreationDate = DateTime.UtcNow ,PreparingTime = 10, Image = "" },
-                new BurgerProduct { Id =4, Name ="Super BBQ", BCategoryId =1, Description = "", Price =30, CreationDate = DateTime.UtcNow ,PreparingTime = 10, Image = "" }
+                new BurgerProduct { Id =1,Name="Mighty Zinger", BCategoryId =3,Description="The Mighty Zinger one of the most liked and extremely big burgers! ",Price=20,CreationDate=DateTime.UtcNow,PreparingTime=10,Image=""},
+                new BurgerProduct { Id =2, Name ="Big Ben", BCategoryId=2, Description = "Carwing for something good look no further", Price =18, CreationDate = DateTime.UtcNow, PreparingTime = 10,Image = "" },
+                new BurgerProduct { Id =3, Name ="Big Bang", BCategoryId =4, Description = "Wanna fill your gaint stomach?? ", Price =40, CreationDate = DateTime.UtcNow ,PreparingTime = 10, Image = "" },
+                new BurgerProduct { Id =4, Name ="Super BBQ", BCategoryId =1, Description = "Super BBQ burgers are made with extreme care", Price =30, CreationDate = DateTime.UtcNow ,PreparingTime = 10, Image = "" }
                 );
         }
     }

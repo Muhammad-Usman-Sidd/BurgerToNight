@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components
-@model IEnumerable<BurgerToNightUI.Models.DTO.BProductDTO>
+@model IEnumerable<BProductDTO>
 <img class="d-block w-100" src="images/home/slide1.jpg" alt="">
 
 <hr />
@@ -8,7 +8,7 @@
         <div class="p-4 col-md-12 col-lg-6">
             <div class="row" style="border-radius:20px; border: 1px solid #ffffff">
                 <div class="col-4">
-                    <img class="d-block w-100" style="border-radius:20px;" src="@category.Image" alt="First slide">
+                    <img class="d-block w-100" style="border-radius:20px;" src="data:@category.ExistingImageType;base64,@category.ExistingImage" alt="First slide">
                 </div>
                 <div class="col-8">
                     <p class="card-title text-warning" style="font-size:xx-large">@category.Name</p>
@@ -19,7 +19,7 @@
                 <div class="col-12">
                     <div class="row pb-3 pt-2">
                         <div class="col-4">
-                            <a href="" class="btn btn-success form-control btn-block">Book</a>
+                            <a href="" class="btn btn-success form-control btn-block">Order Now</a>
                         </div>
                         <div class="col-4">
                             <span class="">Price : @category.PriceInCurrency  </span><br />

@@ -20,17 +20,18 @@ namespace BurgerToNightAPI.Infrastructure
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             _logger.LogError(exception, $"An Exception occurred: {exception.Message}");
-
-            var problemDetails = new ProblemDetails
+            if (httpContext.Response.StatusCode==StatusCodes.Status401Unauthorized)
             {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Bad Request",
-                Type = "https://tools.ietf.org/html/rfc7807",
-                Detail = exception.Message
-            };
-
-            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+                var problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status401Unauthorized,
+                    Title = "Unauthorized",
+                    Type = "https://tools.ietf.org/html/rfc7807",
+                    Detail = exception.Message
+                };
+                httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+            }
             return true;
         }
     }

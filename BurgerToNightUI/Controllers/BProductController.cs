@@ -81,6 +81,7 @@ namespace BurgerToNightUI.Controllers
                     Price = model.BProduct.Price,
                     PreparingTime = model.BProduct.PreparingTime,
                     Image = base64Image
+
                 };
                 var response = await _productService.CreateAsync<APIResponse>(createDTO, HttpContext.Session.GetString(SD.SessionToken));
 

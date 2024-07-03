@@ -15,6 +15,12 @@
                     <input asp-for="BProduct.Name" disabled class="form-control border-0 shadow" />
                     <label asp-for="BProduct.Name" class="ms-2"></label>
                 </div>
+                <div class="py-2 col-12">
+                    <label asp-for="BProduct.Description" class="ms-2 text-muted"></label>
+                    <textarea asp-for="BProduct.Description" class="form-control border-0 shadow"></textarea>
+                    <span asp-validation-for="BProduct.Description" class="text-danger"></span>
+
+                </div>
                 <div class="form-floating py-2 col-12">
                     <input asp-for="BProduct.burgerCategory.Title" disabled class="form-control border-0 shadow" />
                     <label asp-for="BProduct.burgerCategory.Title" class="ms-2"></label>

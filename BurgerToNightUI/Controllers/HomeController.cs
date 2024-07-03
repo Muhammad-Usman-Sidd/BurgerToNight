@@ -5,6 +5,7 @@ using BurgerToNightUI.Models.DTO;
 using BurgerToNightUI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NPOI.SS.Formula.Functions;
 using System.Diagnostics;
 
 namespace BurgerToNightUI.Controllers
@@ -21,14 +22,30 @@ namespace BurgerToNightUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<BProductDTO> list = new();
-
             var response = await _productService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
-                list = JsonConvert.DeserializeObject<List<BProductDTO>>(Convert.ToString(response.Result));
+                var data = JsonConvert.DeserializeObject<List<BProductDTO>>(Convert.ToString(response.Result));
+                foreach (var product in data)
+                {
+                    if (product.Image != null)
+                    {
+                        var type = "image";
+                        if (product.Image.StartsWith("/9j/4AAQ"))
+                        {
+                            type = "image/jpeg";
+                        }
+                        else if (product.Image.StartsWith("iVBORw0KGgo"))
+                        {
+                            type = "image/png";
+                        }
+                        product.ExistingImage = product.Image;
+                        product.ExistingImageType = type;
+                    }
+                }
+                return View(data);
             }
-            return View(list);
+            return View();
         }
 
     }
