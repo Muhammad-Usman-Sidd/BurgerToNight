@@ -1,5 +1,4 @@
-﻿using BurgerToNight.Models;
-using BurgerToNightUI.Extension;
+﻿using BurgerToNightUI.Extension;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +14,7 @@ namespace BurgerToNightUI.Models.DTO
         [ValidateNever]
         public BCategoryDTO burgerCategory { get; set; }
         public int Price { get; set; }
+        public string Description { get; set; }
         public string PriceInCurrency => Price.ToCurrency();
         public int PreparingTime { get; set; }
         public string TimeInMinutes => PreparingTime.ToMinutes();

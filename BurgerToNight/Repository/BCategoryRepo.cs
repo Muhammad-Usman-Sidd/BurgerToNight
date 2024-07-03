@@ -1,12 +1,12 @@
-﻿using BurgerToNight.Data;
-using BurgerToNight.Models;
-using BurgerToNight.Models.DTOs;
-using BurgerToNight.Repository.IRepository;
+﻿using BurgerToNightAPI.Data;
+using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Repository;
+using BurgerToNightAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace BurgerToNight.Repository
+namespace BurgerToNightAPI.Repository
 {
     public class BCategoryRepo:Repository<BurgerCategory>, IBCategoryRepo
     {

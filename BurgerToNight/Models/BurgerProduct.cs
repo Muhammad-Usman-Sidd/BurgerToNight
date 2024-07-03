@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
 
-namespace BurgerToNight.Models
+namespace BurgerToNightAPI.Models
 {
     public class BurgerProduct
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }

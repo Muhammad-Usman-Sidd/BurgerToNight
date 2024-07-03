@@ -1,4 +1,4 @@
-﻿namespace BurgerToNight.Models.DTOs
+﻿namespace BurgerToNightAPI.Models.DTOs
 {
     public class BCategoryUpdateDTO
     {

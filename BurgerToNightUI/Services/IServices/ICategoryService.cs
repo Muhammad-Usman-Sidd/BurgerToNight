@@ -1,5 +1,4 @@
-﻿using BurgerToNight.Models;
-using BurgerToNightUI.Models;
+﻿using BurgerToNightUI.Models;
 using BurgerToNightUI.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -10,11 +9,11 @@ namespace BurgerToNightUI.Services.IServices
 
     public interface ICategoryService :IBaseService
     {
-        Task<T> GetAllAsync<T>();
-        Task<T> GetAsync<T>(int id);
-        Task<T> CreateAsync<T>(BCategoryCreateDTO dto);
-        Task<T> UpdateAsync<T>(BCategoryEditDTO dto);
-        Task<T> DeleteAsync<T>(int id);
+        Task<T> GetAllAsync<T>(string token);
+        Task<T> GetAsync<T>(int id, string token);
+        Task<T> CreateAsync<T>(BCategoryCreateDTO dto, string token);
+        Task<T> UpdateAsync<T>(BCategoryEditDTO dto, string token);
+        Task<T> DeleteAsync<T>(int id, string token);
     }
 
 }

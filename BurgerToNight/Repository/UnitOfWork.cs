@@ -1,13 +1,12 @@
-﻿using BurgerToNight.Data;
-using BurgerToNight.Models;
-using BurgerToNight.Repository.IRepository;
+﻿using BurgerToNightAPI.Data;
+using BurgerToNightAPI.Repository.IRepository;
 
-namespace BurgerToNight.Repository
+namespace BurgerToNightAPI.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly BurgerDbContext _db;
-        public IBCategoryRepo BCategories { get;}
+        public IBCategoryRepo BCategories { get; }
 
         public IBProductRepo BProducts { get; }
 
@@ -16,7 +15,6 @@ namespace BurgerToNight.Repository
             _db = db;
             BCategories = new BCategoryRepo(_db);
             BProducts = new BProductRepo(_db);
-
         }
 
         public async Task SaveAsync()

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace BurgerToNight.Models.DTOs
+namespace BurgerToNightAPI.Models.DTOs
 {
     public class BProductPostDTO
     {

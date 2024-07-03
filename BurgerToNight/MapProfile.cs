@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using BurgerToNight.Models;
-using BurgerToNight.Models.DTOs;
+using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Models.DTOs;
+using Microsoft.Azure.Cosmos;
 
-namespace BurgerToNight
+namespace BurgerToNightAPI
 {
     public class MapProfile : Profile
     {
@@ -16,6 +17,7 @@ namespace BurgerToNight
             CreateMap<BurgerProduct, BProductPostDTO>().ReverseMap();
             CreateMap<BurgerProduct, BProductGetDTO>();
             CreateMap<BurgerProduct, BProductUpdateDTO>().ReverseMap();
+            CreateMap<ApplicationUser, UserDTO>().ReverseMap();
         }
     }
 }

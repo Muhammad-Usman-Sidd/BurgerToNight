@@ -1,8 +1,9 @@
-﻿using BurgerToNight.Data;
-using BurgerToNight.Models;
-using BurgerToNight.Repository.IRepository;
+﻿using BurgerToNightAPI.Data;
+using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Repository;
+using BurgerToNightAPI.Repository.IRepository;
 
-namespace BurgerToNight.Repository
+namespace BurgerToNightAPI.Repository
 {
     public class BProductRepo : Repository<BurgerProduct>, IBProductRepo
     {

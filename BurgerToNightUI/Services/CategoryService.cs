@@ -19,52 +19,58 @@ namespace BurgerToNightUI.Services
 
         }
 
-        public Task<T> CreateAsync<T>(BCategoryCreateDTO dto)
+        public Task<T> CreateAsync<T>(BCategoryCreateDTO dto,string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.POST,
                 Data = dto,
-                Url = categoryUrl + "/CategoryAPI/"
+                Url = categoryUrl + "/CategoryAPI/",
+                Token=token
+               
             });
         }
 
-        public Task<T> DeleteAsync<T>(int id)
+        public Task<T> DeleteAsync<T>(int id,string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = categoryUrl + "/CategoryAPI/" + id
+                Url = categoryUrl + "/CategoryAPI/" + id,
+                Token=token
             });
         }
 
-        public Task<T> GetAllAsync<T>()
+        public Task<T> GetAllAsync<T>(string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = categoryUrl + "/CategoryAPI/"
+                Url = categoryUrl + "/CategoryAPI/",
+                Token=token
             });
         }
 
-        public Task<T> GetAsync<T>(int id)
+        public Task<T> GetAsync<T>(int id, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = categoryUrl + "/CategoryAPI/" + id
+                Url = categoryUrl + "/CategoryAPI/" + id,
+                Token=token
             });
         }
 
-        public Task<T> UpdateAsync<T>(BCategoryEditDTO dto)
+
+        public Task<T> UpdateAsync<T>(BCategoryEditDTO dto, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.PUT,
                 Data = dto,
-                Url = categoryUrl + "/CategoryAPI/" + dto.Id
+                Url = categoryUrl + "/CategoryAPI/" + dto.Id,
+                Token=token
             });
-
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using BurgerToNight.Models;
+﻿using BurgerToNightAPI.Models;
 
-namespace BurgerToNight.Repository.IRepository
+namespace BurgerToNightAPI.Repository.IRepository
 {
     public interface IBProductRepo:IRepository<BurgerProduct>
     {

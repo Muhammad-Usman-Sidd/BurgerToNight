@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 
-namespace BurgerToNight.Models.DTOs
+namespace BurgerToNightAPI.Models.DTOs
 {
     public class BProductGetDTO
     {

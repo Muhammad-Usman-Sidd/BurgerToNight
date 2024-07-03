@@ -1,5 +1,5 @@
-﻿using BurgerToNight.Models.DTOs;
-using BurgerToNight.Utility;
+﻿using BurgerToNight.Utility;
+using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightUI.Models;
 using BurgerToNightUI.Models.DTO;
 using BurgerToNightUI.Models.VM;
@@ -21,50 +21,55 @@ namespace BurgerToNightUI.Services
 
         }
 
-        public Task<T> CreateAsync<T>(BProductPostDTO dto)
+        public Task<T> CreateAsync<T>(BProductPostDTO dto,string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.POST,
                 Data = dto,
-                Url = productUrl + "/ProductAPI/"
+                Url = productUrl + "/ProductAPI/",
+                Token=token
             });
         }
 
-        public Task<T> DeleteAsync<T>(int id)
+        public Task<T> DeleteAsync<T>(int id,string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = productUrl + "/ProductAPI/" + id
+                Url = productUrl + "/ProductAPI/" + id,
+                Token=token
             });
         }
 
-        public Task<T> GetAllAsync<T>()
+        public Task<T> GetAllAsync<T>(string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = productUrl  +"/ProductAPI/"
+                Url = productUrl  +"/ProductAPI/",
+                Token=token
             });
         }
 
-        public Task<T> GetAsync<T>(int id)
+        public Task<T> GetAsync<T>(int id,string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = productUrl + "/ProductAPI/" + id,
+                Token=token
             });
         }
 
-        public Task<T> UpdateAsync<T>(BProductUpdateDTO dto)
+        public Task<T> UpdateAsync<T>(BProductUpdateDTO dto,string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.PUT,
                 Data = dto,
-                Url = productUrl + "/ProductAPI/" + dto.Id
+                Url = productUrl + "/ProductAPI/" + dto.Id,
+                Token=token
             });
         }
     }

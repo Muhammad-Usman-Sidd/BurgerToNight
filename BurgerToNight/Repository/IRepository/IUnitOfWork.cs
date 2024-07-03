@@ -1,4 +1,4 @@
-﻿namespace BurgerToNight.Repository.IRepository
+﻿namespace BurgerToNightAPI.Repository.IRepository
 {
     public interface IUnitOfWork
     {

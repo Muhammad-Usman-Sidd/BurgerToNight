@@ -1,9 +1,7 @@
-﻿using BurgerToNight.Data;
-using BurgerToNight.Models;
-using BurgerToNight.Models.DTOs;
+﻿using BurgerToNightAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BurgerToNight.Repository.IRepository
+namespace BurgerToNightAPI.Repository.IRepository
 {
     public interface IBCategoryRepo:IRepository<BurgerCategory>
     {

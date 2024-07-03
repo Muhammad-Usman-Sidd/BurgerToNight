@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using BurgerToNight.Models;
+using BurgerToNightAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
@@ -30,8 +30,6 @@ public class ExceptionHandlingMiddleware
     {
         var statusCode = HttpStatusCode.InternalServerError; // Default status code
 
-        // Handle specific exceptions if needed
-        // Example: For UnauthorizedAccessException
         // if (exception is UnauthorizedAccessException)
         // {
         //     statusCode = HttpStatusCode.Unauthorized;

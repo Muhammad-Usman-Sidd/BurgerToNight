@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace BurgerToNight.Models
+namespace BurgerToNightAPI.Models
 {
     public class APIResponse
     {

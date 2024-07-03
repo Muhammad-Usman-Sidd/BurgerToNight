@@ -20,30 +20,33 @@ namespace BurgerToNightUI.Controllers
             _categoryService = categoryService;
             _mapper = mapper;
         }
-        [HttpGet(Name ="IndexCategory")]
+        [HttpGet(Name = "IndexCategory")]
         public async Task<IActionResult> IndexCategory()
         {
             List<BCategoryDTO> list = new();
 
-            var response = await _categoryService.GetAllAsync<APIResponse>();
+            var response = await _categoryService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<BCategoryDTO>>(Convert.ToString(response.Result));
             }
             return View(list);
         }
+
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CreateCategory()
         {
             return View();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost(Name = "CreateCategory")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateCategory(BCategoryCreateDTO model)
         {
             if (ModelState.IsValid)
             {
-                var response = await _categoryService.CreateAsync<APIResponse>(model);
+                var response = await _categoryService.CreateAsync<APIResponse>(model, HttpContext.Session.GetString(SD.SessionToken));
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "Category created successfully";
@@ -53,9 +56,11 @@ namespace BurgerToNightUI.Controllers
             TempData["error"] = "Error encountered.";
             return View(model);
         }
+
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditCategory(int id)
         {
-            var response = await _categoryService.GetAsync<APIResponse>(id);
+            var response = await _categoryService.GetAsync<APIResponse>(id, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
 
@@ -64,14 +69,16 @@ namespace BurgerToNightUI.Controllers
             }
             return NotFound();
         }
-        [HttpPost(Name ="EditCategory")]
+
+        [Authorize(Roles = "admin")]
+        [HttpPost(Name = "EditCategory")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCategory(BCategoryEditDTO model)
         {
             if (ModelState.IsValid)
             {
                 TempData["success"] = "Category updated successfully";
-                var response = await _categoryService.UpdateAsync<APIResponse>(model);
+                var response = await _categoryService.UpdateAsync<APIResponse>(model, HttpContext.Session.GetString(SD.SessionToken));
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(IndexCategory));
@@ -80,9 +87,11 @@ namespace BurgerToNightUI.Controllers
             TempData["error"] = "Error encountered.";
             return View(model);
         }
+
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteCategory(int Id)
         {
-            var response = await _categoryService.GetAsync<APIResponse>(Id);
+            var response = await _categoryService.GetAsync<APIResponse>(Id, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
                 BCategoryDTO model = JsonConvert.DeserializeObject<BCategoryDTO>(Convert.ToString(response.Result));
@@ -90,13 +99,14 @@ namespace BurgerToNightUI.Controllers
             }
             return NotFound();
         }
-  
+
+        [Authorize(Roles = "admin")]
         [HttpPost(Name ="DeleteCategory")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteCategory(BCategoryDTO model)
         {
 
-            var response = await _categoryService.DeleteAsync<APIResponse>(model.Id);
+            var response = await _categoryService.DeleteAsync<APIResponse>(model.Id, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Category deleted successfully";

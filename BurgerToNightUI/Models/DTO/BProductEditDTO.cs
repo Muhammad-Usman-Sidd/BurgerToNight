@@ -1,5 +1,4 @@
-﻿using BurgerToNight.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using BurgerToNightUI.Extension;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;

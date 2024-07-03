@@ -1,17 +1,36 @@
 using BurgerToNightUI.Services.IServices;
 using BurgerToNightUI.Services;
 using BurgerToNightUI;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddHttpClient<ICategoryService,CategoryService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpClient<IProductService, ProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddHttpClient<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+              .AddCookie(options =>
+              {
+                  options.Cookie.HttpOnly = true;
+                  options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                  options.LoginPath = "/Auth/Login";
+                  options.AccessDeniedPath = "/Auth/AccessDenied";
+                  options.SlidingExpiration = true;
+              });
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 builder.Services.AddHttpClient();
 var app = builder.Build();
 
@@ -26,9 +45,14 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

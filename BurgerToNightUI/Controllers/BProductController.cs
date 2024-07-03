@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using BurgerToNight.Models.DTOs;
+using BurgerToNight.Utility;
+using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightUI.Models;
 using BurgerToNightUI.Models.DTO;
 using BurgerToNightUI.Models.VM;
@@ -33,7 +34,7 @@ namespace BurgerToNightUI.Controllers
         public async Task<IActionResult> IndexProduct()
         {
             List<BProductDTO> list = new();
-            var response = await _productService.GetAllAsync<APIResponse>();
+            var response = await _productService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<BProductDTO>>(Convert.ToString(response.Result));
@@ -43,7 +44,7 @@ namespace BurgerToNightUI.Controllers
         public async Task<IActionResult> CreateProduct()
         {
             BProductCreateVM productVM = new();
-            var RespCategory = await _categoryService.GetAllAsync<APIResponse>();
+            var RespCategory = await _categoryService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (RespCategory != null && RespCategory.IsSuccess)
             {
                 productVM.CategoryList = JsonConvert.DeserializeObject<List<BCategoryDTO>>
@@ -81,7 +82,7 @@ namespace BurgerToNightUI.Controllers
                     PreparingTime = model.BProduct.PreparingTime,
                     Image = base64Image
                 };
-                var response = await _productService.CreateAsync<APIResponse>(createDTO);
+                var response = await _productService.CreateAsync<APIResponse>(createDTO, HttpContext.Session.GetString(SD.SessionToken));
 
                 if (response != null && response.IsSuccess)
                 {
@@ -96,7 +97,7 @@ namespace BurgerToNightUI.Controllers
                 }
             }
 
-            var resp = await _categoryService.GetAllAsync<APIResponse>();
+            var resp = await _categoryService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (resp != null && resp.IsSuccess)
             {
                 model.CategoryList = JsonConvert.DeserializeObject<List<BCategoryDTO>>
@@ -113,7 +114,7 @@ namespace BurgerToNightUI.Controllers
         public async Task<IActionResult> EditProduct(int id)
         {
             BProductEditVM productVM = new();
-            var response = await _productService.GetAsync<APIResponse>(id);
+            var response = await _productService.GetAsync<APIResponse>(id, HttpContext.Session.GetString(SD.SessionToken));
 
             if (response != null && response.IsSuccess)
             {
@@ -136,7 +137,7 @@ namespace BurgerToNightUI.Controllers
                 productVM.BProduct = _mapper.Map<BProductEditDTO>(model);
             }
 
-            var responsecategory = await _categoryService.GetAllAsync<APIResponse>();
+            var responsecategory = await _categoryService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (responsecategory != null && responsecategory.IsSuccess)
             {
                 productVM.CategoryList = JsonConvert.DeserializeObject<List<BCategoryDTO>>
@@ -177,7 +178,7 @@ namespace BurgerToNightUI.Controllers
                     PreparingTime = product.PreparingTime,
                     Image = base64Image,
                 };
-                var response = await _productService.UpdateAsync<APIResponse>(updateDTO);
+                var response = await _productService.UpdateAsync<APIResponse>(updateDTO, HttpContext.Session.GetString(SD.SessionToken));
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(IndexProduct));
@@ -191,7 +192,7 @@ namespace BurgerToNightUI.Controllers
                 }
             }
 
-            var resp = await _categoryService.GetAllAsync<APIResponse>();
+            var resp = await _categoryService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
             if (resp != null && resp.IsSuccess)
             {
                 model.CategoryList = JsonConvert.DeserializeObject<List<BCategoryDTO>>
@@ -208,7 +209,7 @@ namespace BurgerToNightUI.Controllers
             BProductDeleteVM productVM = new();
 
             // fetch product details
-            var response = await _productService.GetAsync<APIResponse>(id);
+            var response = await _productService.GetAsync<APIResponse>(id, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
                 var productJson = Convert.ToString(response.Result);
@@ -219,7 +220,7 @@ namespace BurgerToNightUI.Controllers
                 if (product != null && product.BCategoryId > 0)
                 {
                     // fetch the category
-                    var categoryResponse = await _categoryService.GetAsync<APIResponse>(product.BCategoryId);
+                    var categoryResponse = await _categoryService.GetAsync<APIResponse>(product.BCategoryId, HttpContext.Session.GetString(SD.SessionToken));
                     if (categoryResponse != null && categoryResponse.IsSuccess)
                     {
                         var categoryJson = Convert.ToString(categoryResponse.Result);
@@ -238,7 +239,7 @@ namespace BurgerToNightUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteProduct(BProductDeleteVM productVM)
         {
-            var response = await _productService.DeleteAsync<APIResponse>(productVM.BProduct.Id);
+            var response = await _productService.DeleteAsync<APIResponse>(productVM.BProduct.Id, HttpContext.Session.GetString(SD.SessionToken));
             if (response != null && response.IsSuccess)
             {
                 return RedirectToAction(nameof(IndexProduct));
