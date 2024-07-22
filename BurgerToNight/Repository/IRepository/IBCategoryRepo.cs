@@ -6,7 +6,6 @@ namespace BurgerToNightAPI.Repository.IRepository
     public interface IBCategoryRepo:IRepository<BurgerCategory>
     {
         Task<BurgerCategory> UpdateAsync(BurgerCategory entity);
-        //ActionResult<BurgerCategroy> NameCheck(BurgerCategroy entity,BurgerCategoryDTO burgerCategroyDTO);
 
     }
 }

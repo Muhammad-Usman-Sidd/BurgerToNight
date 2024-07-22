@@ -8,7 +8,7 @@ namespace BurgerToNightAPI.Models.DTOs
         [Required]
         public string Name { get; set; }
         public int BCategoryId { get; set; }
-
+        [ForeignKey("BCategoryId")]
         public string? Description { get; set; }
         public int Price { get; set; }
         public int? PreparingTime { get; set; }
