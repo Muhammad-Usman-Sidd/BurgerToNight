@@ -17,14 +17,6 @@ namespace BurgerToNightAPI.Repository
             _db = db;
         }
 
-        //public ActionResult<BurgerCategroy> NameCheck(BurgerCategroy entity,BurgerCategoryDTO burgerCategoryDTO)
-        //{
-        //    if (entity.Title.ToLower() == burgerCategoryDTO.Title.ToLower()){
-        //        return ModelStateError;
-        //    }
-        //    return entity;
-        //}
-
         public async Task<BurgerCategory> UpdateAsync(BurgerCategory entity)
         {
             _db.BCategories.Update(entity);

@@ -42,8 +42,8 @@ namespace BurgerToNightFunc.Product
 
                 if (!string.IsNullOrEmpty(product.Image) && product.Image.StartsWith("Blob"))
                 {
-                    var blobName = Path.GetFileName(new Uri(product.Image).AbsolutePath);
-                    await _blobService.DeleteBlobAsync(blobName);
+                    //var blobName = Path.GetFileName(new Uri(product.Image).AbsolutePath);
+                    await _blobService.DeleteBlobAsync(product.Image);
                 }
 
                 await _unitOfWork.BProducts.RemoveAsync(product);

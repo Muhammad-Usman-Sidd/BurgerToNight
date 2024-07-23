@@ -12,7 +12,7 @@ const router = useRouter();
 
 const addCategory = async () => {
   try {
-    await axios.post("http://192.168.15.26:7145/api/CategoryAPI", Category.value);
+    await axios.post("http://192.168.15.26:7168/api/CategoryAPI", Category.value);
     router.push("/");
   } catch (error) {
     console.error("Error Adding the Category", error);
@@ -20,7 +20,7 @@ const addCategory = async () => {
 };
 </script>
 <template>
-  <section class="bg-blue-50 px-4 py-10">
+  <section class="bg-blue-50 px-4 py-10 flex justify-center items-center">
     <div class="container-xl lg:container">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Add Category</h2>
       <form @submit.prevent="addCategory" class="bg-white p-6 rounded-lg shadow-md">
