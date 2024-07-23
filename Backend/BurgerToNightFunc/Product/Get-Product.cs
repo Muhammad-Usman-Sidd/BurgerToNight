@@ -1,68 +1,74 @@
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
-using BurgerToNightAPI.Models;
-using BurgerToNightAPI.Repository.IRepository;
 using AutoMapper;
 using BurgerToNightAPI.Models.DTOs;
+using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Services.IServices;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
 using System.Net;
+using Microsoft.Extensions.Logging;
+using Microsoft.Azure.Functions.Worker.Http;
 
-namespace BurgerToNightFunc.Product
+public class Get_Product
 {
-    public class Get_Product
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+    private readonly IBlobService _blobService;
+
+    public Get_Product(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
+        _blobService = blobService;
+    }
 
-        public Get_Product(IUnitOfWork unitOfWork, IMapper mapper)
+    [Function("GetProduct")]
+    public async Task<APIResponse> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "ProductAPI/{id}")] HttpRequestData req,
+        FunctionContext context, int id)
+    {
+        var log = context.GetLogger("GetProduct");
+        var response = new APIResponse();
+
+        try
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
-
-        [Function("GetProduct")]
-        public async Task<APIResponse> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "ProductAPI/{id}")] HttpRequestData req,
-            FunctionContext context, int id)
-        {
-            var log = context.GetLogger("GetProduct");
-            var response = new APIResponse();
-
-            try
+            var product = await _unitOfWork.BProducts.GetAsync(u => u.Id == id);
+            if (product == null)
             {
-                var product = await _unitOfWork.BProducts.GetAsync(u => u.Id == id);
-                if (product == null)
-                {
-                    response.StatusCode = HttpStatusCode.NotFound;
-                    response.IsSuccess = false;
-                    response.ErrorMessages.Add($"Product with id {id} not found.");
-                    return response;
-                }
-
-                var mappedProduct = _mapper.Map<BProductGetDTO>(product);
-                var burgerCategory = await _unitOfWork.BCategories.GetAsync(c => c.Id == mappedProduct.BCategoryId);
-                mappedProduct.burgerCategory = burgerCategory?.Title;
-
-                response.StatusCode = HttpStatusCode.OK;
-                response.Result = mappedProduct;
-            }
-            catch (Exception ex)
-            {
-                log.LogError($"Error getting product with id {id}: {ex.Message}");
-                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.StatusCode = HttpStatusCode.NotFound;
                 response.IsSuccess = false;
-                response.ErrorMessages.Add($"Internal server error: {ex.Message}");
+                response.ErrorMessages.Add($"Product with id {id} not found.");
+                return response;
             }
 
-            return response;
+            var mappedProduct = _mapper.Map<BProductGetDTO>(product);
+            var burgerCategory = await _unitOfWork.BCategories.GetAsync(c => c.Id == mappedProduct.BCategoryId);
+            mappedProduct.burgerCategory = burgerCategory?.Title;
+
+            // Retrieve the image as a base64 string using the blob name
+            if (!string.IsNullOrEmpty(product.Image) && product.Image.StartsWith("Blob"))
+            {
+                try
+                {
+                    mappedProduct.Image = await _blobService.DownloadBlobAsBase64Async(product.Image);
+                }
+                catch (Exception ex)
+                {
+                    log.LogError($"Error retrieving image for product {product.Id}: {ex.Message}");
+                    mappedProduct.Image = "Error retrieving image";
+                }
+            }
+
+            response.StatusCode = HttpStatusCode.OK;
+            response.Result = mappedProduct;
         }
+        catch (Exception ex)
+        {
+            log.LogError($"Error getting product with id {id}: {ex.Message}");
+            response.StatusCode = HttpStatusCode.InternalServerError;
+            response.IsSuccess = false;
+            response.ErrorMessages.Add($"Internal server error: {ex.Message}");
+        }
+
+        return response;
     }
 }

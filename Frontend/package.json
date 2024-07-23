@@ -1,13 +1,12 @@
 {
-  "name": "practiceproj",
+  "name": "BurgerToNightUI",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview",
-    "server": "json-server --watch src/Burgers.json --port 5000"
+    "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.7.2",

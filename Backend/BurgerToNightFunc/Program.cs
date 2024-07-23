@@ -8,6 +8,9 @@ using AutoMapper;
 using BurgerToNightAPI;
 using Microsoft.EntityFrameworkCore;
 using BurgerToNightAPI.Data;
+using BurgerToNightFunc.Services.IServices;
+using BurgerToNightFunc.Services;
+using Azure.Storage.Blobs;
 
 var host = new HostBuilder()
     .ConfigureAppConfiguration(config =>
@@ -23,9 +26,14 @@ var host = new HostBuilder()
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
 
-        // Add your services
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddSingleton(x =>
+        {
+            var connectionString = configuration.GetValue<string>("BlobStorage:ConnectionString");
+            return new BlobServiceClient(connectionString);
+        });
 
+        services.AddScoped<IBlobService, BlobService>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddAutoMapper(typeof(MapProfile));
 
         services.AddDbContext<BurgerDbContext>(options =>
@@ -35,7 +43,7 @@ var host = new HostBuilder()
         services.AddCors(options =>
         {
             options.AddPolicy("AllowSpecificOrigin",
-                builder => builder.WithOrigins("http://localhost:5173")
+                builder => builder.WithOrigins("http://192.168.15.26:5173")
                                   .AllowAnyHeader()
                                   .AllowAnyMethod());
         });

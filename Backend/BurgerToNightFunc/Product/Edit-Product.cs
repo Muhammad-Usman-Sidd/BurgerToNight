@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -5,6 +7,7 @@ using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Services.IServices;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -16,11 +19,13 @@ namespace BurgerToNightFunc.Product
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IBlobService _blobService;
 
-        public Edit_Product(IUnitOfWork unitOfWork, IMapper mapper)
+        public Edit_Product(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _blobService = blobService;
         }
 
         [Function("EditProduct")]
@@ -43,6 +48,7 @@ namespace BurgerToNightFunc.Product
                     response.ErrorMessages.Add("Error: ID mismatch or DTO is null.");
                     return response;
                 }
+
                 if (await _unitOfWork.BCategories.GetAsync(u => u.Id == updateDTO.BCategoryId) == null)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
@@ -50,19 +56,43 @@ namespace BurgerToNightFunc.Product
                     response.ErrorMessages.Add("Error: BCategoryID mismatch or is null.");
                     return response;
                 }
-                BurgerProduct model = _mapper.Map<BurgerProduct>(updateDTO);
 
-                await _unitOfWork.BProducts.UpdateAsync(model);
+                var existingProduct = await _unitOfWork.BProducts.GetAsync(u => u.Id == id);
+
+                if (existingProduct == null)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.IsSuccess = false;
+                    response.ErrorMessages.Add($"Product with id {id} not found.");
+                    return response;
+                }
+
+                if (!string.IsNullOrEmpty(updateDTO.Image) && updateDTO.Image.StartsWith("data:image"))
+                {
+                    var imageUrl = await _blobService.UploadBase64ImageAsync(updateDTO.Image);
+                    updateDTO.Image = imageUrl;
+                }
+                else
+                {
+                    updateDTO.Image = existingProduct.Image;
+                }
+
+                var updatedProduct = _mapper.Map(updateDTO, existingProduct);
+
+                await _unitOfWork.BProducts.UpdateAsync(updatedProduct);
+                await _unitOfWork.SaveAsync();
+
                 response.StatusCode = HttpStatusCode.NoContent;
                 response.IsSuccess = true;
-                return (response);
             }
             catch (Exception ex)
             {
+                log.LogError($"Error updating product with id {id}: {ex.Message}");
+                response.StatusCode = HttpStatusCode.InternalServerError;
                 response.IsSuccess = false;
-                response.ErrorMessages
-                     = new List<string>() { ex.ToString() };
+                response.ErrorMessages.Add($"Internal server error: {ex.Message}");
             }
+
             return response;
         }
     }

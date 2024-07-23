@@ -1,10 +1,9 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using AutoMapper;
 using BurgerToNightAPI.Models;
-using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Services.IServices;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -14,10 +13,12 @@ namespace BurgerToNightFunc.Product
     public class Delete_Product
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IBlobService _blobService;
 
-        public Delete_Product(IUnitOfWork unitOfWork)
+        public Delete_Product(IUnitOfWork unitOfWork, IBlobService blobService)
         {
             _unitOfWork = unitOfWork;
+            _blobService = blobService;
         }
 
         [Function("DeleteProduct")]
@@ -37,6 +38,12 @@ namespace BurgerToNightFunc.Product
                     response.IsSuccess = false;
                     response.ErrorMessages.Add($"Product with id {id} not found.");
                     return response;
+                }
+
+                if (!string.IsNullOrEmpty(product.Image) && product.Image.StartsWith("Blob"))
+                {
+                    var blobName = Path.GetFileName(new Uri(product.Image).AbsolutePath);
+                    await _blobService.DeleteBlobAsync(blobName);
                 }
 
                 await _unitOfWork.BProducts.RemoveAsync(product);

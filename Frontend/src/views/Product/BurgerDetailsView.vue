@@ -14,7 +14,7 @@ const deleteBurger = async () => {
   try {
     const confirmMessage = window.confirm("Are you sure you want to delete this burger?");
     if (confirmMessage) {
-      await axios.delete(`http://localhost:7168/api/ProductAPI/${BurgerId}`);
+      await axios.delete(`http://192.168.15.26:7168/api/ProductAPI/${BurgerId}`);
       Toast.success("Burger Deleted Successfully");
       router.push("/burgers");
       store.resetCurrentBurger();

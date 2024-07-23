@@ -47,7 +47,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:5173")
+        builder => builder.WithOrigins("http://192.168.15.26:5173")
                           .AllowAnyHeader()
                           .AllowAnyMethod());
 });
@@ -61,43 +61,43 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 }).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => {
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description =
-            "JWT Authorization header using the Bearer scheme. \r\n\r\n " +
-            "Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\n" +
-            "Example: \"Bearer 12345abcdef\"",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Scheme = "Bearer"
-    });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            },
-                Scheme = "oauth2",
-                Name = "Bearer",
-                In = ParameterLocation.Header
-            },
-            new List<string>()
-        }
-    });
-});
+//builder.Services.AddSwaggerGen(options => {
+//    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+//    {
+//        Description =
+//            "JWT Authorization header using the Bearer scheme. \r\n\r\n " +
+//            "Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\n" +
+//            "Example: \"Bearer 12345abcdef\"",
+//        Name = "Authorization",
+//        In = ParameterLocation.Header,
+//        Scheme = "Bearer"
+//    });
+//    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+//    {
+//        {
+//            new OpenApiSecurityScheme
+//            {
+//                Reference = new OpenApiReference
+//                            {
+//                                Type = ReferenceType.SecurityScheme,
+//                                Id = "Bearer"
+//                            },
+//                Scheme = "oauth2",
+//                Name = "Bearer",
+//                In = ParameterLocation.Header
+//            },
+//            new List<string>()
+//        }
+//    });
+//});
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+/// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 app.UseCors("AllowSpecificOrigin");
 app.UseStaticFiles(new StaticFileOptions
 { FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "images")), RequestPath = "/Resources" });

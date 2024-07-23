@@ -8,10 +8,10 @@ import { useBurgerStore } from "@/stores/ProductStore";
 const store = useBurgerStore();
 const router = useRouter();
 const Toast = useToast();
-
+store.resetCurrentBurger();
 const addBurger = async () => {
   try {
-    await axios.post("http://localhost:7168/api/ProductAPI", store.currentBurger);
+    await axios.post("http://192.168.15.26:7168/api/ProductAPI", store.currentBurger);
     Toast.success("Burger added Successfully");
     router.push("/burgers");
     store.resetCurrentBurger();
@@ -27,7 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="bg-blue-50 px-4 py-10">
+  <section class="bg-blue-50 px-4 py-10 flex justify-center items-center">
     <div class="container-xl lg:container">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Add Burger</h2>
       <form @submit.prevent="addBurger" class="bg-white p-6 rounded-lg shadow-md">
