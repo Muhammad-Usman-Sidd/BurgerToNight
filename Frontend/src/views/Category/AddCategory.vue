@@ -12,7 +12,7 @@ const router = useRouter();
 
 const addCategory = async () => {
   try {
-    await axios.post("http://192.168.15.26:7168/api/CategoryAPI", Category.value);
+    await axios.post("http://192.168.15.38:7168/api/CategoryAPI", Category.value);
     router.push("/");
   } catch (error) {
     console.error("Error Adding the Category", error);

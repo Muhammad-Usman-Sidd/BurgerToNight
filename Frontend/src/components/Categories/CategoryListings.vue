@@ -16,7 +16,7 @@ defineProps({
 
 onMounted(async () => {
   try {
-    const CategoryAPI = await axios.get("http://192.168.15.26:7168/api/CategoryAPI");
+    const CategoryAPI = await axios.get("http://192.168.15.38:7168/api/CategoryAPI");
     store.categories = CategoryAPI.data.Result;
     console.log("testing phase", store.categories);
   } catch (error) {

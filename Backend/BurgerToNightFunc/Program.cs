@@ -43,7 +43,7 @@ var host = new HostBuilder()
         services.AddCors(options =>
         {
             options.AddPolicy("AllowSpecificOrigin",
-                builder => builder.WithOrigins("http://192.168.15.26:5173")
+                builder => builder.WithOrigins("http://192.168.15.38:5173")
                                   .AllowAnyHeader()
                                   .AllowAnyMethod());
         });

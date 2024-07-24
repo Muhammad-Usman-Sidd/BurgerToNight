@@ -1,15 +1,17 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
-using AutoMapper;
+using BurgerToNightFunc.Services.IServices;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using BurgerToNightFunc.Services.IServices;
-using BurgerToNightFunc.Services;
+using Newtonsoft.Json;
 
 namespace BurgerToNightFunc.Product
 {
@@ -19,14 +21,12 @@ namespace BurgerToNightFunc.Product
         private readonly IMapper _mapper;
         private readonly IBlobService _blobService;
 
-
-        public GetAll_Product(IUnitOfWork unitOfWork, IMapper mapper,IBlobService blobService)
+        public GetAll_Product(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _blobService = blobService;
         }
-
         [Function("GetAllProduct")]
         public async Task<APIResponse> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "ProductAPI")] HttpRequestData req,
@@ -37,7 +37,12 @@ namespace BurgerToNightFunc.Product
 
             try
             {
-                var products = await _unitOfWork.BProducts.GetAllAsync();
+                var query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
+                int pageNumber = int.TryParse(query["pageNumber"], out pageNumber) ? pageNumber : 1;
+                int pageSize = 3; // Fixed page size
+
+                var (products, totalCount) = await _unitOfWork.BProducts.GetAllPaginatedAsync(pageNumber, pageSize);
+
                 if (products == null || !products.Any())
                 {
                     response.StatusCode = HttpStatusCode.NotFound;
@@ -68,7 +73,11 @@ namespace BurgerToNightFunc.Product
                 }
 
                 response.StatusCode = HttpStatusCode.OK;
-                response.Result = productDTOs;
+                response.Result = new
+                {
+                    Products = productDTOs,
+                    TotalCount = totalCount
+                };
             }
             catch (Exception ex)
             {
@@ -80,5 +89,6 @@ namespace BurgerToNightFunc.Product
 
             return response;
         }
+
     }
 }

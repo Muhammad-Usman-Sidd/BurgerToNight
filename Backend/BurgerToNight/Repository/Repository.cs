@@ -62,5 +62,33 @@ namespace BurgerToNightAPI.Repository
             }
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<(List<T> Items, int TotalCount)> GetAllPaginatedAsync(int pageNumber, int pageSize = 3, Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
+            int totalCount = await query.CountAsync();
+            List<T> items = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
+
     }
+
 }
+

@@ -11,7 +11,7 @@ const Toast = useToast();
 store.resetCurrentBurger();
 const addBurger = async () => {
   try {
-    await axios.post("http://192.168.15.26:7168/api/ProductAPI", store.currentBurger);
+    await axios.post("http://192.168.15.38:7168/api/ProductAPI", store.currentBurger);
     Toast.success("Burger added Successfully");
     router.push("/burgers");
     store.resetCurrentBurger();
