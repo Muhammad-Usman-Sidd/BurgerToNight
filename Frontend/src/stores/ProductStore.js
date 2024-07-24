@@ -7,6 +7,7 @@ const toast = useToast();
 export const useBurgerStore = defineStore('burger', {
   state: () => ({
     burgers: [],
+    cart:{},
     totalItems: 0,
     pageIndex: 1,
     pageSize: 3,
@@ -101,6 +102,13 @@ export const useBurgerStore = defineStore('burger', {
         Image: '',
         Id: null
       }
-    }
+    },
+    addToCart(name, quantity) {
+      if(!this.cart[name]) this.cart[name] = 0;
+      this.cart[name] += quantity;
+    },
+    toggleSidebar() {
+        this.showSidebar = !this.showSidebar;
+    },
   },
 });

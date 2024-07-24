@@ -39,7 +39,7 @@ namespace BurgerToNightFunc.Product
             {
                 var query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
                 int pageNumber = int.TryParse(query["pageNumber"], out pageNumber) ? pageNumber : 1;
-                int pageSize = 3; // Fixed page size
+                int pageSize = 3; 
 
                 var (products, totalCount) = await _unitOfWork.BProducts.GetAllPaginatedAsync(pageNumber, pageSize);
 

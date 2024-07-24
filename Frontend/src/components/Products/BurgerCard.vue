@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
 
-// Define props
 const props = defineProps({
   burger: Object,
 });

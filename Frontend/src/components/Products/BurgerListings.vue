@@ -1,9 +1,11 @@
 <script setup>
-import { onMounted, computed } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { useBurgerStore } from "@/stores/ProductStore";
-import BurgerListing from "./Burger.vue";
+import BurgerCard from "./BurgerCard.vue";
+import BurgerGrid from "./BurgerGrid.vue";
 
 const store = useBurgerStore();
+const viewMode = ref("card");
 defineProps({
   limit: {
     type: Number,
@@ -38,18 +40,47 @@ const prevPage = async () => {
     await store.fetchBurgers(store.pageIndex);
   }
 };
+
+const toggleViewMode = (mode) => {
+  viewMode.value = mode;
+};
 </script>
 
 <template>
   <section class="bg-blue-50 px-4 py-10">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Burgers</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <BurgerListing
+
+      <div class="flex justify-end mb-4">
+        <button
+          @click="toggleViewMode('card')"
+          :class="{ 'bg-gray-300': viewMode === 'card' }"
+          class="px-4 py-2 bg-white border rounded mr-2"
+        >
+          Card View
+        </button>
+        <button
+          @click="toggleViewMode('grid')"
+          :class="{ 'bg-gray-300': viewMode === 'grid' }"
+          class="px-4 py-2 bg-white border rounded"
+        >
+          Grid View
+        </button>
+      </div>
+
+      <div
+        v-if="viewMode === 'card'"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <BurgerCard
           v-for="burger in (store.burgers || []).slice(0, limit || store.burgers.length)"
           :key="burger.Id"
           :burger="burger"
         />
+      </div>
+
+      <div v-if="viewMode === 'grid'">
+        <BurgerGrid :burgers="store.burgers" />
       </div>
       <section v-if="showButton" class="flex justify-center my-10 px-6">
         <RouterLink
