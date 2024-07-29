@@ -12,7 +12,8 @@ namespace BurgerToNightAPI.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-
+        public DbSet<OrdersDetail> OrderDetails { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<LocalUser> LocalUsers { get; set; }
         public DbSet<BurgerCategory> BCategories { get; set; }
         public DbSet<BurgerProduct> BProducts { get; set; }

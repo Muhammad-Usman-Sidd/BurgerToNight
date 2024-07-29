@@ -14,5 +14,4 @@ app.use(router)
 app.use(Toast)
 app.use(pinia);
 
-
 app.mount('#app')

@@ -112,7 +112,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BCategories");
+                    b.ToTable("BCategories", (string)null);
 
                     b.HasData(
                         new
@@ -179,7 +179,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasIndex("BCategoryId");
 
-                    b.ToTable("BProducts");
+                    b.ToTable("BProducts", (string)null);
 
                     b.HasData(
                         new
@@ -254,7 +254,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LocalUsers");
+                    b.ToTable("LocalUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,64 +1,49 @@
-<script setup>
-const props = defineProps({
-  burgers: {
-    type: Array,
-    required: true,
+<!-- BurgerList.vue -->
+<script lang="ts" setup>
+import GridComponent from "../GenericGrid/GridComponent.vue";
+
+// Define an enum for column types
+enum ColumnType {
+  DEFAULT = "default",
+  IMAGE = "image",
+}
+
+// Define props
+const props = defineProps<{
+  burgers: Record<string, any>[];
+  limit?: number;
+}>();
+
+const columns = [
+  { key: "image", label: "Image", type: ColumnType.IMAGE },
+  { key: "name", label: "Name", field: "Name", type: ColumnType.DEFAULT },
+  {
+    key: "category",
+    label: "Category",
+    field: "burgerCategory",
+    type: ColumnType.DEFAULT,
   },
-  limit: {
-    type: Number,
-    default: null,
+  {
+    key: "description",
+    label: "Description",
+    field: "Description",
+    type: ColumnType.DEFAULT,
   },
-});
-const base64Prefix = "data:image/*;base64,";
+  { key: "price", label: "Price", field: "Price", type: ColumnType.DEFAULT },
+  {
+    key: "preparingTime",
+    label: "Preparing Time",
+    field: "PreparingTime",
+    type: ColumnType.DEFAULT,
+  },
+];
 </script>
 
 <template>
-  <div class="overflow-x-auto">
-    <table class="min-w-full bg-white">
-      <thead>
-        <tr>
-          <th class="py-2 px-4 border-b text-center">Image</th>
-          <th class="py-2 px-4 border-b text-center">Name</th>
-          <th class="py-2 px-4 border-b text-center">Category</th>
-          <th class="py-2 px-4 border-b text-center">Description</th>
-          <th class="py-2 px-4 border-b text-center">Price</th>
-          <th class="py-2 px-4 border-b text-center">Preparing Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="burger in burgers.slice(0, limit || burgers.length)"
-          :key="burger.Id"
-          class="hover:bg-gray-100"
-        >
-          <RouterLink :to="'burgers/' + burger.Id" class="contents">
-            <td class="py-2 px-4 border-b text-center">
-              <img
-                :src="
-                  burger.Image.startsWith('data:image/')
-                    ? burger.Image
-                    : base64Prefix + burger.Image
-                "
-                alt="Burger Image"
-                class="w-20 h-20 object-cover rounded mx-auto"
-              />
-            </td>
-            <td class="py-2 px-4 border-b text-center align-middle">{{ burger.Name }}</td>
-            <td class="py-2 px-4 border-b text-center align-middle">
-              {{ burger.burgerCategory }}
-            </td>
-            <td class="py-2 px-4 border-b text-center align-middle">
-              {{ burger.Description }}
-            </td>
-            <td class="py-2 px-4 border-b text-center align-middle">
-              ${{ burger.Price }}
-            </td>
-            <td class="py-2 px-4 border-b text-center align-middle">
-              {{ burger.PreparingTime }} min
-            </td>
-          </RouterLink>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <GridComponent
+    :items="props.burgers"
+    :columns="columns"
+    :limit="props.limit"
+    base64Prefix="data:image/*;base64,"
+  />
 </template>

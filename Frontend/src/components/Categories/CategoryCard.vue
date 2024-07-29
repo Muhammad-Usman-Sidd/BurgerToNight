@@ -1,19 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
+import { defineProps } from "vue";
+import { RouterLink } from "vue-router";
 
-// Define props
-const props = defineProps({
-  category: Object,
-});
+interface Category {
+  Id: number;
+  Title: string;
+  Description: string;
+}
+
+const props = defineProps<{
+  category: Category;
+}>();
+
 const showFullDescription = ref(false);
 
 const toggleFullDescription = () => {
   showFullDescription.value = !showFullDescription.value;
 };
 
-const halfDescription = computed(() => {
+const halfDescription = computed((): string => {
   const description = props.category?.Description ?? "";
-  if (!showFullDescription.value) {
+  if (!showFullDescription.value && description.length > 90) {
     return description.substring(0, 90) + "...";
   }
   return description;
@@ -24,14 +32,11 @@ const halfDescription = computed(() => {
   <div class="bg-white rounded-xl shadow-md relative">
     <div class="p-4">
       <div class="mb-6">
-        <div class="text-gray-600 grid place-items-center my-2"></div>
-        <h3 class="text-xl font-bold">{{ category.Title }}</h3>
+        <h3 class="text-xl font-bold">{{ props.category.Title }}</h3>
       </div>
 
       <div class="mb-5">
-        <div>
-          {{ halfDescription }}
-        </div>
+        <div>{{ halfDescription }}</div>
         <button
           @click="toggleFullDescription"
           class="text-orange-500 hover:text-orange-600 mb-5"
@@ -40,7 +45,7 @@ const halfDescription = computed(() => {
         </button>
       </div>
       <RouterLink
-        :to="'categories/' + category.Id"
+        :to="'categories/' + props.category.Id"
         class="h-[36px] bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-center text-sm"
       >
         Read More

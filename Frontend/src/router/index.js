@@ -32,7 +32,12 @@ const router = createRouter({
     {
       path: '/categories',
       name: 'categories',
-      component: ()=>import('../views/Categories.vue')
+      component: ()=>import('../views/Category/Categories.vue')
+    },
+    {
+      path: '/past-orders',
+      name: 'pastorders',
+      component: ()=>import('../views/PastOrders.vue')
     }
     // {
     //   path: '/categories/:id',

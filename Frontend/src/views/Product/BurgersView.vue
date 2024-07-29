@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import BurgerListings from "../../components/Products/BurgerListings.vue";
 import BackButton from "@/components/BackButton.vue";
 </script>

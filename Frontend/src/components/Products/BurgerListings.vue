@@ -1,24 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, computed, ref } from "vue";
 import { useBurgerStore } from "@/stores/ProductStore";
 import BurgerCard from "./BurgerCard.vue";
 import BurgerGrid from "./BurgerGrid.vue";
 
 const store = useBurgerStore();
-const viewMode = ref("card");
-defineProps({
-  limit: {
-    type: Number,
-  },
-  showButton: {
-    type: Boolean,
-    default: false,
-  },
-  showAddProduct: {
-    type: Boolean,
-    default: true,
-  },
-});
+const viewMode = ref<"card" | "grid">("card");
+
+interface Props {
+  limit?: number;
+  showButton?: boolean;
+  showAddProduct?: boolean;
+}
+
+const props = defineProps<Props>();
+
 const totalPages = computed(() => {
   return Math.ceil(store.totalItems / store.pageSize);
 });
@@ -41,11 +37,14 @@ const prevPage = async () => {
   }
 };
 
-const toggleViewMode = (mode) => {
+const toggleViewMode = (mode: "card" | "grid") => {
   viewMode.value = mode;
 };
-</script>
 
+const addToCart = (burger: { Name: string }) => {
+  store.addToCart(burger.Name, 1);
+};
+</script>
 <template>
   <section class="bg-blue-50 px-4 py-10">
     <div class="container mx-auto">
@@ -76,6 +75,7 @@ const toggleViewMode = (mode) => {
           v-for="burger in (store.burgers || []).slice(0, limit || store.burgers.length)"
           :key="burger.Id"
           :burger="burger"
+          @add-to-cart="addToCart"
         />
       </div>
 

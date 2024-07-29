@@ -1,13 +1,13 @@
-<script setup>
-import CategoryListing from "./Category.vue";
+<script setup lang="ts">
+import CategoryListing from "./CategoryCard.vue";
 import AddCategory from "../../views/Category/AddCategory.vue";
 import { onMounted } from "vue";
-import axios from "axios";
+import { defineProps } from "vue";
 import { useBurgerStore } from "@/stores/ProductStore";
 
 const store = useBurgerStore();
 
-defineProps({
+const props = defineProps({
   showAddButton: {
     type: Boolean,
     default: true,
@@ -16,11 +16,10 @@ defineProps({
 
 onMounted(async () => {
   try {
-    const CategoryAPI = await axios.get("http://192.168.15.38:7168/api/CategoryAPI");
-    store.categories = CategoryAPI.data.Result;
-    console.log("testing phase", store.categories);
+    await store.fetchCategories();
+    console.log("Categories fetched:", store.categories);
   } catch (error) {
-    console.error("Error Fetching the Data", error);
+    console.error("Error fetching the data", error);
   }
 });
 </script>
@@ -31,15 +30,12 @@ onMounted(async () => {
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Categories</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <CategoryListing
-          v-for="category in (store.categories || []).slice(
-            0,
-            limit || store.categories.length
-          )"
+          v-for="category in store.categories || []"
           :key="category.id"
           :category="category"
         />
       </div>
     </div>
   </section>
-  <AddCategory v-if="showAddButton" />
+  <AddCategory v-if="props.showAddButton" />
 </template>

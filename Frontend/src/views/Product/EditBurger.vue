@@ -1,25 +1,15 @@
-<script setup>
-import { ref, reactive, onMounted } from "vue";
+<script setup lang="ts">
+import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useToast } from "vue-toastification";
 import { useBurgerStore } from "@/stores/ProductStore";
 
 const route = useRoute();
 const router = useRouter();
-const Toast = useToast();
 const store = useBurgerStore();
 const burgerId = route.params.id;
-
 const update = async () => {
-  try {
-    await store.update();
-    router.push("/burgers");
-    Toast.success("Burger updated successfully");
-    store.resetCurrentBurger();
-  } catch (error) {
-    console.error("Error updating the Burger", error);
-    Toast.error("Burger not updated");
-  }
+  await store.updateBurger();
+  router.push("/burgers");
 };
 
 onMounted(async () => {
@@ -29,7 +19,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="bg-blue-50 px-4 py-10">
+  <section class="bg-blue-50 px-4 py-10 flex justify-center items-center">
     <div class="container-xl lg:container">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Edit Burger</h2>
       <form @submit.prevent="update" class="bg-white p-6 rounded-lg shadow-md">

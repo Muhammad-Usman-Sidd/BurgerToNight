@@ -21,6 +21,8 @@ builder.Services.AddDbContext<BurgerDbContext>(options =>
 );
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
+builder.Services.AddScoped<IOrderItemRepo, OrderItemRepo>();
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -47,7 +49,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://192.168.15.38:5173")
+        builder => builder.WithOrigins("http://192.168.1.8:5173")
                           .AllowAnyHeader()
                           .AllowAnyMethod());
 });

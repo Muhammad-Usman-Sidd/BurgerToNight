@@ -1,4 +1,4 @@
-@BurgerToNight_HostAddress = http://192.168.15.38:5229
+@BurgerToNight_HostAddress = http://192.168.15.54:5229
 
 GET {{BurgerToNight_HostAddress}}/weatherforecast/
 Accept: application/json

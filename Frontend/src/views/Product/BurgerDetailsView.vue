@@ -1,40 +1,30 @@
-<script setup>
-import { ref, computed, onMounted } from "vue";
+<script setup lang="ts">
+import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import axios from "axios";
 import { useBurgerStore } from "@/stores/ProductStore";
-import { useToast } from "vue-toastification";
 
 const route = useRoute();
 const router = useRouter();
-const Toast = useToast();
 const store = useBurgerStore();
 const BurgerId = route.params.id;
-const deleteBurger = async () => {
-  try {
-    const confirmMessage = window.confirm("Are you sure you want to delete this burger?");
-    if (confirmMessage) {
-      await axios.delete(`http://192.168.15.38:7168/api/ProductAPI/${BurgerId}`);
-      Toast.success("Burger Deleted Successfully");
-      router.push("/burgers");
-      store.resetCurrentBurger();
-    }
-  } catch (error) {
-    console.error("Error deleting burger", error);
-    Toast.error("Deleting failed");
-  }
+
+const deleteProduct = async () => {
+  await store.deleteBurger(BurgerId);
+  router.push("/burgers");
 };
 
-const image = computed(() => {
-  const imageData = store.currentBurger.Image;
-  const base64Prefix = "data:image/*;base64,";
+const image = computed(
+  (): String => {
+    const imageData = store.currentBurger.Image;
+    const base64Prefix = "data:image/*;base64,";
 
-  if (imageData && imageData.startsWith("data:image/")) {
-    return imageData;
-  } else {
-    return base64Prefix + imageData;
+    if (imageData && imageData.startsWith("data:image/")) {
+      return imageData;
+    } else {
+      return base64Prefix + imageData;
+    }
   }
-});
+);
 
 onMounted(async () => {
   await store.fetchBurgerById(BurgerId);
@@ -65,17 +55,17 @@ onMounted(async () => {
             <p class="my-2 bg-orange-100 p-2 font-bold">
               ${{ store.currentBurger.Price }}
             </p>
+            <button
+              @click="store.addToCart(store.currentBurger, 1)"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
+            >
+              Add to Cart
+            </button>
           </div>
         </aside>
         <main class="md:col-span-2">
           <div class="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
             <h1 class="text-3xl font-bold mb-4">{{ store.currentBurger.Name }}</h1>
-            <!-- <div
-              class="text-gray-500 mb-4 flex align-middle justify-center md:justify-start"
-            >
-              <i class="fa-solid fa-location-dot text-lg text-orange-700 mr-2"></i>
-              <p class="text-orange-700">{{ store.currentBurger.bCategoryId }}</p>
-            </div> -->
           </div>
 
           <div class="bg-white p-6 rounded-lg shadow-md mt-6">
@@ -93,7 +83,7 @@ onMounted(async () => {
               Edit Burger
             </RouterLink>
             <button
-              @click="deleteBurger"
+              @click="deleteProduct"
               class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
             >
               Delete Burger

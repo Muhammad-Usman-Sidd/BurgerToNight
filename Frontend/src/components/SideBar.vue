@@ -1,92 +1,92 @@
-<script setup>
-defineProps({
-  toggle,
-  cart,
+<script setup lang="ts">
+import { computed } from "vue";
+import { useBurgerStore } from "@/stores/ProductStore";
+import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
+const store = useBurgerStore();
+
+// Remove item from cart
+const removeFromCart = (burger) => {
+  store.removeItem(burger);
+};
+
+// Checkout action
+const checkout = () => {
+  store.checkout();
+};
+
+// Toggle sidebar visibility
+const toggleSidebar = () => {
+  store.toggleSidebar();
+};
+
+// Calculate total price of items in the cart
+const totalPrice = computed((): string => {
+  return Object.values(store.cart)
+    .reduce((total, item) => {
+      return total + item.burger.Price * item.quantity;
+    }, 0)
+    .toFixed(2); // Format to 2 decimal places
 });
-const removeItem=(name){
-        delete this.cart[name];
-    },
-const checkout=()=> {
-    this.pastOrders.push(...Object.entries(this.cart).map(([name, quantity]) => {
-        const product = this.inventory.find(p => p.name === name);
-        return {
-            name,
-            quantity,
-            price: product.price.,
-            image: product.image
-        };
-    }));
-    cart = {};
-    toggleSidebar();
-}
-const getPrice = (name) => {
-  const product = this.inventory.find((p) => p.name === name);
-  return product ? product.price.USD : 0;
-};
-const getIcon = (name) => {
-  const product = this.inventory.find((p) => p.name === name);
-  return product ? product.icon : "carrot";
-};
-const calculateTotal = () => {
-  return Object.entries(this.cart).reduce((acc, [name, quantity]) => {
-    return acc + quantity * this.getPrice(name);
-  }, 0);
-};
 </script>
+
 <template>
-  <aside
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+  <div
+    v-if="store.showSidebar"
+    class="fixed top-0 right-0 w-96 h-full bg-white shadow-lg p-4 z-50 overflow-y-auto"
   >
-    <div class="bg-white w-11/12 md:w-1/2 lg:w-1/3 p-4 rounded-lg shadow-lg">
-      <h1 class="flex justify-between items-center text-xl font-bold mb-4">
-        <span>Cart</span>
-        <button @click="toggle" class="text-red-500 text-2xl">&times;</button>
-      </h1>
-
-      <div class="overflow-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr>
-              <th><span class="sr-only">Product Image</span></th>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Total</th>
-              <th><span class="sr-only">Actions</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(quantity, key, index) in cart" :key="index" class="border-b">
-              <td class="py-2"><i :class="`icofont-${getIcon(key)} icofont-3x`"></i></td>
-              <td class="py-2">{{ key }}</td>
-              <td class="py-2">${{ getPrice(key).toFixed(2) }}</td>
-              <td class="py-2 text-center">{{ quantity }}</td>
-              <td class="py-2">${{ (getPrice(key) * quantity).toFixed(2) }}</td>
-              <td class="py-2 text-center">
-                <button @click="remove(key)" class="text-red-500 hover:text-red-700">
-                  &times;
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p class="text-center mt-4" v-if="!Object.keys(cart).length">
-          <em>No items in cart</em>
-        </p>
-        <div
-          class="flex justify-between items-center mt-4"
-          v-if="Object.keys(cart).length"
-        >
-          <span class="font-bold">Total: ${{ calculateTotal().toFixed(2) }}</span>
-          <button
-            @click="checkout"
-            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-          >
-            Checkout
-          </button>
-        </div>
-      </div>
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold">Cart</h2>
+      <button @click="toggleSidebar" class="text-gray-500 hover:text-gray-700">
+        <XMarkIcon class="h-6 w-6" />
+      </button>
     </div>
-  </aside>
+
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="border-b">
+          <th class="text-left py-2 px-2">Product</th>
+          <th class="text-left py-2 px-2">Price</th>
+          <th class="text-left py-2 px-2">Quantity</th>
+          <th class="text-left py-2 px-2">Total</th>
+          <th class="text-left py-2 px-2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in store.cart" :key="index" class="border-b">
+          <td class="py-2 px-2">{{ item.burger.Name }}</td>
+          <td class="py-2 px-2">${{ item.burger.Price.toFixed(2) }}</td>
+          <td class="py-2 px-2">{{ item.quantity }}</td>
+          <td class="py-2 px-2">${{ (item.burger.Price * item.quantity).toFixed(2) }}</td>
+          <td class="py-2 px-2">
+            <button @click="removeFromCart(item.burger)" class="text-red-500">
+              <TrashIcon class="h-5 w-5" />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="flex justify-between items-center mt-4 border-t pt-2">
+      <span class="font-semibold">Total:</span>
+      <span class="text-orange-600">${{ totalPrice }}</span>
+    </div>
+
+    <button @click="checkout" class="w-full mt-4 bg-green-500 text-white py-2 rounded">
+      Checkout
+    </button>
+  </div>
 </template>
+
+<style scoped>
+/* Add styles for table if needed */
+table {
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid #ddd;
+}
+th {
+  background-color: #f4f4f4;
+}
+</style>
