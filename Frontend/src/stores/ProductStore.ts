@@ -17,7 +17,7 @@ export const useBurgerStore = defineStore('burger', {
     showSidebar: false,
     pastOrders: [] as ProductGetDTO[],
     totalItems: 0,
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: 3,
     token: "",
     categories: [] as CategoryGetDTO[],
@@ -47,10 +47,10 @@ export const useBurgerStore = defineStore('burger', {
     },
     async fetchBurgers(page= 1) {
       try {
-        const response: APIResponse<ProductGetDTO[]> = await ProductService.getAllProducts(page , this.token);
+        const response: APIResponse<any> = await ProductService.getAllProducts(page );
         console.log(response);
         this.burgers = response.Result.Products;
-        this.totalItems = response.Result.TotalItems; // Adjust if needed
+        this.totalItems = response.Result.TotalCount; 
         this.pageIndex = page;
       } catch (error) {
         console.error('Error fetching burgers', error);
@@ -59,7 +59,7 @@ export const useBurgerStore = defineStore('burger', {
     },
     async fetchBurgerById(id: number) {
       try {
-        const response: APIResponse<ProductGetDTO> = await ProductService.getProduct(id, this.token);
+        const response: APIResponse<ProductGetDTO> = await ProductService.getProduct(id);
         this.currentBurger = response.Result;
       } catch (error) {
         console.error('Error fetching burger by ID', error);
@@ -79,7 +79,7 @@ export const useBurgerStore = defineStore('burger', {
     },
     async fetchPastOrders() {
       try {
-        const response: APIResponse<ProductGetDTO[]> = await ProductService.getAllProducts(1, this.token); // Adjust if needed
+        const response: APIResponse<ProductGetDTO[]> = await ProductService.getAllProducts(1); // Adjust if needed
         this.pastOrders = response.Result;
         console.log(this.pastOrders);
       } catch (error) {

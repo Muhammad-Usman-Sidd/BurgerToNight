@@ -34,19 +34,17 @@ class ProductService extends BaseService implements IProductService {
     });
   }
 
-  async getAllProducts(pageIndex: number,token: string): Promise<APIResponse<ProductGetDTO[]>> {
+  async getAllProducts(pageIndex: number): Promise<APIResponse<ProductGetDTO[]>> {
     return this.sendRequest<ProductGetDTO[]>({
       Url: `/ProductAPI?pageNumber=${pageIndex}&pageSize=3`,
-      Method: 'GET',
-      Token: token
+      Method: 'GET'
     });
   }
 
-  async getProduct(id: number, token: string): Promise<APIResponse<ProductGetDTO>> {
+  async getProduct(id: number): Promise<APIResponse<ProductGetDTO>> {
     return this.sendRequest<ProductGetDTO>({
       Url: `/ProductAPI/${id}`,
-      Method: 'GET',
-      Token: token
+      Method: 'GET'
     });
   }
 
