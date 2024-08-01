@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useBurgerStore } from "@/stores/ProductStore";
+import { useBurgerStore } from "../../stores/ProductStore";
 
 const route = useRoute();
 const router = useRouter();
 const store = useBurgerStore();
 const burgerId = route.params.id;
 const update = async () => {
-  await store.updateBurger();
+  await store.updateBurger(+burgerId);
   router.push("/burgers");
 };
 
 onMounted(async () => {
   await store.fetchCategories();
-  await store.fetchBurgerById(burgerId);
+  await store.fetchBurgerById(+burgerId);
 });
 </script>
 

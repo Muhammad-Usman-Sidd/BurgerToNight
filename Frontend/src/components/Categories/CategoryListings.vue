@@ -3,7 +3,7 @@ import CategoryListing from "./CategoryCard.vue";
 import AddCategory from "../../views/Category/AddCategory.vue";
 import { onMounted } from "vue";
 import { defineProps } from "vue";
-import { useBurgerStore } from "@/stores/ProductStore";
+import { useBurgerStore } from "../../stores/ProductStore";
 
 const store = useBurgerStore();
 

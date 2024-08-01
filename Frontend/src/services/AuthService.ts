@@ -1,0 +1,41 @@
+import BaseService from './BaseService';
+import { APIResponse } from '../models/APIResult';
+import { LoginDTO, RegistrationRequestDTO, ResetPasswordDTO } from '../models/AuthDtos';
+
+interface IAuthService {
+    login<T>(dto: LoginDTO): Promise<APIResponse<T>>;
+    register<T>(dto: RegistrationRequestDTO): Promise<APIResponse<T>>;
+    resetPassword<T>(dto: ResetPasswordDTO): Promise<APIResponse<T>>;
+}
+
+class AuthService extends BaseService implements IAuthService {
+    constructor(baseURL: string) {
+        super(baseURL);
+    }
+
+    async login<T>(dto: LoginDTO): Promise<APIResponse<T>> {
+        return this.sendRequest<T>({
+            Url: '/AuthLogin',
+            Method: 'POST',
+            Data: dto
+        });
+    }
+
+    async register<T>(dto: RegistrationRequestDTO): Promise<APIResponse<T>> {
+        return this.sendRequest<T>({
+            Url: '/AuthRegister',
+            Method: 'POST',
+            Data: dto
+        });
+    }
+
+    async resetPassword<T>(dto: ResetPasswordDTO): Promise<APIResponse<T>> {
+        return this.sendRequest<T>({
+            Url: '/AuthResetPassword',
+            Method: 'POST',
+            Data: dto
+        });
+    }
+}
+
+export default AuthService;

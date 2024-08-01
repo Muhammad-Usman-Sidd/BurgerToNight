@@ -11,6 +11,8 @@ using BurgerToNightAPI.Data;
 using BurgerToNightFunc.Services.IServices;
 using BurgerToNightFunc.Services;
 using Azure.Storage.Blobs;
+using BurgerToNightAPI.Models;
+using Microsoft.AspNetCore.Identity;
 
 var host = new HostBuilder()
     .ConfigureAppConfiguration(config =>
@@ -34,6 +36,9 @@ var host = new HostBuilder()
 
         services.AddScoped<IBlobService, BlobService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserRepo, UserRepo>();
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<BurgerDbContext>().AddDefaultTokenProviders();
         services.AddAutoMapper(typeof(MapProfile));
 
         services.AddDbContext<BurgerDbContext>(options =>
@@ -43,7 +48,7 @@ var host = new HostBuilder()
         services.AddCors(options =>
         {
             options.AddPolicy("AllowSpecificOrigin",
-                builder => builder.WithOrigins("http://192.168.1.8:5173")
+                builder => builder.WithOrigins("http://192.168.15.41:5173")
                                   .AllowAnyHeader()
                                   .AllowAnyMethod());
         });

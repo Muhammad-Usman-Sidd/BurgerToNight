@@ -1,67 +1,68 @@
-using System;
-using System.Net;
-using System.Threading.Tasks;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Repository.IRepository;
-using BurgerToNightFunc.Services.IServices;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
-namespace BurgerToNightFunc.Product
+public class DeleteProduct
 {
-    public class Delete_Product
+    private readonly IUnitOfWork _unitOfWork;
+
+    public DeleteProduct(IUnitOfWork unitOfWork)
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IBlobService _blobService;
+        _unitOfWork = unitOfWork;
+    }
 
-        public Delete_Product(IUnitOfWork unitOfWork, IBlobService blobService)
+    [Function("DeleteProduct")]
+    public async Task<APIResponse> Run(
+        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "ProductAPI/{id}")] HttpRequestData req,
+        FunctionContext context,
+        int id)
+    {
+        var log = context.GetLogger("DeleteProduct");
+        var response = new APIResponse();
+
+        try
         {
-            _unitOfWork = unitOfWork;
-            _blobService = blobService;
-        }
-
-        [Function("DeleteProduct")]
-        public async Task<APIResponse> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "ProductAPI/{id}")] HttpRequestData req,
-            FunctionContext context, int id)
-        {
-            var log = context.GetLogger("DeleteProduct");
-            var response = new APIResponse();
-
-            try
+            // Validate authentication
+            var token = req.Headers.GetValues("Authorization").FirstOrDefault();
+            if (token == null || !await IsUserAuthorized(token))
             {
-                var product = await _unitOfWork.BProducts.GetAsync(u => u.Id == id);
-                if (product == null)
-                {
-                    response.StatusCode = HttpStatusCode.NotFound;
-                    response.IsSuccess = false;
-                    response.ErrorMessages.Add($"Product with id {id} not found.");
-                    return response;
-                }
-
-                if (!string.IsNullOrEmpty(product.Image) && product.Image.StartsWith("Blob"))
-                {
-                    //var blobName = Path.GetFileName(new Uri(product.Image).AbsolutePath);
-                    await _blobService.DeleteBlobAsync(product.Image);
-                }
-
-                await _unitOfWork.BProducts.RemoveAsync(product);
-                await _unitOfWork.SaveAsync();
-
-                response.StatusCode = HttpStatusCode.OK;
-                response.IsSuccess = true;
-                response.Result = null;
-            }
-            catch (Exception ex)
-            {
-                log.LogError($"Error deleting product with id {id}: {ex.Message}");
-                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.StatusCode = HttpStatusCode.Unauthorized;
                 response.IsSuccess = false;
-                response.ErrorMessages.Add($"Internal server error: {ex.Message}");
+                response.ErrorMessages.Add("Unauthorized");
+                return response;
             }
 
-            return response;
+            var existingProduct = await _unitOfWork.BProducts.GetAsync(u=>u.Id==id);
+            if (existingProduct == null)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.IsSuccess = false;
+                response.ErrorMessages.Add("Product not found");
+                return response;
+            }
+
+            await _unitOfWork.BProducts.RemoveAsync(existingProduct);
+            await _unitOfWork.SaveAsync();
+
+            response.StatusCode = HttpStatusCode.NoContent;
         }
+        catch (Exception ex)
+        {
+            log.LogError($"Error deleting product: {ex.Message}");
+            response.StatusCode = HttpStatusCode.InternalServerError;
+            response.IsSuccess = false;
+            response.ErrorMessages.Add($"Internal server error: {ex.Message}");
+        }
+
+        return response;
+    }
+
+    private async Task<bool> IsUserAuthorized(string token)
+    {
+        // Implement authentication and authorization logic here
+        return true; // Replace with actual logic
     }
 }

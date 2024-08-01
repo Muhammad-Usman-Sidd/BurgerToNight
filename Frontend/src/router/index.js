@@ -38,12 +38,22 @@ const router = createRouter({
       path: '/past-orders',
       name: 'pastorders',
       component: ()=>import('../views/PastOrders.vue')
+    }, 
+    {
+      path: '/register',
+      name: 'register',
+      component: ()=>import('../views/Auth/Registration.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: ()=>import('../views/Auth/Login.vue')
+    },
+    {
+      path: '/reset-password',
+      name: 'resetPassword',
+      component: ()=>import('../views/Auth/Login.vue')
     }
-    // {
-    //   path: '/categories/:id',
-    //   name: 'categories',
-    //   component: ()=>import('../views/CategoriesDetails.vue')
-    // }
   ]
 })
 

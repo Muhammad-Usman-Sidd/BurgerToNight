@@ -9,13 +9,13 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net;
 
-public class Create_Product
+public class CreateProduct
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IBlobService _blobService;
 
-    public Create_Product(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
+    public CreateProduct(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -24,7 +24,7 @@ public class Create_Product
 
     [Function("CreateProduct")]
     public async Task<APIResponse> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "ProductAPI")] HttpRequestData req,
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "ProductAPI")] HttpRequestData req,
         FunctionContext context)
     {
         var log = context.GetLogger("CreateProduct");
@@ -32,6 +32,16 @@ public class Create_Product
 
         try
         {
+            // Validate authentication
+            var token = req.Headers.GetValues("Authorization").FirstOrDefault();
+            if (token == null || !await IsUserAuthorized(token))
+            {
+                response.StatusCode = HttpStatusCode.Unauthorized;
+                response.IsSuccess = false;
+                response.ErrorMessages.Add("Unauthorized");
+                return response;
+            }
+
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var createDTO = JsonConvert.DeserializeObject<BProductPostDTO>(requestBody);
 
@@ -83,5 +93,11 @@ public class Create_Product
         }
 
         return response;
+    }
+
+    private async Task<bool> IsUserAuthorized(string token)
+    {
+        // Implement authentication and authorization logic here
+        return true; // Replace with actual logic
     }
 }

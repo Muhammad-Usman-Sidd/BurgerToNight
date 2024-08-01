@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { onMounted, computed, ref } from "vue";
-import { useBurgerStore } from "@/stores/ProductStore";
+import { useBurgerStore } from "../../stores/ProductStore";
 import BurgerCard from "./BurgerCard.vue";
 import BurgerGrid from "./BurgerGrid.vue";
+import { ProductGetDTO } from "../../models/ProductDtos";
 
 const store = useBurgerStore();
 const viewMode = ref<"card" | "grid">("card");
@@ -34,6 +35,7 @@ const prevPage = async () => {
   if (store.pageIndex > 1) {
     store.pageIndex -= 1;
     await store.fetchBurgers(store.pageIndex);
+    console.log(store.burgers);
   }
 };
 
@@ -41,8 +43,8 @@ const toggleViewMode = (mode: "card" | "grid") => {
   viewMode.value = mode;
 };
 
-const addToCart = (burger: { Name: string }) => {
-  store.addToCart(burger.Name, 1);
+const addToCart = (burger: ProductGetDTO, quantity: number) => {
+  store.addToCart(burger, quantity);
 };
 </script>
 <template>
@@ -72,7 +74,7 @@ const addToCart = (burger: { Name: string }) => {
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         <BurgerCard
-          v-for="burger in (store.burgers || []).slice(0, limit || store.burgers.length)"
+          v-for="burger in (store.burgers || []).slice(0, limit || store.totalItems)"
           :key="burger.Id"
           :burger="burger"
           @add-to-cart="addToCart"

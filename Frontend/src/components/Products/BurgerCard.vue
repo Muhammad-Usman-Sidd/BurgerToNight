@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { useBurgerStore } from "@/stores/ProductStore";
+import { useBurgerStore } from "../../stores/ProductStore";
+import { ProductGetDTO } from "../../models/ProductDtos";
 
 const store = useBurgerStore();
 
-interface Burger {
-  Id: string;
-  Name: string;
-  Image: string;
-  Description: string;
-  burgerCategory: string;
-  Price: number;
-}
-
 const props = defineProps<{
-  burger: Burger;
+  burger: ProductGetDTO;
 }>();
 
 const showFullDescription = ref(false);
@@ -60,7 +52,7 @@ const addToCart = () => {
             />
           </div>
           <h3 class="text-xl font-bold">{{ burger.Name }}</h3>
-          <h4 class="text-gray-500">Category: {{ burger.burgerCategory }}</h4>
+          <h4 class="text-gray-500">Category: {{ burger.BurgerCategory }}</h4>
         </div>
 
         <div class="mb-5">

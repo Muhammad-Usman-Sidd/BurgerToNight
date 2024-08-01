@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
-import { useBurgerStore } from "@/stores/ProductStore";
+import { useBurgerStore } from "../stores/ProductStore";
 
 const store = useBurgerStore();
 
@@ -27,34 +27,32 @@ console.log(pastOrders);
 
     <ul v-else class="w-full max-w-4xl">
       <li
-        v-for="(order, index) in pastOrders.values"
+        v-for="(order, index) in pastOrders"
         :key="index"
         class="border rounded-lg shadow-md p-4 mb-4 bg-white"
       >
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-semibold text-orange-700">Order #{{ index + 1 }}</h2>
-          <span class="text-gray-500">{{
-            new Date(order.OrderDate).toLocaleDateString()
-          }}</span>
+          <span class="text-gray-500">{{ order.Id }}</span>
         </div>
 
         <ul class="mb-4">
           <li
-            v-for="(item, itemIndex) in order.Items.values"
+            v-for="(i, itemIndex) in order"
             :key="itemIndex"
             class="flex justify-between items-center mb-2 p-2 border rounded-lg shadow-sm bg-orange-100"
           >
-            <span>{{ item.Product.Name }}</span>
-            <span>x{{ item.Quantity }}</span>
+            <span>{{ order.Image }}</span>
+            <span>x{{ order.BurgerCategory }}</span>
           </li>
         </ul>
 
         <div class="flex justify-between items-center mt-2">
           <span class="font-semibold text-orange-700">
-            Total: ${{ order.TotalPrice.toFixed(2) }}
+            Total: ${{ order.Price.toFixed(2) }}
           </span>
           <button
-            @click="store.addToCart(order.Items[0])"
+            @click="store.addToCart(order, 1)"
             class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
             Add to Cart

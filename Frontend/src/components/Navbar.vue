@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import logo from "../assets/img/logo.png";
-import { useBurgerStore } from "@/stores/ProductStore";
+import { useBurgerStore } from "../stores/ProductStore";
 import SideBar from "./SideBar.vue";
 import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { useRoute } from "vue-router";
@@ -111,6 +111,20 @@ const store = useBurgerStore();
               >
                 <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
                 Past Orders
+              </RouterLink>
+              <RouterLink to="/login">
+                <button
+                  class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                >
+                  Login
+                </button>
+              </RouterLink>
+              <RouterLink to="/register">
+                <button
+                  class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
+                >
+                  Register
+                </button>
               </RouterLink>
             </div>
           </div>

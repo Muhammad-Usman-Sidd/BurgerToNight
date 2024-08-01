@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useBurgerStore } from "@/stores/ProductStore";
+import { useBurgerStore } from "../../stores/ProductStore";
 import { useRouter } from "vue-router";
 
 const store = useBurgerStore();
