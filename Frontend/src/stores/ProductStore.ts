@@ -17,7 +17,7 @@ export const useBurgerStore = defineStore('burger', {
     showSidebar: false,
     pastOrders: [] as ProductGetDTO[],
     totalItems: 0,
-    pageIndex: 1,
+    pageIndex: 0,
     pageSize: 3,
     token: "",
     categories: [] as CategoryGetDTO[],
@@ -26,7 +26,7 @@ export const useBurgerStore = defineStore('burger', {
   actions: {
     async fetchCategories() {
       try {
-        const response :APIResponse<any[]> = await axios.get("http://192.168.15.41:7168/api/CategoryAPI"); 
+        const response :APIResponse<any> = await axios.get("http://192.168.15.41:7168/api/CategoryAPI"); 
         console.log(response.data.Result);
         this.categories = response.data.Result; // Adjust based on the actual response structure
         console.log(this.categories);
@@ -47,7 +47,7 @@ export const useBurgerStore = defineStore('burger', {
     },
     async fetchBurgers(page= 1) {
       try {
-        const response: APIResponse<any> = await ProductService.getAllProducts(page);
+        const response: APIResponse<ProductGetDTO[]> = await ProductService.getAllProducts(page , this.token);
         console.log(response);
         this.burgers = response.Result.Products;
         this.totalItems = response.Result.TotalItems; // Adjust if needed
@@ -79,7 +79,7 @@ export const useBurgerStore = defineStore('burger', {
     },
     async fetchPastOrders() {
       try {
-        const response: APIResponse<ProductGetDTO[]> = await ProductService.getAllProducts(1); // Adjust if needed
+        const response: APIResponse<ProductGetDTO[]> = await ProductService.getAllProducts(1, this.token); // Adjust if needed
         this.pastOrders = response.Result;
         console.log(this.pastOrders);
       } catch (error) {
