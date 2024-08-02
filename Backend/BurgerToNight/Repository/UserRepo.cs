@@ -86,9 +86,9 @@ namespace BurgerToNightAPI.Repository
             ApplicationUser user = new()
             {
                 UserName = registrationRequestDTO.UserName,
-                Email = registrationRequestDTO.UserName,
-                NormalizedEmail = registrationRequestDTO.UserName.ToUpper(),
-                Name = registrationRequestDTO.Name,
+                Email = registrationRequestDTO.Email,
+                NormalizedEmail = registrationRequestDTO.Email.ToUpper(),
+                Name = registrationRequestDTO.UserName,
             };
 
             try
@@ -102,7 +102,17 @@ namespace BurgerToNightAPI.Repository
                         await _roleManager.CreateAsync(new IdentityRole("admin"));
                         await _roleManager.CreateAsync(new IdentityRole("customer"));
                     }
-                    await _userManager.AddToRoleAsync(user, "admin");
+
+                    // Check the secret key and assign role accordingly
+                    if (registrationRequestDTO.SecretKey == "usman is admin")
+                    {
+                        await _userManager.AddToRoleAsync(user, "admin");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "customer");
+                    }
+
                     var userToReturn = _db.ApplicationUsers
                         .FirstOrDefault(u => u.UserName == registrationRequestDTO.UserName);
                     return _mapper.Map<UserDTO>(userToReturn);
@@ -115,6 +125,7 @@ namespace BurgerToNightAPI.Repository
 
             return new UserDTO();
         }
+
         public async Task<bool> ResetPassword(string userId, ResetPasswordDTO passwordChangeDTO)
         {
             var user = await _userManager.FindByIdAsync(userId);

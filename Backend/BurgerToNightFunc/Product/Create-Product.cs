@@ -97,7 +97,6 @@ public class CreateProduct
 
     private async Task<bool> IsUserAuthorized(string token)
     {
-        // Implement authentication and authorization logic here
-        return true; // Replace with actual logic
+        return true;
     }
 }

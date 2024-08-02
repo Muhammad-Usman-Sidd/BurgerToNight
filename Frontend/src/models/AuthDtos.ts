@@ -7,8 +7,8 @@ export interface RegistrationRequestDTO {
   userName: string;
   email: string;
   password: string;
-  name:string;
-  role:string
+  role:string;
+  secretKey:string
 }
 
 export interface ResetPasswordDTO {

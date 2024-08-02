@@ -2,8 +2,11 @@
 import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useBurgerStore } from "@/stores/ProductStore";
+import useAuthStore from "../../stores/AuthStore";
+import UnAuthorized from "../../components/UnAuthorized.vue";
 
 const route = useRoute();
+const authStore = useAuthStore();
 const router = useRouter();
 const store = useBurgerStore();
 const BurgerId = route.params.id;
@@ -17,7 +20,6 @@ const image = computed(
   (): String => {
     const imageData = store.currentBurger.Image;
     const base64Prefix = "data:image/*;base64,";
-
     if (imageData && imageData.startsWith("data:image/")) {
       return imageData;
     } else {
@@ -32,7 +34,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="bg-orange-50">
+  <section v-if="authStore.isLoggedIn" class="bg-orange-50">
     <div class="container m-auto py-10 px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 w-full gap-6">
         <aside>
@@ -92,5 +94,8 @@ onMounted(async () => {
         </main>
       </div>
     </div>
+  </section>
+  <section v-if="!authStore.isLoggedIn">
+    <UnAuthorized />
   </section>
 </template>

@@ -1,0 +1,35 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { useAuthStore } from "../stores/AuthStore";
+import { RouterLink } from "vue-router";
+
+const authStore = useAuthStore();
+const isLoggedIn = computed(() => authStore.isLoggedIn);
+</script>
+
+<template>
+  <div>
+    <RouterLink v-if="!isLoggedIn" to="/login">
+      <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+        Login
+      </button>
+    </RouterLink>
+    <RouterLink v-if="!isLoggedIn" to="/register">
+      <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+        Register
+      </button>
+    </RouterLink>
+    <RouterLink v-if="isLoggedIn" to="/reset-password">
+      <button class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-700">
+        Reset Password
+      </button>
+    </RouterLink>
+    <button
+      v-if="isLoggedIn"
+      @click="authStore.logout"
+      class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+    >
+      Logout
+    </button>
+  </div>
+</template>

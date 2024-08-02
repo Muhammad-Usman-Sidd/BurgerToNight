@@ -2,8 +2,11 @@
 import { onMounted } from "vue";
 import { useBurgerStore } from "../../stores/ProductStore";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../../stores/AuthStore";
+import UnAuthorized from "../../components/UnAuthorized.vue";
 
 const store = useBurgerStore();
+const authStore = useAuthStore();
 const router = useRouter();
 store.resetCurrentBurger();
 
@@ -18,7 +21,10 @@ const addProduct = async () => {
 </script>
 
 <template>
-  <section class="bg-blue-50 px-4 py-10 flex justify-center items-center">
+  <section
+    v-if="authStore.isLoggedIn === true"
+    class="bg-blue-50 px-4 py-10 flex justify-center items-center"
+  >
     <div class="container-xl lg:container">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Add Burger</h2>
       <form @submit.prevent="addProduct" class="bg-white p-6 rounded-lg shadow-md">
@@ -82,5 +88,8 @@ const addProduct = async () => {
         </button>
       </form>
     </div>
+  </section>
+  <section v-if="!authStore.isLoggedIn">
+    <UnAuthorized />
   </section>
 </template>

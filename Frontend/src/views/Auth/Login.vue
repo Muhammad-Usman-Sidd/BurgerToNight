@@ -2,9 +2,8 @@
 import { ref } from "vue";
 import AuthService from "../../services/AuthService";
 import { APIResponse } from "../../models/APIResult.ts";
-import { useBurgerStore } from "../../stores/ProductStore.ts";
-
-const store = useBurgerStore();
+import { useAuthStore } from "../../stores/AuthStore.ts";
+const authStore = useAuthStore();
 const loginRequest = ref({
   userName: "",
   password: "",
@@ -22,7 +21,12 @@ const login = async () => {
       console.log("Login successful:", response.Result.Token);
 
       // Store the token
-      store.token = response.Result.Token;
+      authStore.token = response.Result.Token;
+      authStore.isLoggedIn = true;
+      loginRequest.value = {
+        userName: "",
+        password: "",
+      };
 
       // Redirect to the dashboard or another page
     } else {

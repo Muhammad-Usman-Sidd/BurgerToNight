@@ -12,6 +12,7 @@ import {
   TagIcon,
   InboxStackIcon,
 } from "@heroicons/vue/24/solid";
+import AuthButtons from "./AuthButtons.vue";
 
 const isActiveLink = (routePath: string): boolean => {
   const route: RouteLocationNormalizedLoaded = useRoute();
@@ -28,7 +29,6 @@ const store = useBurgerStore();
         <div
           class="flex flex-1 items-center justify-center md:items-stretch md:justify-start"
         >
-          <!-- Logo -->
           <RouterLink class="flex flex-shrink-0 items-center mr-4" to="/">
             <img class="h-10 w-auto" :src="logo" alt="Vue Burgers" />
             <span class="hidden md:block text-white text-2xl font-bold ml-2">
@@ -112,20 +112,7 @@ const store = useBurgerStore();
                 <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
                 Past Orders
               </RouterLink>
-              <RouterLink to="/login">
-                <button
-                  class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                >
-                  Login
-                </button>
-              </RouterLink>
-              <RouterLink to="/register">
-                <button
-                  class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
-                >
-                  Register
-                </button>
-              </RouterLink>
+              <AuthButtons />
             </div>
           </div>
         </div>

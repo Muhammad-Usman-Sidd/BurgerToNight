@@ -2,8 +2,11 @@
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useBurgerStore } from "../../stores/ProductStore";
+import useAuthStore from "../../stores/AuthStore";
+import UnAuthorized from "../../components/UnAuthorized.vue";
 
 const route = useRoute();
+const authStore = useAuthStore();
 const router = useRouter();
 const store = useBurgerStore();
 const burgerId = route.params.id;
@@ -19,7 +22,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="bg-blue-50 px-4 py-10 flex justify-center items-center">
+  <section
+    v-if="authStore.isLoggedIn"
+    class="bg-blue-50 px-4 py-10 flex justify-center items-center"
+  >
     <div class="container-xl lg:container">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Edit Burger</h2>
       <form @submit.prevent="update" class="bg-white p-6 rounded-lg shadow-md">
@@ -83,5 +89,8 @@ onMounted(async () => {
         </button>
       </form>
     </div>
+  </section>
+  <section v-if="!authStore.isLoggedIn">
+    <UnAuthorized />
   </section>
 </template>

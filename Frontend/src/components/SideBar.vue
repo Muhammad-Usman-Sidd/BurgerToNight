@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { useBurgerStore } from "@/stores/ProductStore";
+import { useBurgerStore } from "../stores/ProductStore";
 import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
+import { ProductGetDTO } from "../models/ProductDtos";
 const store = useBurgerStore();
 
 // Remove item from cart
-const removeFromCart = (burger) => {
+const removeFromCart = (burger: ProductGetDTO) => {
   store.removeItem(burger);
 };
 
@@ -22,7 +23,7 @@ const toggleSidebar = () => {
 // Calculate total price of items in the cart
 const totalPrice = computed((): string => {
   return Object.values(store.cart)
-    .reduce((total, item) => {
+    .reduce((total: number, item: any) => {
       return total + item.burger.Price * item.quantity;
     }, 0)
     .toFixed(2); // Format to 2 decimal places

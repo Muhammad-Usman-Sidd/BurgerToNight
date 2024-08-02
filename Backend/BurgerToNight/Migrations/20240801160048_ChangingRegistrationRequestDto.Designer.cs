@@ -4,6 +4,7 @@ using BurgerToNightAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BurgerToNightAPI.Migrations
 {
     [DbContext(typeof(BurgerDbContext))]
-    partial class BurgerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240801160048_ChangingRegistrationRequestDto")]
+    partial class ChangingRegistrationRequestDto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,28 +121,28 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreationCategoryTime = new DateTime(2024, 8, 2, 12, 26, 39, 914, DateTimeKind.Local).AddTicks(4728),
+                            CreationCategoryTime = new DateTime(2024, 8, 1, 21, 0, 46, 679, DateTimeKind.Local).AddTicks(936),
                             Description = "BBQ burger are made with highly care and in check environment",
                             Title = "BBQ"
                         },
                         new
                         {
                             Id = 2,
-                            CreationCategoryTime = new DateTime(2024, 8, 2, 12, 26, 39, 914, DateTimeKind.Local).AddTicks(4747),
+                            CreationCategoryTime = new DateTime(2024, 8, 1, 21, 0, 46, 679, DateTimeKind.Local).AddTicks(956),
                             Description = "Grilled burger Patty are made in hygenic and clean Oven",
                             Title = "Grilled"
                         },
                         new
                         {
                             Id = 3,
-                            CreationCategoryTime = new DateTime(2024, 8, 2, 12, 26, 39, 914, DateTimeKind.Local).AddTicks(4750),
+                            CreationCategoryTime = new DateTime(2024, 8, 1, 21, 0, 46, 679, DateTimeKind.Local).AddTicks(958),
                             Description = "Crunch buger patty are made With best breadcrumbs and fresh and clean oil",
                             Title = "Crunch"
                         },
                         new
                         {
                             Id = 4,
-                            CreationCategoryTime = new DateTime(2024, 8, 2, 12, 26, 39, 914, DateTimeKind.Local).AddTicks(4752),
+                            CreationCategoryTime = new DateTime(2024, 8, 1, 21, 0, 46, 679, DateTimeKind.Local).AddTicks(960),
                             Description = "Our most favourite and yet the best one!",
                             Title = "Special"
                         });
@@ -186,7 +189,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 1,
                             BCategoryId = 3,
-                            CreationDate = new DateTime(2024, 8, 2, 7, 26, 39, 919, DateTimeKind.Utc).AddTicks(6030),
+                            CreationDate = new DateTime(2024, 8, 1, 16, 0, 46, 684, DateTimeKind.Utc).AddTicks(4846),
                             Description = "The Mighty Zinger one of the most liked and extremely big burgers! ",
                             Image = "",
                             Name = "Mighty Zinger",
@@ -197,7 +200,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 2,
                             BCategoryId = 2,
-                            CreationDate = new DateTime(2024, 8, 2, 7, 26, 39, 919, DateTimeKind.Utc).AddTicks(6034),
+                            CreationDate = new DateTime(2024, 8, 1, 16, 0, 46, 684, DateTimeKind.Utc).AddTicks(4851),
                             Description = "Carwing for something good look no further",
                             Image = "",
                             Name = "Big Ben",
@@ -208,7 +211,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 3,
                             BCategoryId = 4,
-                            CreationDate = new DateTime(2024, 8, 2, 7, 26, 39, 919, DateTimeKind.Utc).AddTicks(6037),
+                            CreationDate = new DateTime(2024, 8, 1, 16, 0, 46, 684, DateTimeKind.Utc).AddTicks(4855),
                             Description = "Wanna fill your gaint stomach?? ",
                             Image = "",
                             Name = "Big Bang",
@@ -219,7 +222,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 4,
                             BCategoryId = 1,
-                            CreationDate = new DateTime(2024, 8, 2, 7, 26, 39, 919, DateTimeKind.Utc).AddTicks(6040),
+                            CreationDate = new DateTime(2024, 8, 1, 16, 0, 46, 684, DateTimeKind.Utc).AddTicks(4858),
                             Description = "Super BBQ burgers are made with extreme care",
                             Image = "",
                             Name = "Super BBQ",

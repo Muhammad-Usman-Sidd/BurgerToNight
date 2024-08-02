@@ -9,8 +9,8 @@ const registerRequest = ref<RegistrationRequestDTO>({
   userName: "",
   email: "",
   password: "",
-  name: "",
   role: "customer",
+  secretKey: "",
 });
 const errorMessage = ref<string>("");
 
@@ -20,8 +20,8 @@ const register = async () => {
       userName: registerRequest.value.userName,
       email: registerRequest.value.email,
       password: registerRequest.value.password,
-      name: registerRequest.value.name,
       role: registerRequest.value.role,
+      secretKey: registerRequest.value.secretKey,
     });
 
     if (response.IsSuccess) {
@@ -30,8 +30,8 @@ const register = async () => {
         userName: "",
         email: "",
         password: "",
-        name: "",
         role: "customer",
+        secretKey: "",
       };
     } else {
       errorMessage.value = response.ErrorMessages.join(", ");
@@ -47,6 +47,27 @@ const register = async () => {
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h2 class="text-2xl font-semibold mb-6">Register</h2>
       <form @submit.prevent="register">
+        <div class="mb-4">
+          <label for="role" class="block text-gray-700">Role:</label>
+          <select
+            id="role"
+            v-model="registerRequest.role"
+            class="mt-1 p-2 w-full border rounded-lg"
+          >
+            <option value="customer">Customer</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div v-if="registerRequest.role === 'admin'" class="mb-4">
+          <label for="secretKey" class="block text-gray-700">Secret Key:</label>
+          <input
+            type="text"
+            id="secretKey"
+            v-model="registerRequest.secretKey"
+            class="mt-1 p-2 w-full border rounded-lg"
+          />
+        </div>
+
         <div class="mb-4">
           <label for="username" class="block text-gray-700">Username:</label>
           <input
@@ -73,16 +94,6 @@ const register = async () => {
             type="password"
             id="password"
             v-model="registerRequest.password"
-            required
-            class="mt-1 p-2 w-full border rounded-lg"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="name" class="block text-gray-700">Name:</label>
-          <input
-            type="text"
-            id="name"
-            v-model="registerRequest.name"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
