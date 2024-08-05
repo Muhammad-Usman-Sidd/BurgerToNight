@@ -34,7 +34,7 @@ public class CreateProduct
         {
             // Validate authentication
             var token = req.Headers.GetValues("Authorization").FirstOrDefault();
-            if (token == null || !await IsUserAuthorized(token))
+            if (token == null)
             {
                 response.StatusCode = HttpStatusCode.Unauthorized;
                 response.IsSuccess = false;
@@ -93,10 +93,5 @@ public class CreateProduct
         }
 
         return response;
-    }
-
-    private async Task<bool> IsUserAuthorized(string token)
-    {
-        return true;
     }
 }

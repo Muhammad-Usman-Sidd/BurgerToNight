@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useBurgerStore } from "@/stores/ProductStore";
-import useAuthStore from "../../stores/AuthStore";
+import { useBurgerStore } from "../../stores/ProductStore";
+import { useAuthStore } from "../../stores/AuthStore";
+import { useCartStore } from "../../stores/CartStore";
 import UnAuthorized from "../../components/UnAuthorized.vue";
 
 const route = useRoute();
-const authStore = useAuthStore();
 const router = useRouter();
 const store = useBurgerStore();
+const cartStore = useCartStore();
+const authStore = useAuthStore();
 const BurgerId = route.params.id;
 
 const deleteProduct = async () => {
-  await store.deleteBurger(BurgerId);
+  await store.deleteBurger(+BurgerId);
   router.push("/burgers");
 };
 
@@ -29,7 +31,7 @@ const image = computed(
 );
 
 onMounted(async () => {
-  await store.fetchBurgerById(BurgerId);
+  await store.fetchBurgerById(+BurgerId);
 });
 </script>
 
@@ -47,7 +49,6 @@ onMounted(async () => {
                 class="w-70 h-64 object-cover rounded mx-0"
               />
             </div>
-            <p class="my-2">{{ store.currentBurger.Name }}</p>
             <hr class="my-4" />
             <h3 class="text-xl">Category:</h3>
             <p class="my-2 bg-orange-100 p-2 font-bold">
@@ -57,12 +58,6 @@ onMounted(async () => {
             <p class="my-2 bg-orange-100 p-2 font-bold">
               ${{ store.currentBurger.Price }}
             </p>
-            <button
-              @click="store.addToCart(store.currentBurger, 1)"
-              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
-            >
-              Add to Cart
-            </button>
           </div>
         </aside>
         <main class="md:col-span-2">
@@ -76,7 +71,10 @@ onMounted(async () => {
             <h3 class="text-orange-800 text-lg font-bold mb-2">Preparing Time:</h3>
             <p class="mb-4">{{ store.currentBurger.PreparingTime }} min</p>
           </div>
-          <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+          <div
+            v-if="authStore.isLoggedIn && authStore.role === 'admin'"
+            class="bg-white p-6 rounded-lg shadow-md mt-6"
+          >
             <h3 class="text-xl font-bold mb-6">Manage Burger</h3>
             <RouterLink
               :to="`/burgers/edit/${store.currentBurger.Id}`"
@@ -89,6 +87,18 @@ onMounted(async () => {
               class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
             >
               Delete Burger
+            </button>
+          </div>
+          <div
+            v-if="authStore.isLoggedIn && authStore.role === 'customer'"
+            class="bg-white p-8 rounded-lg shadow-md mt-8"
+          >
+            <h3 class="text-xl font-bold mb-6">Manage Burger</h3>
+            <button
+              @click="cartStore.addToCart(store.currentBurger, 1)"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-8 block"
+            >
+              Add to Cart
             </button>
           </div>
         </main>

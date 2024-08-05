@@ -13,8 +13,16 @@ export interface RegistrationRequestDTO {
 
 export interface ResetPasswordDTO {
   userId: string;
-  currentPassword:string;
+  currentPassword: string;
   newPassword: string;
-  confirmPassword:string;
+  confirmPassword: string;
+}
+
+export interface LoginResponseDTO {
+  User :{
+    Id:string;
+  };
+  Role :string;
+  Token :string;
 }
 

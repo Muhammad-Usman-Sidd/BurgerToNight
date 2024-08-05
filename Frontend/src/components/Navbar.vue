@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import logo from "../assets/img/logo.png";
 import { useBurgerStore } from "../stores/ProductStore";
-import SideBar from "./SideBar.vue";
 import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { useRoute } from "vue-router";
 import {
@@ -12,14 +11,19 @@ import {
   TagIcon,
   InboxStackIcon,
 } from "@heroicons/vue/24/solid";
+import SideBar from "./SideBar.vue";
 import AuthButtons from "./AuthButtons.vue";
+import { useAuthStore } from "../stores/AuthStore";
+import { useCartStore } from "../stores/CartStore";
+
+const store = useBurgerStore();
+const cartStore = useCartStore();
+const authStore = useAuthStore();
 
 const isActiveLink = (routePath: string): boolean => {
   const route: RouteLocationNormalizedLoaded = useRoute();
   return route.path === routePath;
 };
-
-const store = useBurgerStore();
 </script>
 
 <template>
@@ -68,6 +72,7 @@ const store = useBurgerStore();
                 Burgers
               </RouterLink>
               <RouterLink
+                v-if="authStore.isLoggedIn && authStore.role === 'admin'"
                 to="/add-burgers"
                 :class="[
                   isActiveLink('/add-burgers')
@@ -83,6 +88,7 @@ const store = useBurgerStore();
                 Add Burgers
               </RouterLink>
               <RouterLink
+                v-if="authStore.isLoggedIn"
                 to="/categories"
                 :class="[
                   isActiveLink('/categories')
@@ -98,6 +104,7 @@ const store = useBurgerStore();
                 Categories
               </RouterLink>
               <RouterLink
+                v-if="authStore.isLoggedIn && authStore.role === 'customer'"
                 to="/past-orders"
                 :class="[
                   isActiveLink('/past-orders')
@@ -116,7 +123,10 @@ const store = useBurgerStore();
             </div>
           </div>
         </div>
-        <button @click="store.toggleSidebar" class="p-2 text-white hover:text-gray-300">
+        <button
+          @click="cartStore.toggleSidebar"
+          class="p-2 text-white hover:text-gray-300"
+        >
           <ShoppingCartIcon class="h-6 w-6" />
         </button>
       </div>

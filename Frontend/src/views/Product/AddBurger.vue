@@ -3,15 +3,17 @@ import { onMounted } from "vue";
 import { useBurgerStore } from "../../stores/ProductStore";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/AuthStore";
+import { useCategoryStore } from "../../stores/CategoryStore.ts";
 import UnAuthorized from "../../components/UnAuthorized.vue";
 
 const store = useBurgerStore();
 const authStore = useAuthStore();
+const categoryStore = useCategoryStore();
 const router = useRouter();
 store.resetCurrentBurger();
 
 onMounted(() => {
-  store.fetchCategories();
+  categoryStore.fetchCategories();
 });
 
 const addProduct = async () => {
@@ -22,7 +24,7 @@ const addProduct = async () => {
 
 <template>
   <section
-    v-if="authStore.isLoggedIn === true"
+    v-if="authStore.isLoggedIn && authStore.role === 'admin'"
     class="bg-blue-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
@@ -59,7 +61,7 @@ const addProduct = async () => {
           >
             <option value="" disabled>Select Category</option>
             <option
-              v-for="category in store.categories"
+              v-for="category in categoryStore.categories"
               :key="category.Id"
               :value="category.Id"
             >
@@ -88,8 +90,5 @@ const addProduct = async () => {
         </button>
       </form>
     </div>
-  </section>
-  <section v-if="!authStore.isLoggedIn">
-    <UnAuthorized />
   </section>
 </template>

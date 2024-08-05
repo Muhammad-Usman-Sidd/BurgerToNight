@@ -1,14 +1,44 @@
+<script lang="ts" setup>
+import { ref } from "vue";
+import { useAuthStore } from "../../stores/AuthStore";
+import { useToast } from "vue-toastification";
+import { ResetPasswordDTO } from "../../models/AuthDtos";
+
+const authStore = useAuthStore();
+const toast = useToast();
+const errorMessage = ref<string | null>(null);
+const user = ref<resetPasswordDTO>({
+  userId: authStore.user.id,
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+});
+
+const resetPassword = async () => {
+  try {
+    await authStore.resetPassword(user.value);
+    user.value = {};
+    toast.success("Password has been reset");
+  } catch (error: any) {
+    errorMessage.value = error.message;
+    console.error("Error resetting the password", error);
+  }
+};
+</script>
+
 <template>
   <div class="flex justify-center items-center min-h-screen bg-gray-100">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h2 class="text-2xl font-semibold mb-6">Reset Password</h2>
       <form @submit.prevent="resetPassword">
         <div class="mb-4">
-          <label for="userId" class="block text-gray-700">User ID:</label>
+          <label for="currentPassword" class="block text-gray-700"
+            >Current Password:</label
+          >
           <input
-            type="text"
-            id="userId"
-            v-model="resetPasswordRequest.userId"
+            type="password"
+            id="currentPassword"
+            v-model="user.currentPassword"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -18,7 +48,19 @@
           <input
             type="password"
             id="newPassword"
-            v-model="resetPasswordRequest.newPassword"
+            v-model="user.newPassword"
+            required
+            class="mt-1 p-2 w-full border rounded-lg"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="confirmPassword" class="block text-gray-700"
+            >Confirm Password:</label
+          >
+          <input
+            type="password"
+            id="confirmPassword"
+            v-model="user.confirmPassword"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />

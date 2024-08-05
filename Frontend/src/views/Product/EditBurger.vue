@@ -2,28 +2,32 @@
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useBurgerStore } from "../../stores/ProductStore";
-import useAuthStore from "../../stores/AuthStore";
+import { useCategoryStore } from "../../stores/CategoryStore.ts";
+import { useAuthStore } from "../../stores/AuthStore";
 import UnAuthorized from "../../components/UnAuthorized.vue";
 
 const route = useRoute();
-const authStore = useAuthStore();
 const router = useRouter();
+const authStore = useAuthStore();
+const categoryStore = useCategoryStore();
 const store = useBurgerStore();
+
 const burgerId = route.params.id;
+
 const update = async () => {
   await store.updateBurger(+burgerId);
   router.push("/burgers");
 };
 
 onMounted(async () => {
-  await store.fetchCategories();
+  await categoryStore.fetchCategories();
   await store.fetchBurgerById(+burgerId);
 });
 </script>
 
 <template>
   <section
-    v-if="authStore.isLoggedIn"
+    v-if="authStore.isLoggedIn && authStore.role === 'admin'"
     class="bg-blue-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
@@ -60,7 +64,7 @@ onMounted(async () => {
           >
             <option value="" disabled>Select Category</option>
             <option
-              v-for="category in store.categories"
+              v-for="category in categoryStore.categories"
               :key="category.Id"
               :value="category.Id"
             >

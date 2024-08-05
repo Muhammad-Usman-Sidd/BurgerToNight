@@ -1,23 +1,23 @@
+<script setup lang="ts">
+import { LockClosedIcon, ArrowRightIcon } from "@heroicons/vue/24/solid";
+</script>
 <template>
-  <section class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded shadow-md text-center">
-      <div class="flex justify-center mb-4">
-        <LockClosedIcon class="h-12 w-12 text-blue-500" />
+  <section
+    class="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-200 to-gray-400"
+  >
+    <div class="bg-white p-12 rounded-xl shadow-lg text-center">
+      <div class="flex justify-center mb-6">
+        <LockClosedIcon class="h-16 w-16 text-blue-600" />
       </div>
-      <h2 class="text-xl font-semibold text-gray-700 mb-6">Sign in to Continue</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-8">Sign in to Continue</h2>
       <RouterLink to="/login">
         <button
-          class="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg text-lg font-medium hover:bg-blue-800 transition-colors duration-300"
         >
-          <ArrowRightOnRectangleIcon class="h-5 w-5 mr-2" />
+          <ArrowRightIcon class="h-6 w-6 mr-3" />
           Login
         </button>
       </RouterLink>
     </div>
   </section>
 </template>
-
-<script setup>
-import { RouterLink } from "vue-router";
-import { LockClosedIcon, ArrowRightOnRectangleIcon } from "@heroicons/vue/24/solid";
-</script>

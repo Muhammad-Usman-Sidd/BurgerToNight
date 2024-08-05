@@ -41,6 +41,14 @@ namespace BurgerToNightAPI.Repository
             }
             return false;
         }
+        private async Task<string> GetRole(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
+            var role = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            return role;
+        }
+
 
         public async Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO)
         {
@@ -52,7 +60,8 @@ namespace BurgerToNightAPI.Repository
                 return new LoginResponseDTO()
                 {
                     Token = "",
-                    User = null
+                    User = null,
+                    Role =string.Empty
                 };
             }
 
@@ -78,6 +87,7 @@ namespace BurgerToNightAPI.Repository
             {
                 Token = tokenHandler.WriteToken(token),
                 User = _mapper.Map<UserDTO>(user),
+                Role= roles.FirstOrDefault()?? string.Empty
             };
             return loginResponseDTO;
         }

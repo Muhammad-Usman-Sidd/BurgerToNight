@@ -11,12 +11,12 @@ const isLoggedIn = computed(() => authStore.isLoggedIn);
   <div>
     <RouterLink v-if="!isLoggedIn" to="/login">
       <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-        Login
+        Sign In
       </button>
     </RouterLink>
     <RouterLink v-if="!isLoggedIn" to="/register">
       <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
-        Register
+        Sign Up
       </button>
     </RouterLink>
     <RouterLink v-if="isLoggedIn" to="/reset-password">

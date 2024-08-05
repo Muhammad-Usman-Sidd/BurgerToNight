@@ -2,8 +2,10 @@
 import { ref, computed } from "vue";
 import { useBurgerStore } from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
+import useCartStore from "../../stores/CartStore";
 
 const store = useBurgerStore();
+const cartStore = useCartStore();
 
 const props = defineProps<{
   burger: ProductGetDTO;
@@ -36,7 +38,7 @@ const halfDescription = computed(() => {
 });
 
 const addToCart = () => {
-  store.addToCart(props.burger, quantity.value);
+  cartStore.addToCart(props.burger, quantity.value);
 };
 </script>
 <template>

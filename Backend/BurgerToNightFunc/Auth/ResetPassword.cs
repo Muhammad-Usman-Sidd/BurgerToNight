@@ -1,8 +1,4 @@
-using System;
-using System.IO;
 using System.Net;
-using System.Threading.Tasks;
-using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
@@ -24,7 +20,7 @@ namespace BurgerToNightFunc.Auth
 
         [Function("ResetPassword")]
         public async Task<APIResponse> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "AuthResetPassword")] HttpRequestData req,
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "AuthResetPassword")] HttpRequestData req,
             FunctionContext context)
         {
             var log = context.GetLogger("ResetPassword");
@@ -35,8 +31,8 @@ namespace BurgerToNightFunc.Auth
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var resetPasswordDTO = JsonConvert.DeserializeObject<ResetPasswordDTO>(requestBody);
 
-                var userId = req.Headers.GetValues("userId").FirstOrDefault();
-                if (string.IsNullOrEmpty(userId))
+                //var userId = req.Headers.GetValues("userId").FirstOrDefault();
+                if (string.IsNullOrEmpty(resetPasswordDTO.UserId))
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.IsSuccess = false;
@@ -44,7 +40,7 @@ namespace BurgerToNightFunc.Auth
                     return response;
                 }
 
-                var result = await _userRepo.ResetPassword(userId, resetPasswordDTO);
+                var result = await _userRepo.ResetPassword(resetPasswordDTO.UserId, resetPasswordDTO);
 
                 if (!result)
                 {

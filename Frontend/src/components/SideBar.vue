@@ -1,38 +1,34 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { useBurgerStore } from "../stores/ProductStore";
 import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 import { ProductGetDTO } from "../models/ProductDtos";
-const store = useBurgerStore();
+import useCartStore from "../stores/CartStore";
+const cartStore = useCartStore();
 
-// Remove item from cart
 const removeFromCart = (burger: ProductGetDTO) => {
-  store.removeItem(burger);
+  cartStore.removeItem(burger);
 };
 
-// Checkout action
 const checkout = () => {
-  store.checkout();
+  cartStore.checkout();
 };
 
-// Toggle sidebar visibility
 const toggleSidebar = () => {
-  store.toggleSidebar();
+  cartStore.toggleSidebar();
 };
 
-// Calculate total price of items in the cart
 const totalPrice = computed((): string => {
-  return Object.values(store.cart)
+  return Object.values(cartStore.cart)
     .reduce((total: number, item: any) => {
       return total + item.burger.Price * item.quantity;
     }, 0)
-    .toFixed(2); // Format to 2 decimal places
+    .toFixed(2);
 });
 </script>
 
 <template>
   <div
-    v-if="store.showSidebar"
+    v-if="cartStore.showSidebar"
     class="fixed top-0 right-0 w-96 h-full bg-white shadow-lg p-4 z-50 overflow-y-auto"
   >
     <div class="flex justify-between items-center mb-4">
@@ -53,7 +49,7 @@ const totalPrice = computed((): string => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in store.cart" :key="index" class="border-b">
+        <tr v-for="(item, index) in cartStore.cart" :key="index" class="border-b">
           <td class="py-2 px-2">{{ item.burger.Name }}</td>
           <td class="py-2 px-2">${{ item.burger.Price.toFixed(2) }}</td>
           <td class="py-2 px-2">{{ item.quantity }}</td>
@@ -79,7 +75,6 @@ const totalPrice = computed((): string => {
 </template>
 
 <style scoped>
-/* Add styles for table if needed */
 table {
   border-collapse: collapse;
 }

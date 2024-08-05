@@ -23,14 +23,22 @@ namespace BurgerToNightFunc.Category
             _unitOfWork = unitOfWork;
         }
         [Function("CreateCategory")]
-        public async Task<APIResponse> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "CategoryAPI")] HttpRequestData req,
+        public async Task<APIResponse> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "CategoryAPI")] HttpRequestData req,
         FunctionContext context)
-        {
+         {
             var response = new APIResponse();
             try
             {
+                var token = req.Headers.GetValues("Authorization").FirstOrDefault();
+                if (token == null)
+                {
+                    response.StatusCode = HttpStatusCode.Unauthorized;
+                    response.IsSuccess = false;
+                    response.ErrorMessages.Add("Unauthorized");
+                    return response;
+                }
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var createDTO = JsonConvert.DeserializeObject<BCategoryGetDTO>(requestBody);
+                var createDTO = JsonConvert.DeserializeObject<BCategoryPostDTO>(requestBody);
 
                 if (createDTO == null)
                 {
@@ -42,7 +50,7 @@ namespace BurgerToNightFunc.Category
                 var model = _mapper.Map<BurgerCategory>(createDTO);
 
                 await _unitOfWork.BCategories.CreateAsync(model);
-                await _unitOfWork.BCategories.SaveAsync();
+                await _unitOfWork.SaveAsync();
 
                 response.StatusCode = HttpStatusCode.Created;
                 response.Result = model;

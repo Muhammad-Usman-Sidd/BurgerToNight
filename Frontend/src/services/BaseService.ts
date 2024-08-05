@@ -4,7 +4,6 @@ class BaseService {
   private axiosInstance: AxiosInstance;
   constructor(baseURL: string) {
     this.axiosInstance = axios.create({ baseURL });
-    console.log(this.axiosInstance);
   }
   
   protected async sendRequest<T>(apiRequest: APIRequest): Promise<APIResponse<T>> {

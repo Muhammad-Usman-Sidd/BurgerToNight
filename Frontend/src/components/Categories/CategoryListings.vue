@@ -3,21 +3,14 @@ import CategoryListing from "./CategoryCard.vue";
 import AddCategory from "../../views/Category/AddCategory.vue";
 import { onMounted } from "vue";
 import { defineProps } from "vue";
-import { useBurgerStore } from "../../stores/ProductStore";
+import { useCategoryStore } from "../../stores/CategoryStore.ts";
 
-const store = useBurgerStore();
-
-const props = defineProps({
-  showAddButton: {
-    type: Boolean,
-    default: true,
-  },
-});
+const categoryStore = useCategoryStore();
 
 onMounted(async () => {
   try {
-    await store.fetchCategories();
-    console.log("Categories fetched:", store.categories);
+    await categoryStore.fetchCategories();
+    console.log("Categories fetched:", categoryStore.categories);
   } catch (error) {
     console.error("Error fetching the data", error);
   }
@@ -30,12 +23,11 @@ onMounted(async () => {
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Categories</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <CategoryListing
-          v-for="category in store.categories || []"
+          v-for="category in categoryStore.categories || []"
           :key="category.id"
           :category="category"
         />
       </div>
     </div>
   </section>
-  <AddCategory v-if="props.showAddButton" />
 </template>

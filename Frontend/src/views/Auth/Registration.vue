@@ -1,43 +1,24 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import AuthService from "../../services/AuthService";
-import { useToast } from "vue-toastification";
-import { RegistrationRequestDTO } from "../../models/AuthDtos";
+import { useAuthStore } from "../../stores/AuthStore";
+import { RegistrationRequestDTO } from "../../models/AuthDtos.ts";
 
-const authService = new AuthService(import.meta.env.VITE_API_URL);
-const registerRequest = ref<RegistrationRequestDTO>({
+const authStore = useAuthStore();
+const errorMessage = ref<string | null>(null);
+const user = ref<RegistrationRequestDTO>({
   userName: "",
   email: "",
   password: "",
-  role: "customer",
+  role: "",
   secretKey: "",
 });
-const errorMessage = ref<string>("");
 
 const register = async () => {
   try {
-    const response = await authService.register({
-      userName: registerRequest.value.userName,
-      email: registerRequest.value.email,
-      password: registerRequest.value.password,
-      role: registerRequest.value.role,
-      secretKey: registerRequest.value.secretKey,
-    });
-
-    if (response.IsSuccess) {
-      console.log("Registration successful:", response.Result);
-      registerRequest.value = {
-        userName: "",
-        email: "",
-        password: "",
-        role: "customer",
-        secretKey: "",
-      };
-    } else {
-      errorMessage.value = response.ErrorMessages.join(", ");
-    }
-  } catch (error) {
-    errorMessage.value = "Failed to register. Please try again.";
+    await authStore.register(user.value);
+    user.value = {};
+  } catch (error: any) {
+    errorMessage.value = error.message || "Failed to register. Please try again.";
   }
 };
 </script>
@@ -49,21 +30,17 @@ const register = async () => {
       <form @submit.prevent="register">
         <div class="mb-4">
           <label for="role" class="block text-gray-700">Role:</label>
-          <select
-            id="role"
-            v-model="registerRequest.role"
-            class="mt-1 p-2 w-full border rounded-lg"
-          >
+          <select id="role" v-model="user.role" class="mt-1 p-2 w-full border rounded-lg">
             <option value="customer">Customer</option>
             <option value="admin">Admin</option>
           </select>
         </div>
-        <div v-if="registerRequest.role === 'admin'" class="mb-4">
+        <div v-if="user.role === 'admin'" class="mb-4">
           <label for="secretKey" class="block text-gray-700">Secret Key:</label>
           <input
             type="text"
             id="secretKey"
-            v-model="registerRequest.secretKey"
+            v-model="user.secretKey"
             class="mt-1 p-2 w-full border rounded-lg"
           />
         </div>
@@ -73,7 +50,7 @@ const register = async () => {
           <input
             type="text"
             id="username"
-            v-model="registerRequest.userName"
+            v-model="user.userName"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -83,7 +60,7 @@ const register = async () => {
           <input
             type="email"
             id="email"
-            v-model="registerRequest.email"
+            v-model="user.email"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -93,7 +70,7 @@ const register = async () => {
           <input
             type="password"
             id="password"
-            v-model="registerRequest.password"
+            v-model="user.password"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />

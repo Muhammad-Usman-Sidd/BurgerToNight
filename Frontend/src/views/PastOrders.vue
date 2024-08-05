@@ -10,7 +10,7 @@ onMounted(async () => {
 });
 
 // Compute past orders from the store
-const pastOrders = computed(() => store.pastOrders);
+const pastOrders = store.pastOrders;
 console.log(pastOrders);
 </script>
 
@@ -19,7 +19,7 @@ console.log(pastOrders);
     <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Past Orders</h1>
 
     <div
-      v-if="!pastOrders.values || pastOrders.values.length === 0"
+      v-if="!pastOrders || pastOrders.length === 0"
       class="block text-gray-700 text-center"
     >
       No past orders found.
@@ -52,7 +52,7 @@ console.log(pastOrders);
             Total: ${{ order.Price.toFixed(2) }}
           </span>
           <button
-            @click="store.addToCart(order, 1)"
+            @click="cartStore.addToCart(order, 1)"
             class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
             Add to Cart
