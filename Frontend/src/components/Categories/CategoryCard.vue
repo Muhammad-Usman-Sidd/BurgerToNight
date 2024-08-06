@@ -2,8 +2,8 @@
 import { ref, computed } from "vue";
 import { defineProps } from "vue";
 import { RouterLink } from "vue-router";
-import { CategoryGetDTO } from "../../models/CategoryDtos.ts";
-import { useCategoryStore } from "../../stores/CategoryStore.ts";
+import { CategoryGetDTO } from "../../models/CategoryDtos";
+import { useCategoryStore } from "../../stores/CategoryStore";
 const categoryStore = useCategoryStore();
 const props = defineProps<{
   category: CategoryGetDTO;

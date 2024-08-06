@@ -4,8 +4,8 @@
     {
         IBCategoryRepo BCategories { get; }
         IBProductRepo BProducts { get; }
-        IOrderItemRepo OrderItems { get; }
-        IOrderDetailRepo OrderDetails { get; }
+
+        IOrderRepo Orders { get; }
 
         Task SaveAsync();
     }

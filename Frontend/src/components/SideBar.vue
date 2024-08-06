@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 import { ProductGetDTO } from "../models/ProductDtos";
-import useCartStore from "../stores/CartStore";
+import {useCartStore} from "../stores/CartStore";
 const cartStore = useCartStore();
 
 const removeFromCart = (burger: ProductGetDTO) => {

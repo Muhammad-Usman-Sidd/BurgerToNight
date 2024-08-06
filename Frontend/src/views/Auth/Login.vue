@@ -3,6 +3,8 @@ import { ref } from "vue";
 import { useAuthStore } from "../../stores/AuthStore";
 import { useToast } from "vue-toastification";
 import { LoginDTO } from "../../models/AuthDtos";
+import { useRouter } from "vue-router";
+const router=useRouter();
 
 const toast = useToast();
 const authStore = useAuthStore();
@@ -16,9 +18,10 @@ const user = ref<LoginDTO>(loginUser());
 const login = async () => {
   try {
     await authStore.login(user.value);
+    toast.success(`Hello ${user.value.userName}`);
     user.value=loginUser();
+    router.push('/burgers');
     console.log(authStore.role);
-    toast.success("Logged In Successfully");
   } catch (error: any) {
     errorMessage.value = error.message || "Failed to login. Please try again.";
   }

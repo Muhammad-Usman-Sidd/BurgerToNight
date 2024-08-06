@@ -2,7 +2,10 @@
 import { ref } from "vue";
 import { useAuthStore } from "../../stores/AuthStore";
 import { RegistrationRequestDTO } from "../../models/AuthDtos";
-
+import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
+const router=useRouter();
+const toast=useToast();
 const authStore = useAuthStore();
 const errorMessage = ref<string | null>(null);
 const createUser=():RegistrationRequestDTO =>({
@@ -17,7 +20,10 @@ const user = ref<RegistrationRequestDTO>(createUser());
 const register = async () => {
   try {
     await authStore.register(user.value);
+    toast.success(`Hello ${user.value.userName}`)
     user.value = createUser();
+    router.push('/burgers');
+    errorMessage.value = "";
   } catch (error: any) {
     errorMessage.value = error.message || "Failed to register. Please try again.";
   }

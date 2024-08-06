@@ -32,7 +32,6 @@ public class CreateProduct
 
         try
         {
-            // Validate authentication
             var token = req.Headers.GetValues("Authorization").FirstOrDefault();
             if (token == null)
             {
@@ -69,12 +68,10 @@ public class CreateProduct
                 return response;
             }
 
-            // Upload the base64 image and get the blob name
             var blobName = await _blobService.UploadBase64ImageAsync(createDTO.Image);
-
-            // Map DTO to entity and save the product
             var product = _mapper.Map<BurgerProduct>(createDTO);
-            product.Image = blobName; // Store the blob name in the database
+            product.Image = blobName;
+
             await _unitOfWork.BProducts.CreateAsync(product);
             await _unitOfWork.SaveAsync();
 

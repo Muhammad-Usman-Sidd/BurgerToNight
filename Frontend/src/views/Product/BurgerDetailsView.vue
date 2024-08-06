@@ -91,7 +91,7 @@ onMounted(async () => {
           </div>
           <div
             v-if="authStore.isLoggedIn && authStore.role === 'customer'"
-            class="bg-white p-8 rounded-lg shadow-md mt-8"
+            class="bg-white p-6 rounded-lg shadow-md mt-6"
           >
             <h3 class="text-xl font-bold mb-6">Manage Burger</h3>
             <button

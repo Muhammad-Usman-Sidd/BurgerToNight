@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import { useBurgerStore } from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
-import useCartStore from "../../stores/CartStore";
+import {useCartStore} from "../../stores/CartStore";
 
 const store = useBurgerStore();
 const cartStore = useCartStore();

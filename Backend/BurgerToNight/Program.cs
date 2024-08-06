@@ -21,8 +21,7 @@ builder.Services.AddDbContext<BurgerDbContext>(options =>
 );
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
-builder.Services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
-builder.Services.AddScoped<IOrderItemRepo, OrderItemRepo>();
+builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

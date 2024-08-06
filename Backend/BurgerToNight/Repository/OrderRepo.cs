@@ -4,16 +4,16 @@ using BurgerToNightAPI.Repository.IRepository;
 
 namespace BurgerToNightAPI.Repository
 {
-    public class OrderDetailRepo : Repository<OrdersDetail>, IOrderDetailRepo
+    public class OrderRepo : Repository<Order>, IOrderRepo
     {
         private readonly BurgerDbContext _db;
-        public OrderDetailRepo(BurgerDbContext db) : base(db)
+        public OrderRepo(BurgerDbContext db) : base(db)
         {
             _db = db;
         }
-        public async Task<OrdersDetail> UpdateAsync(OrdersDetail entity)
+        public async Task<Order> UpdateAsync(Order entity)
         {
-            _db.OrderDetails.Update(entity);
+            _db.Orders.Update(entity);
             await _db.SaveChangesAsync();
             return entity;
         }

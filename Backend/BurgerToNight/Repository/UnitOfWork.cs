@@ -9,15 +9,13 @@ namespace BurgerToNightAPI.Repository
         public IBCategoryRepo BCategories { get; }
 
         public IBProductRepo BProducts { get; }
-        public IOrderItemRepo OrderItems { get; set; }
-        public IOrderDetailRepo OrderDetails { get; set; }
+        public IOrderRepo Orders { get; set; }
 
 
         public UnitOfWork(BurgerDbContext db)
         {
             _db = db;
-            OrderItems = new OrderItemRepo(_db);
-            OrderDetails = new OrderDetailRepo(_db);
+            Orders = new OrderRepo(_db);
             BCategories = new BCategoryRepo(_db);
             BProducts = new BProductRepo(_db);
 
