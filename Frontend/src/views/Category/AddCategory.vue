@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useCategoryStore } from "../../stores/CategoryStore.ts";
-import { CategoryCreateDTO } from "../../models/CategoryDtos.ts";
-import { useAuthStore } from "../../stores/AuthStore.ts";
+import { useToast } from "vue-toastification";
+import { useCategoryStore } from "../../stores/CategoryStore";
+import { CategoryCreateDTO } from "../../models/CategoryDtos";
+import { useAuthStore } from "../../stores/AuthStore";
+
+const authStore = useAuthStore();
+const toast = useToast();
 const addCategory = async () => {
   try {
     await categoryStore.addCategory();

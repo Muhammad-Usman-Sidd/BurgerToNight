@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "../../stores/AuthStore";
-import { RegistrationRequestDTO } from "../../models/AuthDtos.ts";
+import { RegistrationRequestDTO } from "../../models/AuthDtos";
 
 const authStore = useAuthStore();
 const errorMessage = ref<string | null>(null);
-const user = ref<RegistrationRequestDTO>({
+const createUser=():RegistrationRequestDTO =>({
   userName: "",
   email: "",
   password: "",
   role: "",
   secretKey: "",
 });
+const user = ref<RegistrationRequestDTO>(createUser());
 
 const register = async () => {
   try {
     await authStore.register(user.value);
-    user.value = {};
+    user.value = createUser();
   } catch (error: any) {
     errorMessage.value = error.message || "Failed to register. Please try again.";
   }

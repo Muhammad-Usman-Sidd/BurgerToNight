@@ -2,20 +2,21 @@
 import { ref } from "vue";
 import { useAuthStore } from "../../stores/AuthStore";
 import { useToast } from "vue-toastification";
-import { LoginDTO } from "../../models/AuthDtos.ts";
+import { LoginDTO } from "../../models/AuthDtos";
 
 const toast = useToast();
 const authStore = useAuthStore();
 const errorMessage = ref<string | null>(null);
-const user = ref<LoginDTO>({
+const loginUser = ():LoginDTO =>({
   userName: "",
   password: "",
 });
+const user = ref<LoginDTO>(loginUser());
 
 const login = async () => {
   try {
     await authStore.login(user.value);
-    user.value = {};
+    user.value=loginUser();
     console.log(authStore.role);
     toast.success("Logged In Successfully");
   } catch (error: any) {
