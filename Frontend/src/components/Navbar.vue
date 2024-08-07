@@ -14,9 +14,9 @@ import {
 import SideBar from "./SideBar.vue";
 import AuthButtons from "./AuthButtons.vue";
 import { useAuthStore } from "../stores/AuthStore";
-import { useCartStore } from "../stores/CartStore";
+import { useOrderStore } from "../stores/OrderStore";
 
-const cartStore = useCartStore();
+const orderStore = useOrderStore();
 const authStore = useAuthStore();
 
 const isActiveLink = (routePath: string): boolean => {
@@ -104,7 +104,7 @@ const isActiveLink = (routePath: string): boolean => {
               </RouterLink>
               <RouterLink
                 v-if="authStore.isLoggedIn && authStore.role === 'customer'"
-                @click="cartStore.loadPastOrders()"
+                @click="orderStore.loadPastOrders()"
                 to="/past-orders"
                 :class="[
                   isActiveLink('/past-orders')
@@ -124,7 +124,7 @@ const isActiveLink = (routePath: string): boolean => {
           </div>
         </div>
         <button
-          @click="cartStore.toggleSidebar"
+          @click="orderStore.toggleSidebar"
           class="p-2 text-white hover:text-gray-300"
         >
           <ShoppingCartIcon class="h-6 w-6" />

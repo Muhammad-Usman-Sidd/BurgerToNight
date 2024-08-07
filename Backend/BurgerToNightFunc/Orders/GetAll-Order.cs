@@ -25,7 +25,7 @@ namespace BurgerToNightFunc.Orders
 
             try
             {
-                var orders = await _unitOfWork.Orders.GetAllAsync();
+                var orders = await _unitOfWork.OrderHeaders.GetAllAsync();
 
                 if (orders == null || !orders.Any())
                 {

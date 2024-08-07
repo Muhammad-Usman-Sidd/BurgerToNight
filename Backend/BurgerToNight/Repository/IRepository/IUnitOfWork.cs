@@ -4,9 +4,10 @@
     {
         IBCategoryRepo BCategories { get; }
         IBProductRepo BProducts { get; }
+        IOrderDetailRepo OrderDetails { get; }
 
-        IOrderRepo Orders { get; }
-
+        IOrderHeaderRepo OrderHeaders { get; }
+        ICartRepo Carts { get; }
         Task SaveAsync();
     }
 }

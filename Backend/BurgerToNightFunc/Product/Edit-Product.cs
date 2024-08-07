@@ -24,7 +24,7 @@ public class UpdateProduct
 
     [Function("UpdateProduct")]
     public async Task<APIResponse> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "put", Route = "ProductAPI/{id}")] HttpRequestData req,
+        [HttpTrigger(AuthorizationLevel.Function, "put", Route = "productAPI/{id}")] HttpRequestData req,
         FunctionContext context,
         int id)
     {

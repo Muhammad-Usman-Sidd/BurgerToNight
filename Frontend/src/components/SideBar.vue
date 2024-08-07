@@ -2,23 +2,23 @@
 import { computed } from "vue";
 import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 import { ProductGetDTO } from "../models/ProductDtos";
-import {useCartStore} from "../stores/CartStore";
-const cartStore = useCartStore();
+import {useOrderStore} from "../stores/OrderStore";
+const orderStore = useOrderStore();
 
 const removeFromCart = (burger: ProductGetDTO) => {
-  cartStore.removeItem(burger);
+  orderStore.removeItem(burger);
 };
 
 const checkout = () => {
-  cartStore.checkout();
+  orderStore.checkout();
 };
 
 const toggleSidebar = () => {
-  cartStore.toggleSidebar();
+  orderStore.toggleSidebar();
 };
 
 const totalPrice = computed((): string => {
-  return Object.values(cartStore.cart)
+  return Object.values(orderStore.cart)
     .reduce((total: number, item: any) => {
       return total + item.burger.Price * item.quantity;
     }, 0)
@@ -28,7 +28,7 @@ const totalPrice = computed((): string => {
 
 <template>
   <div
-    v-if="cartStore.showSidebar"
+    v-if="orderStore.showSidebar"
     class="fixed top-0 right-0 w-96 h-full bg-white shadow-lg p-4 z-50 overflow-y-auto"
   >
     <div class="flex justify-between items-center mb-4">
@@ -49,7 +49,7 @@ const totalPrice = computed((): string => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in cartStore.cart" :key="index" class="border-b">
+        <tr v-for="(item, index) in orderStore.cart" :key="index" class="border-b">
           <td class="py-2 px-2">{{ item.burger.Name }}</td>
           <td class="py-2 px-2">${{ item.burger.Price.toFixed(2) }}</td>
           <td class="py-2 px-2">{{ item.quantity }}</td>

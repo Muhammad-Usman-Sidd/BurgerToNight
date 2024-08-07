@@ -3,7 +3,11 @@ using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -20,26 +24,18 @@ namespace BurgerToNightFunc.Orders
         }
 
         [Function("CreateOrder")]
-        public async Task<APIResponse> CreateOrder(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "orders")] HttpRequestData req)
+        public async Task<APIResponse> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "orders")] HttpRequestData req,
+            FunctionContext context)
         {
             var response = new APIResponse();
 
             try
             {
-                var token = req.Headers.GetValues("Authorization").FirstOrDefault();
-                if (string.IsNullOrEmpty(token))
-                {
-                    response.StatusCode = HttpStatusCode.Unauthorized;
-                    response.IsSuccess = false;
-                    response.ErrorMessages.Add("Unauthorized");
-                    return response;
-                }
-
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var createDTO = JsonConvert.DeserializeObject<OrderCreateDTO>(requestBody);
+                var orderDTO = JsonConvert.DeserializeObject<OrderCreateDTO>(requestBody);
 
-                if (createDTO == null)
+                if (orderDTO == null || !orderDTO.OrderDetails.Any())
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.IsSuccess = false;
@@ -47,33 +43,47 @@ namespace BurgerToNightFunc.Orders
                     return response;
                 }
 
-                var order = new Order
+                var orderHeader = new OrderHeader
                 {
-                    UserId = createDTO.UserId,
-                    Items = createDTO.Items.Select(i => new OrderItem
-                    {
-                        ProductId = i.ProductId,
-                        Quantity = i.Quantity,
-                        Price = i.Price
-                    }).ToList(),
-                    Status = OrderStatus.Preparing,
-                    OrderDate = DateTime.UtcNow
+                    UserId = orderDTO.UserId,
+                    OrderDate = DateTime.UtcNow,
+                    OrderTotal = orderDTO.OrderTotal,
+                    OrderStatus = "Pending",
+                    PaymentStatus = "Pending",
+                    PhoneNumber = orderDTO.PhoneNumber,
+                    Address = orderDTO.Address,
+                    City = orderDTO.City,
+                    Name = orderDTO.Name,
                 };
 
-                await _unitOfWork.Orders.CreateAsync(order);
+                await _unitOfWork.OrderHeaders.CreateAsync(orderHeader);
+                await _unitOfWork.SaveAsync();
 
-                response.StatusCode = HttpStatusCode.OK;
+                foreach (var detail in orderDTO.OrderDetails)
+                {
+                    var orderDetail = new OrderDetail
+                    {
+                        OrderHeaderId = orderHeader.Id,
+                        ProductId = detail.ProductId,
+                        Quantity = detail.Quantity,
+                        Price = detail.Price
+                    };
+                    await _unitOfWork.OrderDetails.CreateAsync(orderDetail);
+                }
+                await _unitOfWork.SaveAsync();
+
+                response.StatusCode = HttpStatusCode.Created;
                 response.IsSuccess = true;
-                response.Result = order;
-                return response;
+                response.Result = orderHeader;
             }
             catch (Exception ex)
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.IsSuccess = false;
-                response.ErrorMessages.Add(ex.Message);
-                return response;
+                response.ErrorMessages.Add($"Internal server error: {ex.Message}");
             }
+
+            return response;
         }
     }
 }

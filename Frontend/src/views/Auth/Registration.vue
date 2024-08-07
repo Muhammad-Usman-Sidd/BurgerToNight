@@ -4,25 +4,27 @@ import { useAuthStore } from "../../stores/AuthStore";
 import { RegistrationRequestDTO } from "../../models/AuthDtos";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
-const router=useRouter();
-const toast=useToast();
+const router = useRouter();
+const toast = useToast();
 const authStore = useAuthStore();
 const errorMessage = ref<string | null>(null);
-const createUser=():RegistrationRequestDTO =>({
-  userName: "",
-  email: "",
-  password: "",
-  role: "",
-  secretKey: "",
+const createUser = (): RegistrationRequestDTO => ({
+  UserName: "",
+  Email: "",
+  PhoneNumber: "",
+  Address: "",
+  Password: "",
+  Role: "",
+  SecretKey: "",
 });
 const user = ref<RegistrationRequestDTO>(createUser());
 
 const register = async () => {
   try {
     await authStore.register(user.value);
-    toast.success(`Hello ${user.value.userName}`)
+    toast.success(`Hello ${user.value.UserName}`);
     user.value = createUser();
-    router.push('/burgers');
+    router.push("/burgers");
     errorMessage.value = "";
   } catch (error: any) {
     errorMessage.value = error.message || "Failed to register. Please try again.";
@@ -37,17 +39,17 @@ const register = async () => {
       <form @submit.prevent="register">
         <div class="mb-4">
           <label for="role" class="block text-gray-700">Role:</label>
-          <select id="role" v-model="user.role" class="mt-1 p-2 w-full border rounded-lg">
+          <select id="role" v-model="user.Role" class="mt-1 p-2 w-full border rounded-lg">
             <option value="customer">Customer</option>
             <option value="admin">Admin</option>
           </select>
         </div>
-        <div v-if="user.role === 'admin'" class="mb-4">
+        <div v-if="user.Role === 'admin'" class="mb-4">
           <label for="secretKey" class="block text-gray-700">Secret Key:</label>
           <input
             type="text"
             id="secretKey"
-            v-model="user.secretKey"
+            v-model="user.SecretKey"
             class="mt-1 p-2 w-full border rounded-lg"
           />
         </div>
@@ -57,7 +59,28 @@ const register = async () => {
           <input
             type="text"
             id="username"
-            v-model="user.userName"
+            v-model="user.UserName"
+            required
+            class="mt-1 p-2 w-full border rounded-lg"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="phoneNumber" class="block text-gray-700">PhoneNumber:</label>
+          <input
+            type="text"
+            id="phoneNumber"
+            v-model="user.PhoneNumber"
+            required
+            class="mt-1 p-2 w-full border rounded-lg"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="address" class="block text-gray-700">Address:</label>
+          <input
+            type="text"
+            id="address"
+            v-model="user.Address"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -67,7 +90,7 @@ const register = async () => {
           <input
             type="email"
             id="email"
-            v-model="user.email"
+            v-model="user.Email"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -77,7 +100,7 @@ const register = async () => {
           <input
             type="password"
             id="password"
-            v-model="user.password"
+            v-model="user.Password"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />

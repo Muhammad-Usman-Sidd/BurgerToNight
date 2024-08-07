@@ -4,10 +4,10 @@ import { useBurgerStore } from "../../stores/ProductStore";
 import BurgerCard from "./BurgerCard.vue";
 import BurgerGrid from "./BurgerGrid.vue";
 import { ProductGetDTO } from "../../models/ProductDtos";
-import {useCartStore} from "../../stores/CartStore";
+import {useOrderStore} from "../../stores/OrderStore";
 
 const store = useBurgerStore();
-const cartStore = useCartStore();
+const orderStore = useOrderStore();
 const viewMode = ref<"card" | "grid">("card");
 
 interface Props {
@@ -45,7 +45,7 @@ const toggleViewMode = (mode: "card" | "grid") => {
 };
 
 const addToCart = (burger: ProductGetDTO, quantity: number) => {
-  cartStore.addToCart(burger, quantity);
+  orderStore.addToCart(burger, quantity);
 };
 </script>
 <template>

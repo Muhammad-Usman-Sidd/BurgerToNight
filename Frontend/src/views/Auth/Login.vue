@@ -4,23 +4,23 @@ import { useAuthStore } from "../../stores/AuthStore";
 import { useToast } from "vue-toastification";
 import { LoginDTO } from "../../models/AuthDtos";
 import { useRouter } from "vue-router";
-const router=useRouter();
+const router = useRouter();
 
 const toast = useToast();
 const authStore = useAuthStore();
 const errorMessage = ref<string | null>(null);
-const loginUser = ():LoginDTO =>({
-  userName: "",
-  password: "",
+const loginUser = (): LoginDTO => ({
+  UserName: "",
+  Password: "",
 });
 const user = ref<LoginDTO>(loginUser());
 
 const login = async () => {
   try {
     await authStore.login(user.value);
-    toast.success(`Hello ${user.value.userName}`);
-    user.value=loginUser();
-    router.push('/burgers');
+    toast.success(`Hello ${user.value.UserName}`);
+    user.value = loginUser();
+    router.push("/burgers");
     console.log(authStore.role);
   } catch (error: any) {
     errorMessage.value = error.message || "Failed to login. Please try again.";
@@ -38,7 +38,7 @@ const login = async () => {
           <input
             type="text"
             id="userName"
-            v-model="user.userName"
+            v-model="user.UserName"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -48,7 +48,7 @@ const login = async () => {
           <input
             type="password"
             id="password"
-            v-model="user.password"
+            v-model="user.Password"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />

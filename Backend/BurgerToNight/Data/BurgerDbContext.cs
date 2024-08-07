@@ -12,7 +12,9 @@ namespace BurgerToNightAPI.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Cart> Cart { get; set; }
         public DbSet<LocalUser> LocalUsers { get; set; }
         public DbSet<BurgerCategory> BCategories { get; set; }
         public DbSet<BurgerProduct> BProducts { get; set; }
@@ -134,14 +136,6 @@ namespace BurgerToNightAPI.Data
                     Image = ""
                 }
             );
-
-            modelBuilder.Entity<Order>()
-                .OwnsMany(o => o.Items, a =>
-                {
-                    a.WithOwner().HasForeignKey("OrderId");
-                    a.Property<int>("Id");
-                    a.HasKey("Id");
-                });
         }
     }
 }

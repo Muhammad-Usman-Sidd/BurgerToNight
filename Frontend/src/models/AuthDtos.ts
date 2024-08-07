@@ -1,21 +1,23 @@
 export interface LoginDTO {
-  userName: string;
-  password: string;
+  UserName: string;
+  Password: string;
 }
 
 export interface RegistrationRequestDTO {
-  userName: string;
-  email: string;
-  password: string;
-  role:string;
-  secretKey:string
+  UserName: string;
+  Email?: string;
+  PhoneNumber:string
+  Password: string;
+  Address?:string
+  Role?:string;
+  SecretKey:string
 }
 
 export interface ResetPasswordDTO {
-  userId: string;
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  UserId: string;
+  CurrentPassword: string;
+  NewPassword: string;
+  ConfirmPassword: string;
 }
 
 export interface LoginResponseDTO {

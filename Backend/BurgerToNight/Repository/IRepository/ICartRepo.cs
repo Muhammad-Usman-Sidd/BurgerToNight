@@ -2,9 +2,8 @@
 
 namespace BurgerToNightAPI.Repository.IRepository
 {
-    public interface IOrderRepo :IRepository<Order>
+    public interface ICartRepo :IRepository<Cart>
     {
-        Task<Order> UpdateAsync(Order entity);
-
+        Task<Cart> UpdateAsync(Cart entity);
     }
 }

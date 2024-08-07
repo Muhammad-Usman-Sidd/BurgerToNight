@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useAuthStore } from '../../stores/AuthStore';
-import { useToast } from 'vue-toastification';
-import { ResetPasswordDTO } from '../../models/AuthDtos';
+import { ref } from "vue";
+import { useAuthStore } from "../../stores/AuthStore";
+import { useToast } from "vue-toastification";
+import { ResetPasswordDTO } from "../../models/AuthDtos";
 
 const authStore = useAuthStore();
 const toast = useToast();
 const errorMessage = ref<string | null>(null);
 
 const createResetPasswordDTO = (): ResetPasswordDTO => ({
-  userId: authStore.user.id,
-  currentPassword: '',
-  newPassword: '',
-  confirmPassword: '',
+  UserId: authStore.user.id,
+  CurrentPassword: "",
+  NewPassword: "",
+  ConfirmPassword: "",
 });
 
 const user = ref<ResetPasswordDTO>(createResetPasswordDTO());
@@ -20,11 +20,11 @@ const user = ref<ResetPasswordDTO>(createResetPasswordDTO());
 const resetPassword = async () => {
   try {
     await authStore.resetPassword(user.value);
-    user.value=createResetPasswordDTO();
-    toast.success('Password has been reset');
+    user.value = createResetPasswordDTO();
+    toast.success("Password has been reset");
   } catch (error: any) {
     errorMessage.value = error.message;
-    console.error('Error resetting the password', error);
+    console.error("Error resetting the password", error);
   }
 };
 </script>
@@ -35,11 +35,13 @@ const resetPassword = async () => {
       <h2 class="text-2xl font-semibold mb-6">Reset Password</h2>
       <form @submit.prevent="resetPassword">
         <div class="mb-4">
-          <label for="currentPassword" class="block text-gray-700">Current Password:</label>
+          <label for="currentPassword" class="block text-gray-700"
+            >Current Password:</label
+          >
           <input
             type="password"
             id="currentPassword"
-            v-model="user.currentPassword"
+            v-model="user.CurrentPassword"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -49,17 +51,19 @@ const resetPassword = async () => {
           <input
             type="password"
             id="newPassword"
-            v-model="user.newPassword"
+            v-model="user.NewPassword"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
         </div>
         <div class="mb-4">
-          <label for="confirmPassword" class="block text-gray-700">Confirm Password:</label>
+          <label for="confirmPassword" class="block text-gray-700"
+            >Confirm Password:</label
+          >
           <input
             type="password"
             id="confirmPassword"
-            v-model="user.confirmPassword"
+            v-model="user.ConfirmPassword"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />

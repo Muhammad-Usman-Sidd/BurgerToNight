@@ -1,4 +1,5 @@
 ﻿using BurgerToNightAPI.Data;
+using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Repository.IRepository;
 
 namespace BurgerToNightAPI.Repository
@@ -7,17 +8,21 @@ namespace BurgerToNightAPI.Repository
     {
         private readonly BurgerDbContext _db;
         public IBCategoryRepo BCategories { get; }
-
         public IBProductRepo BProducts { get; }
-        public IOrderRepo Orders { get; set; }
+        public IOrderHeaderRepo OrderHeaders { get; set; }
+        public IOrderDetailRepo OrderDetails { get; set; }
+        public ICartRepo Carts { get; set; }
 
+       
 
         public UnitOfWork(BurgerDbContext db)
         {
             _db = db;
-            Orders = new OrderRepo(_db);
             BCategories = new BCategoryRepo(_db);
             BProducts = new BProductRepo(_db);
+            OrderDetails = new OrderDetailRepo(_db);
+            OrderHeaders = new OrderHeaderRepo(_db);
+            Carts = new CartRepo(_db);
 
         }
 

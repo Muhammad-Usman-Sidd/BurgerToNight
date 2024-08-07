@@ -16,7 +16,7 @@ public class DeleteProduct
 
     [Function("DeleteProduct")]
     public async Task<APIResponse> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "ProductAPI/{id}")] HttpRequestData req,
+        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "productAPI/{id}")] HttpRequestData req,
         FunctionContext context,
         int id)
     {

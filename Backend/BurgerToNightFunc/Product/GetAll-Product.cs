@@ -29,7 +29,7 @@ namespace BurgerToNightFunc.Product
         }
         [Function("GetAllProduct")]
         public async Task<APIResponse> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "ProductAPI")] HttpRequestData req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "productAPI")] HttpRequestData req,
             FunctionContext context)
         {
             var log = context.GetLogger("GetAllProduct");

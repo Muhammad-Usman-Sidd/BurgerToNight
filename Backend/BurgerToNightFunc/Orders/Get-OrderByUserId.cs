@@ -26,7 +26,7 @@ namespace BurgerToNightFunc.Orders
 
             try
             {
-                var orders = await _unitOfWork.Orders.GetAsync(u => u.UserId == userId);
+                var orders = await _unitOfWork.OrderHeaders.GetAsync(u => u.UserId == userId);
 
                 if (orders == null)
                 {

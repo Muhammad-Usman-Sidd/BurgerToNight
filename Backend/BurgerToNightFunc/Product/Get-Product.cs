@@ -23,7 +23,7 @@ public class Get_Product
 
     [Function("GetProduct")]
     public async Task<APIResponse> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "ProductAPI/{id}")] HttpRequestData req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "productAPI/{id}")] HttpRequestData req,
         FunctionContext context, int id)
     {
         var log = context.GetLogger("GetProduct");

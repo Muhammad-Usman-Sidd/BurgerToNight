@@ -1,42 +1,49 @@
-import axios from 'axios';
 import BaseService from './BaseService';
 import { APIResponse } from '../models/APIResult';
-import { OrderCreateDTO, OrderGetDTO } from "../models/OrderDtos";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { OrderHeaderGetDTO,OrderHeaderCreateDTO,OrderHeaderUpdateDTO } from '../models/OrderHeaderDtos';
 
 export interface IOrderService {
-  createOrder(dto: OrderCreateDTO, token: string): Promise<APIResponse<OrderGetDTO>>;
-  getUserOrders(userId: string, token: string): Promise<APIResponse<OrderGetDTO[]>>;
-  getOrderStatus(orderId: string, token: string): Promise<APIResponse<OrderGetDTO>>;
+  getUserOrders(userId: string, token: string): Promise<APIResponse<OrderHeaderGetDTO[]>>;
+  deleteOrder(orderId: number, token: string): Promise<APIResponse<null>>;
+  placeOrder(dto:OrderHeaderCreateDTO ,token: string): Promise<APIResponse<OrderHeaderGetDTO>>;
+  updateOrder(dto:OrderHeaderUpdateDTO, token: string): Promise<APIResponse<null>>;
 }
 
 class OrderService extends BaseService implements IOrderService {
   constructor() {
-    super(API_URL);
+    super(import.meta.env.VITE_API_URL);
   }
 
-  async createOrder(dto: OrderCreateDTO, token: string): Promise<APIResponse<OrderGetDTO>> {
-    return this.sendRequest<OrderGetDTO>({
-      Url: `/orders`,
+  async getUserOrders(userId: string, token: string): Promise<APIResponse<OrderHeaderGetDTO[]>> {
+    return this.sendRequest<OrderHeaderGetDTO[]>({
+      Method: 'GET',
+      Url: `orders/${userId}`,
+      Token: token
+    });
+  }
+
+  async deleteOrder(orderId: number, token: string): Promise<APIResponse<null>> {
+    return this.sendRequest<null>({
+      Method: 'DELETE',
+      Url: `orders/${orderId}`,
+      Token: token
+    });
+  }
+
+  async placeOrder(dto:OrderHeaderCreateDTO, token: string): Promise<APIResponse<OrderHeaderGetDTO>> {
+    return this.sendRequest<OrderHeaderGetDTO>({
       Method: 'POST',
+      Url: `orders`,
       Data: dto,
       Token: token
     });
   }
 
-  async getUserOrders(userId: string, token: string): Promise<APIResponse<OrderGetDTO[]>> {
-    return this.sendRequest<OrderGetDTO[]>({
-      Url: `/orders/user/${userId}`,
-      Method: 'GET',
-      Token: token
-    });
-  }
-
-  async getOrderStatus(orderId: string, token: string): Promise<APIResponse<OrderGetDTO>> {
-    return this.sendRequest<OrderGetDTO>({
-      Url: `/orders/${orderId}/status`, 
-      Method: 'GET',
+  async updateOrder(dto:OrderHeaderUpdateDTO , token: string): Promise<APIResponse<null>> {
+    return this.sendRequest<null>({
+      Method: 'PUT',
+      Url: `orders/${dto.Id}`,
+      Data: dto,
       Token: token
     });
   }

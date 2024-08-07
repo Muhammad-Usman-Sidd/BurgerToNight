@@ -4,6 +4,7 @@ using BurgerToNightAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BurgerToNightAPI.Migrations
 {
     [DbContext(typeof(BurgerDbContext))]
-    partial class BurgerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240807152346_SomeBugFixInOrdersTable")]
+    partial class SomeBugFixInOrdersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace BurgerToNightAPI.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -69,13 +69,21 @@ namespace BurgerToNightAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -125,42 +133,42 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreationCategoryTime = new DateTime(2024, 8, 7, 21, 33, 37, 699, DateTimeKind.Local).AddTicks(1322),
+                            CreationCategoryTime = new DateTime(2024, 8, 7, 20, 23, 45, 213, DateTimeKind.Local).AddTicks(23),
                             Description = "Experience the smoky flavor and tender texture of our BBQ burgers, crafted with meticulous care in a controlled environment.",
                             Title = "BBQ"
                         },
                         new
                         {
                             Id = 2,
-                            CreationCategoryTime = new DateTime(2024, 8, 7, 21, 33, 37, 699, DateTimeKind.Local).AddTicks(1344),
+                            CreationCategoryTime = new DateTime(2024, 8, 7, 20, 23, 45, 213, DateTimeKind.Local).AddTicks(42),
                             Description = "Indulge in the wholesome goodness of our Grilled burgers, prepared in a hygienic oven for a perfect char and juicy bite.",
                             Title = "Grilled"
                         },
                         new
                         {
                             Id = 3,
-                            CreationCategoryTime = new DateTime(2024, 8, 7, 21, 33, 37, 699, DateTimeKind.Local).AddTicks(1347),
+                            CreationCategoryTime = new DateTime(2024, 8, 7, 20, 23, 45, 213, DateTimeKind.Local).AddTicks(45),
                             Description = "Savor the irresistible crunch of our burgers, made with the finest breadcrumbs and fresh, clean oil for an unforgettable taste.",
                             Title = "Crunch"
                         },
                         new
                         {
                             Id = 4,
-                            CreationCategoryTime = new DateTime(2024, 8, 7, 21, 33, 37, 699, DateTimeKind.Local).AddTicks(1349),
+                            CreationCategoryTime = new DateTime(2024, 8, 7, 20, 23, 45, 213, DateTimeKind.Local).AddTicks(47),
                             Description = "Discover our signature Special burgers, the ultimate favorite renowned for their exceptional flavor and quality.",
                             Title = "Special"
                         },
                         new
                         {
                             Id = 5,
-                            CreationCategoryTime = new DateTime(2024, 8, 7, 21, 33, 37, 699, DateTimeKind.Local).AddTicks(1350),
+                            CreationCategoryTime = new DateTime(2024, 8, 7, 20, 23, 45, 213, DateTimeKind.Local).AddTicks(49),
                             Description = "Dive into the deliciousness of our Fish burgers, served with love and a smile for a delightful seafood experience.",
                             Title = "Fish"
                         },
                         new
                         {
                             Id = 6,
-                            CreationCategoryTime = new DateTime(2024, 8, 7, 21, 33, 37, 699, DateTimeKind.Local).AddTicks(1352),
+                            CreationCategoryTime = new DateTime(2024, 8, 7, 20, 23, 45, 213, DateTimeKind.Local).AddTicks(51),
                             Description = "Enjoy the rich and succulent taste of our Lamb burgers, made with premium lamb meat imported from Turkey just for you.",
                             Title = "Lamb"
                         });
@@ -207,7 +215,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 1,
                             BCategoryId = 3,
-                            CreationDate = new DateTime(2024, 8, 7, 16, 33, 37, 699, DateTimeKind.Utc).AddTicks(1761),
+                            CreationDate = new DateTime(2024, 8, 7, 15, 23, 45, 213, DateTimeKind.Utc).AddTicks(653),
                             Description = "The Mighty Zinger is one of our most liked and extraordinarily large burgers! Made with a crunchy breadcrumb coating, fresh lettuce, juicy tomatoes, pickles, and topped with spicy mayo.",
                             Image = "",
                             Name = "Mighty Zinger",
@@ -218,7 +226,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 2,
                             BCategoryId = 2,
-                            CreationDate = new DateTime(2024, 8, 7, 16, 33, 37, 699, DateTimeKind.Utc).AddTicks(1766),
+                            CreationDate = new DateTime(2024, 8, 7, 15, 23, 45, 213, DateTimeKind.Utc).AddTicks(657),
                             Description = "Craving something delicious? Look no further than the Big Ben, a grilled delight featuring a charred patty, cheddar cheese, crispy bacon, onions, and a special smoky sauce.",
                             Image = "",
                             Name = "Big Ben",
@@ -229,7 +237,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 3,
                             BCategoryId = 4,
-                            CreationDate = new DateTime(2024, 8, 7, 16, 33, 37, 699, DateTimeKind.Utc).AddTicks(1769),
+                            CreationDate = new DateTime(2024, 8, 7, 15, 23, 45, 213, DateTimeKind.Utc).AddTicks(661),
                             Description = "Need to fill a giant stomach? The Big Bang is here to deliver with its massive size and explosive flavor! Loaded with double beef patties, American cheese, onion rings, and BBQ sauce.",
                             Image = "",
                             Name = "Big Bang",
@@ -240,7 +248,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 4,
                             BCategoryId = 1,
-                            CreationDate = new DateTime(2024, 8, 7, 16, 33, 37, 699, DateTimeKind.Utc).AddTicks(1772),
+                            CreationDate = new DateTime(2024, 8, 7, 15, 23, 45, 213, DateTimeKind.Utc).AddTicks(663),
                             Description = "Our Super BBQ burgers are crafted with extreme care, offering a mouthwatering BBQ experience with smoky beef patties, pepper jack cheese, crispy onions, and tangy BBQ sauce.",
                             Image = "",
                             Name = "Super BBQ",
@@ -251,7 +259,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 5,
                             BCategoryId = 5,
-                            CreationDate = new DateTime(2024, 8, 7, 16, 33, 37, 699, DateTimeKind.Utc).AddTicks(1775),
+                            CreationDate = new DateTime(2024, 8, 7, 15, 23, 45, 213, DateTimeKind.Utc).AddTicks(666),
                             Description = "Our Selmon Fish burgers are in high demand. Order yours before it's too late and enjoy the taste of fresh, delectable fish! Made with crispy fish fillets, tartar sauce, lettuce, and pickles.",
                             Image = "",
                             Name = "Selmon Burger",
@@ -262,7 +270,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 6,
                             BCategoryId = 6,
-                            CreationDate = new DateTime(2024, 8, 7, 16, 33, 37, 699, DateTimeKind.Utc).AddTicks(1778),
+                            CreationDate = new DateTime(2024, 8, 7, 15, 23, 45, 213, DateTimeKind.Utc).AddTicks(669),
                             Description = "Savor the exquisite flavor of our Lamb Burger, featuring premium lamb meat, mint yogurt sauce, feta cheese, cucumber slices, and arugula, all wrapped in a toasted bun.",
                             Image = "",
                             Name = "Lamb Burger",

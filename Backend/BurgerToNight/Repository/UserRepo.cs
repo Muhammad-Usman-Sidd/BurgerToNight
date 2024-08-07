@@ -99,6 +99,8 @@ namespace BurgerToNightAPI.Repository
                 Email = registrationRequestDTO.Email,
                 NormalizedEmail = registrationRequestDTO.Email.ToUpper(),
                 Name = registrationRequestDTO.UserName,
+                Address=registrationRequestDTO.Address,
+                PhoneNumber = registrationRequestDTO.PhoneNumber,
             };
 
             try

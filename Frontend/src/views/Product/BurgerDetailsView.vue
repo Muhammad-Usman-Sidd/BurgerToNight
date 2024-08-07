@@ -3,13 +3,13 @@ import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useBurgerStore } from "../../stores/ProductStore";
 import { useAuthStore } from "../../stores/AuthStore";
-import { useCartStore } from "../../stores/CartStore";
+import { useOrderStore } from "../../stores/OrderStore";
 import UnAuthorized from "../../components/UnAuthorized.vue";
 
 const route = useRoute();
 const router = useRouter();
 const store = useBurgerStore();
-const cartStore = useCartStore();
+const orderStore = useOrderStore();
 const authStore = useAuthStore();
 const BurgerId = route.params.id;
 
@@ -95,7 +95,7 @@ onMounted(async () => {
           >
             <h3 class="text-xl font-bold mb-6">Manage Burger</h3>
             <button
-              @click="cartStore.addToCart(store.currentBurger, 1)"
+              @click="orderStore.addToCart(store.currentBurger, 1)"
               class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-8 block"
             >
               Add to Cart

@@ -24,7 +24,7 @@ public class CreateProduct
 
     [Function("CreateProduct")]
     public async Task<APIResponse> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "ProductAPI")] HttpRequestData req,
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "productAPI")] HttpRequestData req,
         FunctionContext context)
     {
         var log = context.GetLogger("CreateProduct");
