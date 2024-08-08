@@ -2,8 +2,6 @@ import BaseService from './BaseService';
 import { APIResponse } from '../models/APIResult';
 import { CategoryGetDTO, CategoryCreateDTO } from '../models/CategoryDtos';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export interface ICategoryService {
   createCategory(dto: CategoryCreateDTO, token: string): Promise<APIResponse<CategoryGetDTO>>;
   deleteCategory(id: number, token: string): Promise<APIResponse<null>>;
@@ -12,7 +10,7 @@ export interface ICategoryService {
 
 class CategoryService extends BaseService implements ICategoryService {
   constructor() {
-    super(API_URL);
+    super(import.meta.env.VITE_API_URL);
   }
 
   async createCategory(dto: CategoryCreateDTO, token: string): Promise<APIResponse<CategoryGetDTO>> {

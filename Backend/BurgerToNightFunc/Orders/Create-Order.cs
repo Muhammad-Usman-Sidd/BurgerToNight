@@ -1,3 +1,4 @@
+using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
@@ -17,10 +18,12 @@ namespace BurgerToNightFunc.Orders
     public class Create_Order
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public Create_Order(IUnitOfWork unitOfWork)
+        public Create_Order(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [Function("CreateOrder")]
@@ -35,7 +38,7 @@ namespace BurgerToNightFunc.Orders
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var orderDTO = JsonConvert.DeserializeObject<OrderCreateDTO>(requestBody);
 
-                if (orderDTO == null || !orderDTO.OrderDetails.Any())
+                if (orderDTO == null || !orderDTO.Items.Any())
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.IsSuccess = false;
@@ -43,38 +46,34 @@ namespace BurgerToNightFunc.Orders
                     return response;
                 }
 
-                var orderHeader = new OrderHeader
-                {
-                    UserId = orderDTO.UserId,
-                    OrderDate = DateTime.UtcNow,
-                    OrderTotal = orderDTO.OrderTotal,
-                    OrderStatus = "Pending",
-                    PaymentStatus = "Pending",
-                    PhoneNumber = orderDTO.PhoneNumber,
-                    Address = orderDTO.Address,
-                    City = orderDTO.City,
-                    Name = orderDTO.Name,
-                };
+                var orderHeaderobj = _mapper.Map<OrderHeader>(orderDTO);
+                orderHeaderobj.OrderDate = DateTime.UtcNow;
+                orderHeaderobj.OrderStatus = "Pending";
+                orderHeaderobj.PaymentStatus = "Pending";
+   
 
-                await _unitOfWork.OrderHeaders.CreateAsync(orderHeader);
+                await _unitOfWork.OrderHeaders.CreateAsync(orderHeaderobj);
                 await _unitOfWork.SaveAsync();
 
-                foreach (var detail in orderDTO.OrderDetails)
+                foreach (var Item in orderDTO.Items)
                 {
                     var orderDetail = new OrderDetail
                     {
-                        OrderHeaderId = orderHeader.Id,
-                        ProductId = detail.ProductId,
-                        Quantity = detail.Quantity,
-                        Price = detail.Price
+                        orderHeader = orderHeaderobj,
+                        OrderHeaderId = orderHeaderobj.Id,
+                        ProductId = Item.ProductId,
+                        burgerProduct = await _unitOfWork.BProducts.GetAsync(u => u.Id == Item.ProductId),
+                        Quantity = Item.Quantity,
+                        Price = Item.Price
                     };
                     await _unitOfWork.OrderDetails.CreateAsync(orderDetail);
                 }
                 await _unitOfWork.SaveAsync();
+                var dto = _mapper.Map<OrderGetDTO>(orderDTO);
 
                 response.StatusCode = HttpStatusCode.Created;
                 response.IsSuccess = true;
-                response.Result = orderHeader;
+                response.Result = dto;
             }
             catch (Exception ex)
             {

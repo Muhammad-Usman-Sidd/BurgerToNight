@@ -13,14 +13,14 @@ namespace BurgerToNightAPI.Models
         public int OrderHeaderId { get; set; }
         [ForeignKey("OrderHeaderId")]
         [ValidateNever]
-        public OrderHeader OrderHeader { get; set; }
+        public OrderHeader orderHeader { get; set; }
 
 
         [Required]
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         [ValidateNever]
-        public BurgerProduct Product { get; set; }
+        public BurgerProduct burgerProduct { get; set; }
 
         public int Quantity { get; set; }
         public double Price { get; set; }

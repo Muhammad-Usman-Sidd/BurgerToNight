@@ -23,6 +23,9 @@ export interface ResetPasswordDTO {
 export interface LoginResponseDTO {
   User :{
     Id:string;
+    PhoneNumber?:string;
+    Address?:string;
+    Name:string;
   };
   Role :string;
   Token :string;

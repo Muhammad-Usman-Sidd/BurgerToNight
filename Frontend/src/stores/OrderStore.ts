@@ -3,18 +3,18 @@ import { useToast } from 'vue-toastification';
 import { ProductGetDTO } from '../models/ProductDtos';
 import { useAuthStore } from './AuthStore';
 import OrderService from '../services/OrderService';
-import { OrderHeaderGetDTO, OrderHeaderCreateDTO, OrderHeaderUpdateDTO } from '../models/OrderHeaderDtos';
+import { OrderGetDTO, OrderCreateDTO, OrderUpdateDTO } from '../models/OrderDtos';
 import { OrderDetailCreateDTO } from '../models/OrderDetailDtos';
+import { APIResponse } from '../models/APIResult';
 
 const toast = useToast();
-const orderService = new OrderService();
+const orderService=new OrderService();
 
 export const useOrderStore = defineStore('order', {
   state: () => ({
     cart: [] as { burger: ProductGetDTO; quantity: number }[],
     showSidebar: false,
-    pastOrders: [] as OrderHeaderGetDTO[],
-    orderStatus: {} as string,
+    pastOrders: [] as OrderGetDTO[],
   }),
   actions: {
     addToCart(burger: ProductGetDTO, quantity: number) {
@@ -45,11 +45,12 @@ export const useOrderStore = defineStore('order', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn) {
         try {
-          const orderDto: OrderHeaderCreateDTO = {
-            UserId: authStore.user.Id,
+          const orderDto: OrderCreateDTO = {
+            UserId: authStore.user.id,
             OrderTotal: this.cart.reduce((total, item) => total + item.burger.Price * item.quantity, 0),
-            Name: authStore.user.Name,
-            PhoneNumber:authStore.user.PhoneNumber,
+            Name: authStore.user.name,
+            PhoneNumber:authStore.user.phoneNumber,
+            Address:authStore.user.address,
             Items: this.cart.map((item) => ({
               ProductId: item.burger.Id,
               Quantity: item.quantity,
@@ -57,6 +58,7 @@ export const useOrderStore = defineStore('order', {
             })) as OrderDetailCreateDTO[],
           };
           const response = await orderService.placeOrder(orderDto, authStore.token);
+          console.log(response);
           if (response.IsSuccess) {
             this.cart = [];
             this.toggleSidebar();
@@ -74,9 +76,10 @@ export const useOrderStore = defineStore('order', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn) {
         try {
-          const response = await orderService.getUserOrders(authStore.user.id, authStore.token);
+          const response :APIResponse<OrderGetDTO[]> = await orderService.getUserOrders(authStore.user.id, authStore.token);
           if (response.IsSuccess) {
             this.pastOrders = response.Result;
+            console.log(response);
           } else {
             toast.error(response.ErrorMessages.join(', '));
           }
@@ -87,7 +90,7 @@ export const useOrderStore = defineStore('order', {
         toast.error('Login to see past orders');
       }
     },
-    async updateOrderStatus(orderId: number, dto: OrderHeaderUpdateDTO) {
+    async updateOrderStatus(orderId: number, dto: OrderUpdateDTO) {
       const authStore = useAuthStore();
       try {
         dto.Id=orderId;

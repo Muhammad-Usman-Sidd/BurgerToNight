@@ -10,7 +10,7 @@ namespace BurgerToNightAPI.Models
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser applicationUser { get; set; }
 
         public DateTime OrderDate { get; set; }
         public double OrderTotal { get; set; }
@@ -27,8 +27,6 @@ namespace BurgerToNightAPI.Models
         public string PhoneNumber { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
-        public string City { get; set; }
         [Required]
         public string Name { get; set; }
 

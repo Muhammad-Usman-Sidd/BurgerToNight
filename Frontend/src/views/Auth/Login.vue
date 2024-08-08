@@ -21,7 +21,6 @@ const login = async () => {
     toast.success(`Hello ${user.value.UserName}`);
     user.value = loginUser();
     router.push("/burgers");
-    console.log(authStore.role);
   } catch (error: any) {
     errorMessage.value = error.message || "Failed to login. Please try again.";
   }

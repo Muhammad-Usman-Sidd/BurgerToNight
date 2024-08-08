@@ -1,8 +1,10 @@
+using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -12,23 +14,25 @@ namespace BurgerToNightFunc.Orders
     public class Get_OrderByUserId
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public Get_OrderByUserId(IUnitOfWork unitOfWork)
+        public Get_OrderByUserId(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [Function("GetUserOrders")]
         public async Task<APIResponse> GetUserOrders(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "orders/user/{userId}")] HttpRequestData req, string userId)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "orders/{userId}")] HttpRequestData req, string userId)
         {
             var response = new APIResponse();
 
             try
             {
-                var orders = await _unitOfWork.OrderHeaders.GetAsync(u => u.UserId == userId);
+                var orders = await _unitOfWork.OrderHeaders.GetAllAsync(u => u.UserId == userId);
 
-                if (orders == null)
+                if (orders == null || !orders.Any())
                 {
                     response.StatusCode = HttpStatusCode.NotFound;
                     response.IsSuccess = false;
@@ -36,9 +40,26 @@ namespace BurgerToNightFunc.Orders
                 }
                 else
                 {
+                    var orderDTOs = new List<OrderGetDTO>();
+
+                    foreach (var order in orders)
+                    {
+                        var orderDetails = await _unitOfWork.OrderDetails.GetAllAsync(u => u.OrderHeaderId == order.Id);
+                        var orderDTO = _mapper.Map<OrderGetDTO>(order);
+
+                        orderDTO.Items = orderDetails.Select(detail => new OrderDetailDTO
+                        {
+                            ProductId = detail.ProductId,
+                            Quantity = detail.Quantity,
+                            Price = detail.Price
+                        }).ToList();
+
+                        orderDTOs.Add(orderDTO);
+                    }
+
                     response.StatusCode = HttpStatusCode.OK;
                     response.IsSuccess = true;
-                    response.Result = orders;
+                    response.Result = orderDTOs;
                 }
 
                 return response;
@@ -53,4 +74,3 @@ namespace BurgerToNightFunc.Orders
         }
     }
 }
-

@@ -7,7 +7,6 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const toast = useToast();
 const authStore = useAuthStore();
-const errorMessage = ref<string | null>(null);
 const createUser = (): RegistrationRequestDTO => ({
   UserName: "",
   Email: "",
@@ -17,17 +16,16 @@ const createUser = (): RegistrationRequestDTO => ({
   Role: "",
   SecretKey: "",
 });
-const user = ref<RegistrationRequestDTO>(createUser());
+const registerUser = ref<RegistrationRequestDTO>(createUser());
 
 const register = async () => {
   try {
-    await authStore.register(user.value);
-    toast.success(`Hello ${user.value.UserName}`);
-    user.value = createUser();
-    router.push("/burgers");
-    errorMessage.value = "";
+    await authStore.register(registerUser.value);
+    toast.success(`Hello ${registerUser.value.UserName}`);
+    registerUser.value = createUser();
+    router.push("/login");
   } catch (error: any) {
-    errorMessage.value = error.message || "Failed to register. Please try again.";
+    console.log("Error:" + error);
   }
 };
 </script>
@@ -39,17 +37,21 @@ const register = async () => {
       <form @submit.prevent="register">
         <div class="mb-4">
           <label for="role" class="block text-gray-700">Role:</label>
-          <select id="role" v-model="user.Role" class="mt-1 p-2 w-full border rounded-lg">
+          <select
+            id="role"
+            v-model="registerUser.Role"
+            class="mt-1 p-2 w-full border rounded-lg"
+          >
             <option value="customer">Customer</option>
             <option value="admin">Admin</option>
           </select>
         </div>
-        <div v-if="user.Role === 'admin'" class="mb-4">
+        <div v-if="registerUser.Role === 'admin'" class="mb-4">
           <label for="secretKey" class="block text-gray-700">Secret Key:</label>
           <input
             type="text"
             id="secretKey"
-            v-model="user.SecretKey"
+            v-model="registerUser.SecretKey"
             class="mt-1 p-2 w-full border rounded-lg"
           />
         </div>
@@ -59,7 +61,7 @@ const register = async () => {
           <input
             type="text"
             id="username"
-            v-model="user.UserName"
+            v-model="registerUser.UserName"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -70,7 +72,7 @@ const register = async () => {
           <input
             type="text"
             id="phoneNumber"
-            v-model="user.PhoneNumber"
+            v-model="registerUser.PhoneNumber"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -80,7 +82,7 @@ const register = async () => {
           <input
             type="text"
             id="address"
-            v-model="user.Address"
+            v-model="registerUser.Address"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -90,7 +92,7 @@ const register = async () => {
           <input
             type="email"
             id="email"
-            v-model="user.Email"
+            v-model="registerUser.Email"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -100,7 +102,7 @@ const register = async () => {
           <input
             type="password"
             id="password"
-            v-model="user.Password"
+            v-model="registerUser.Password"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -109,7 +111,6 @@ const register = async () => {
           Register
         </button>
       </form>
-      <div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
     </div>
   </div>
 </template>

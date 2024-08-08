@@ -1,6 +1,6 @@
 import { OrderDetailCreateDTO,OrderDetailGetDTO } from "./OrderDetailDtos";
 
-export interface OrderHeaderGetDTO {
+export interface OrderGetDTO {
   Id: number;
   UserId: number;
   OrderDate: string;
@@ -11,22 +11,20 @@ export interface OrderHeaderGetDTO {
   PaymentDate: string;
   PhoneNumber?: string;
   Address?: string;
-  City?: string;
   Name: string;
   Items: OrderDetailGetDTO[];
 }
 
-export interface OrderHeaderCreateDTO{
+export interface OrderCreateDTO{
   UserId: number;
   OrderTotal: number;
-  PhoneNumber: string;
+  PhoneNumber?: string;
   Address?: string;
-  City?: string;
   Name: string;
   Items: OrderDetailCreateDTO[];
 }
 
-export interface OrderHeaderUpdateDTO{
+export interface OrderUpdateDTO{
   Id:number
   OrderStatus:string,
   PaymentStatus:string

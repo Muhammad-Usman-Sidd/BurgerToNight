@@ -8,4 +8,4 @@ export interface OrderDetailCreateDTO {
     ProductId: number;
     Quantity: number;
     Price: number;
-  }
+}

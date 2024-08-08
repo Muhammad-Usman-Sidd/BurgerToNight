@@ -1,8 +1,10 @@
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -19,14 +21,14 @@ namespace BurgerToNightFunc.Orders
 
         [Function("GetAllOrders")]
         public async Task<APIResponse> GetAllOrders(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "orders")] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "orders")] HttpRequestData req,
+            string userId)
         {
             var response = new APIResponse();
 
             try
             {
-                var orders = await _unitOfWork.OrderHeaders.GetAllAsync();
-
+                var orders = await _unitOfWork.OrderHeaders.GetAllAsync(includeProperties: "OrderDetail");
                 if (orders == null || !orders.Any())
                 {
                     response.StatusCode = HttpStatusCode.NotFound;

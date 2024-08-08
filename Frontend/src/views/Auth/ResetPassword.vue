@@ -15,12 +15,12 @@ const createResetPasswordDTO = (): ResetPasswordDTO => ({
   ConfirmPassword: "",
 });
 
-const user = ref<ResetPasswordDTO>(createResetPasswordDTO());
+const resetUser = ref<ResetPasswordDTO>(createResetPasswordDTO());
 
 const resetPassword = async () => {
   try {
-    await authStore.resetPassword(user.value);
-    user.value = createResetPasswordDTO();
+    await authStore.resetPassword(resetUser.value);
+    resetUser.value = createResetPasswordDTO();
     toast.success("Password has been reset");
   } catch (error: any) {
     errorMessage.value = error.message;
@@ -41,7 +41,7 @@ const resetPassword = async () => {
           <input
             type="password"
             id="currentPassword"
-            v-model="user.CurrentPassword"
+            v-model="resetUser.CurrentPassword"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -51,7 +51,7 @@ const resetPassword = async () => {
           <input
             type="password"
             id="newPassword"
-            v-model="user.NewPassword"
+            v-model="resetUser.NewPassword"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />
@@ -63,7 +63,7 @@ const resetPassword = async () => {
           <input
             type="password"
             id="confirmPassword"
-            v-model="user.ConfirmPassword"
+            v-model="resetUser.ConfirmPassword"
             required
             class="mt-1 p-2 w-full border rounded-lg"
           />

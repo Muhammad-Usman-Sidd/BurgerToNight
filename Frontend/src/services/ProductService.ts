@@ -2,8 +2,6 @@ import BaseService from './BaseService';
 import { APIResponse } from '../models/APIResult';
 import { ProductGetDTO, ProductCreateDTO, ProductUpdateDTO } from '../models/ProductDtos';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export interface IProductService {
   createProduct(dto: ProductCreateDTO, token: string): Promise<APIResponse<ProductGetDTO>>;
   deleteProduct(id: number, token: string): Promise<APIResponse<null>>;
@@ -14,7 +12,7 @@ export interface IProductService {
 
 class ProductService extends BaseService implements IProductService {
   constructor() {
-    super(API_URL); // Pass the base URL
+    super(import.meta.env.VITE_API_URL);
   }
 
   async createProduct(dto: ProductCreateDTO, token: string): Promise<APIResponse<ProductGetDTO>> {

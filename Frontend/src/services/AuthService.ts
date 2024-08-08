@@ -9,8 +9,8 @@ interface IAuthService {
 }
 
 class AuthService extends BaseService implements IAuthService {
-    constructor(baseURL: string) {
-        super(baseURL);
+    constructor() {
+        super(import.meta.env.VITE_API_URL);
     }
 
     async login<T>(dto: LoginDTO): Promise<APIResponse<T>> {

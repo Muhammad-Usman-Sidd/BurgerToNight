@@ -1,5 +1,6 @@
 ﻿using BurgerToNightAPI.Data;
 using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
 
 namespace BurgerToNightAPI.Repository
@@ -17,12 +18,13 @@ namespace BurgerToNightAPI.Repository
             _db.OrderHeaders.Update(obj);
         }
 
-        public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)
+        public void UpdateStatus(int id, OrderUpdateDTO orderStatus, string? paymentStatus = null)
         {
             var orderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.Id == id);
             if (orderFromDb != null)
             {
-                orderFromDb.OrderStatus = orderStatus;
+                orderFromDb.OrderStatus = orderStatus.OrderStatus;
+                orderFromDb.PaymentStatus = orderStatus.PaymentStatus;
                 if (!string.IsNullOrEmpty(paymentStatus))
                 {
                     orderFromDb.PaymentStatus = paymentStatus;
