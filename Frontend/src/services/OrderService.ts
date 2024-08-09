@@ -21,6 +21,14 @@ class OrderService extends BaseService implements IOrderService {
       Token: token
     });
   }
+  
+  async getAllOrders(token: string): Promise<APIResponse<OrderGetDTO[]>> {
+    return this.sendRequest<OrderGetDTO[]>({
+      Method: 'GET',
+      Url: `orders`,
+      Token: token
+    });
+  }
 
   async deleteOrder(id: number, token: string): Promise<APIResponse<null>> {
     return this.sendRequest<null>({

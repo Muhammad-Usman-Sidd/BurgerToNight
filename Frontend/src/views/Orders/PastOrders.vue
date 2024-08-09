@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue";
-import { useOrderStore } from "../stores/OrderStore";
-import useBurgerStore from "../stores/ProductStore";
-import { ProductGetDTO } from "../models/ProductDtos";
+import { useOrderStore } from "../../stores/OrderStore";
+import useBurgerStore from "../../stores/ProductStore";
+import { ProductGetDTO } from "../../models/ProductDtos";
+import { useAuthStore } from "../../stores/AuthStore";
 
 const orderStore = useOrderStore();
 const productStore = useBurgerStore();
+const authStore = useAuthStore();
 
 const productDetails = reactive<Record<number, ProductGetDTO | null>>({});
 
@@ -23,7 +25,7 @@ const getProductDetails = async (Id: number): Promise<ProductGetDTO | null> => {
 };
 
 onMounted(async () => {
-  await orderStore.loadPastOrders();
+  await orderStore.loadUserPastOrders();
   for (const order of orderStore.pastOrders) {
     for (const item of order.Items) {
       await getProductDetails(item.ProductId);
@@ -33,7 +35,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-blue-50 px-4 py-10 flex flex-col items-center">
+  <div
+    v-if="authStore.isLoggedIn"
+    class="bg-blue-50 px-4 py-10 flex flex-col items-center"
+  >
     <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Past Orders</h1>
 
     <div v-if="!orderStore.pastOrders.length" class="block text-gray-700 text-center">
@@ -51,6 +56,19 @@ onMounted(async () => {
           <span class="text-gray-500">{{
             new Date(order.OrderDate).toLocaleDateString()
           }}</span>
+        </div>
+
+        <div class="mb-2 flex items-center">
+          <div class="flex items-center mr-6">
+            <span class="font-semibold text-orange-700 mr-1">Order Status:</span>
+            <span class="text-gray-700">{{ order.OrderStatus }}</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center">
+            <span class="font-semibold text-orange-700 mr-1">Payment Status:</span>
+            <span class="text-gray-700">{{ order.PaymentStatus }}</span>
+          </div>
         </div>
 
         <ul class="mb-4">

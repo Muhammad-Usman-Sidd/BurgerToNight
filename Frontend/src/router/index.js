@@ -37,7 +37,12 @@ const router = createRouter({
     {
       path: '/past-orders',
       name: 'pastorders',
-      component: ()=>import('../views/PastOrders.vue')
+      component: ()=>import('../views/Orders/PastOrders.vue')
+    }, 
+    {
+      path: '/orders',
+      name: 'orders',
+      component: ()=>import('../views/Orders/ManageOrders.vue')
     }, 
     {
       path: '/register',

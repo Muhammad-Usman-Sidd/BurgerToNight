@@ -18,17 +18,15 @@ const deleteProduct = async () => {
   router.push("/burgers");
 };
 
-const image = computed(
-  (): String => {
-    const imageData = store.currentBurger.Image;
-    const base64Prefix = "data:image/*;base64,";
-    if (imageData && imageData.startsWith("data:image/")) {
-      return imageData;
-    } else {
-      return base64Prefix + imageData;
-    }
+const image = computed((): any => {
+  const imageData = store.currentBurger.Image;
+  const base64Prefix = "data:image/*;base64,";
+  if (imageData && imageData.startsWith("data:image/")) {
+    return imageData;
+  } else {
+    return base64Prefix + imageData;
   }
-);
+});
 
 onMounted(async () => {
   await store.fetchBurgerById(+BurgerId);

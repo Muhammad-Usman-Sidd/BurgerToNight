@@ -104,7 +104,7 @@ const isActiveLink = (routePath: string): boolean => {
               </RouterLink>
               <RouterLink
                 v-if="authStore.isLoggedIn && authStore.role === 'customer'"
-                @click="orderStore.loadPastOrders()"
+                @click="orderStore.loadUserPastOrders()"
                 to="/past-orders"
                 :class="[
                   isActiveLink('/past-orders')
@@ -116,8 +116,25 @@ const isActiveLink = (routePath: string): boolean => {
                   'py-2',
                 ]"
               >
+                <InboxStackIcon class="h-5 w-5 inline-block mr-1" />Past
+                Orders</RouterLink
+              >
+              <RouterLink
+                v-if="authStore.isLoggedIn && authStore.role === 'admin'"
+                @click="orderStore.loadOrders()"
+                to="/orders"
+                :class="[
+                  isActiveLink('/orders')
+                    ? 'bg-orange-900'
+                    : 'hover:bg-gray-900 hover:text-white',
+                  'text-white',
+                  'rounded-md',
+                  'px-3',
+                  'py-2',
+                ]"
+              >
                 <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
-                Past Orders
+                Orders
               </RouterLink>
               <AuthButtons />
             </div>

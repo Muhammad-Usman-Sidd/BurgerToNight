@@ -62,7 +62,7 @@ export const useOrderStore = defineStore('order', {
           if (response.IsSuccess) {
             this.cart = [];
             this.toggleSidebar();
-            await this.loadPastOrders();
+            await this.loadUserPastOrders();
             toast.success('Order placed successfully');
           } else {
             toast.error(response.ErrorMessages.join(', '));
@@ -72,7 +72,7 @@ export const useOrderStore = defineStore('order', {
         }
       }
     },
-    async loadPastOrders() {
+    async loadUserPastOrders() {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn) {
         try {
@@ -90,14 +90,31 @@ export const useOrderStore = defineStore('order', {
         toast.error('Login to see past orders');
       }
     },
-    async updateOrderStatus(orderId: number, dto: OrderUpdateDTO) {
+    async loadOrders() {
+      const authStore = useAuthStore();
+      if (authStore.isLoggedIn && authStore.role === "admin") {
+        try {
+          const response :APIResponse<OrderGetDTO[]> = await orderService.getAllOrders(authStore.token);
+          if (response.IsSuccess) {
+            this.pastOrders = response.Result;
+            console.log(response);
+          } else {
+            toast.error(response.ErrorMessages.join(', '));
+          }
+        } catch (error) {
+          toast.error('Error loading past orders');
+        }
+      } else {
+        toast.error('Login to see past orders');
+      }
+    },
+    async updateOrder(dto: OrderUpdateDTO) {
       const authStore = useAuthStore();
       try {
-        dto.Id=orderId;
         const response = await orderService.updateOrder(dto, authStore.token);
         if (response.IsSuccess) {
           toast.success('Order status updated successfully');
-          await this.loadPastOrders();
+          await this.loadOrders();
         } else {
           toast.error(response.ErrorMessages.join(', '));
         }
@@ -111,7 +128,7 @@ export const useOrderStore = defineStore('order', {
         const response = await orderService.deleteOrder(orderId, authStore.token);
         if (response.IsSuccess) {
           toast.success('Order deleted successfully');
-          await this.loadPastOrders();
+          await this.loadOrders();
         } else {
           toast.error(response.ErrorMessages.join(', '));
         }
