@@ -51,7 +51,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://192.168.15.63:5173")
+        builder => builder.WithOrigins("http://192.168.15.76:5173")
                           .AllowAnyHeader()
                           .AllowAnyMethod());
 });
