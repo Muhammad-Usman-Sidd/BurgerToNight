@@ -76,12 +76,16 @@ export const useBurgerStore = defineStore('product', {
     },
     handleImageUpload(event: Event) {
       try {
-        const file = (event.target as HTMLInputElement).files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.currentBurger.Image = reader.result as string;
-        };
-        reader.readAsDataURL(file);
+        const files = (event.target as HTMLInputElement).files;
+        if (files && files.length != null) {
+
+          const file = files[0];
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            this.currentBurger.Image = reader.result as string;
+          };
+          reader.readAsDataURL(file);
+        }
       } catch (error) {
         toast.error('Error uploading image');
       }
