@@ -48,7 +48,7 @@ namespace BurgerToNightFunc.Orders
 
                 var orderHeaderobj = _mapper.Map<OrderHeader>(orderDTO);
                 orderHeaderobj.OrderDate = DateTime.UtcNow;
-                orderHeaderobj.OrderStatus = "Pending";
+                orderHeaderobj.OrderStatus = "Order Accepted";
                 orderHeaderobj.PaymentStatus = "Pending";
    
 

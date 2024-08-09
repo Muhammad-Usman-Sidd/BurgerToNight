@@ -21,7 +21,7 @@ const registerUser = ref<RegistrationRequestDTO>(createUser());
 const register = async () => {
   try {
     await authStore.register(registerUser.value);
-    toast.success(`Hello ${registerUser.value.UserName}`);
+    toast.success(`Account created successfully login to continue`);
     registerUser.value = createUser();
     router.push("/login");
   } catch (error: any) {

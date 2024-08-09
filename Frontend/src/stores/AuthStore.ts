@@ -49,14 +49,6 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response: APIResponse<any> = await authService.register(dto);
         console.log(response)
-        if (response.IsSuccess) {
-          this.isLoggedIn = true;
-          this.token = response.Result.Token;
-          this.role = response.Result.Role;
-          this.user.id = response.Result.User.Id;
-        } else {
-          throw new Error(response.ErrorMessages.join(', '));
-        }
       } catch (error: any) {
         throw new Error(error.message || 'Failed to register. Please try again.');
       }

@@ -8,9 +8,9 @@
     },
     "storage1": {
       "secretStore": "LocalSecretsFile",
+      "resourceId": null,
       "type": "storage.emulator",
-      "connectionId": "BlobStorage",
-      "dynamicId": null
+      "connectionId": "BlobStorage"
     }
   }
 }
