@@ -8,10 +8,6 @@ const categoryStore = useCategoryStore();
 const props = defineProps<{
   category: CategoryGetDTO;
 }>();
-
-const deleteCategory = async (id: number) => {
-  await categoryStore.deleteCategory(id);
-};
 </script>
 
 <template>
@@ -20,16 +16,15 @@ const deleteCategory = async (id: number) => {
       <div class="mb-6">
         <h3 class="text-xl font-bold">{{ category.Title }}</h3>
       </div>
-
       <div class="mb-5">
         <div>{{ category.Description }}</div>
       </div>
-      <RouterLink
-        :to="'categories/' + category.Id"
+      <!-- <RouterLink
+        :to="'categories/'"
         class="h-[36px] bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-center text-sm"
       >
         Read More
-      </RouterLink>
+      </RouterLink> -->
     </div>
   </div>
 </template>

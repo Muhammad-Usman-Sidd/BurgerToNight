@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import BurgerListings from "../../components/Products/BurgerListings.vue";
+import { useAuthStore } from "../../stores/AuthStore";
 import BackButton from "../../components/BackButton.vue";
-import { useAuthStore } from "../../stores/AuthStore.ts";
+import BurgerListings from "../../components/Products/BurgerListings.vue";
 const authStore = useAuthStore();
 </script>
+
 <template>
   <BackButton />
   <BurgerListings :showButton="false" />

@@ -2,16 +2,15 @@
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useBurgerStore } from "../../stores/ProductStore";
-import { useCategoryStore } from "../../stores/CategoryStore.ts";
+import { useCategoryStore } from "../../stores/CategoryStore";
 import { useAuthStore } from "../../stores/AuthStore";
-import UnAuthorized from "../../components/UnAuthorized.vue";
+import UnAuthAdmin from "../../components/UnAuth(Admin).vue";
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 const categoryStore = useCategoryStore();
 const store = useBurgerStore();
-
 const burgerId = route.params.id;
 
 const update = async () => {
@@ -27,7 +26,7 @@ onMounted(async () => {
 
 <template>
   <section
-    v-if="authStore.isLoggedIn && authStore.role === 'admin'"
+  v-if="authStore.isLoggedIn && authStore.role==='admin'"
     class="bg-blue-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
@@ -94,7 +93,5 @@ onMounted(async () => {
       </form>
     </div>
   </section>
-  <section v-if="!authStore.isLoggedIn">
-    <UnAuthorized />
-  </section>
+<UnAuthAdmin/>
 </template>

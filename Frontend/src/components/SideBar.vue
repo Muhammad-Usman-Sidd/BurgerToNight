@@ -2,7 +2,8 @@
 import { computed } from "vue";
 import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 import { ProductGetDTO } from "../models/ProductDtos";
-import {useOrderStore} from "../stores/OrderStore";
+import { useOrderStore } from "../stores/OrderStore";
+
 const orderStore = useOrderStore();
 
 const removeFromCart = (burger: ProductGetDTO) => {
@@ -29,7 +30,7 @@ const totalPrice = computed((): string => {
 <template>
   <div
     v-if="orderStore.showSidebar"
-    class="fixed top-0 right-0 w-96 h-full bg-white shadow-lg p-4 z-50 overflow-y-auto"
+    class="fixed top-0 right-0 w-full max-w-md h-full bg-white shadow-lg p-4 z-50 overflow-y-auto md:max-w-lg lg:max-w-xl"
   >
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">Cart</h2>

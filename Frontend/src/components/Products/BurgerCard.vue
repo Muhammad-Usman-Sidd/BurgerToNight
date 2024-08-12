@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { useBurgerStore } from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
 import {useOrderStore} from "../../stores/OrderStore";
+import { useAuthStore } from "../../stores/AuthStore";
 
-const store = useBurgerStore();
+const authStore=useAuthStore();
 const orderStore = useOrderStore();
 
 const props = defineProps<{
@@ -70,7 +70,9 @@ const addToCart = () => {
         </div>
         <h3 class="text-orange-500 mb-2">Price :${{ burger.Price }}</h3>
       </RouterLink>
-      <div class="flex flex-col lg:flex-row justify-between mb-4">
+      <div 
+      v-if="authStore.isLoggedIn && authStore.role==='customer'"
+      class="flex flex-col lg:flex-row justify-between mb-4">
         <div class="flex items-center mb-4">
           <input
             type="number"

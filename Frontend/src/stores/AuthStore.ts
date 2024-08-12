@@ -15,7 +15,8 @@ export const useAuthStore = defineStore('auth', {
       address:''
     } as any,
     token: '',
-    role: ''
+    role: '',
+    showDropdownButtons:false
   }),
   actions: {
     async login(dto: LoginDTO) {
@@ -62,6 +63,9 @@ export const useAuthStore = defineStore('auth', {
       } catch (error: any) {
         throw new Error(error.message || 'Failed to reset password. Please try again.');
       }
+    },
+    toggleDropdownButtons(){
+      this.showDropdownButtons = !this.showDropdownButtons;
     }
   }
 });

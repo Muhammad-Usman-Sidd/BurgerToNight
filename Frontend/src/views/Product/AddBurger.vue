@@ -3,8 +3,8 @@ import { onMounted } from "vue";
 import { useBurgerStore } from "../../stores/ProductStore";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/AuthStore";
-import { useCategoryStore } from "../../stores/CategoryStore.ts";
-import UnAuthorized from "../../components/UnAuthorized.vue";
+import { useCategoryStore } from "../../stores/CategoryStore";
+import UnAuthAdmin from "../../components/UnAuth(Admin).vue";
 
 const store = useBurgerStore();
 const authStore = useAuthStore();
@@ -12,19 +12,20 @@ const categoryStore = useCategoryStore();
 const router = useRouter();
 store.resetCurrentBurger();
 
-onMounted(() => {
-  categoryStore.fetchCategories();
-});
-
 const addProduct = async () => {
   await store.addBurger();
   router.push("/burgers");
 };
+
+onMounted(() => {
+  categoryStore.fetchCategories();
+});
 </script>
 
 <template>
+  <UnAuthAdmin/>
   <section
-    v-if="authStore.isLoggedIn && authStore.role === 'admin'"
+  v-if="authStore.isLoggedIn && authStore.role==='admin'"
     class="bg-blue-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">

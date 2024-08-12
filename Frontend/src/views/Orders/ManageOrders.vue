@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue";
 import { useOrderStore } from "../../stores/OrderStore";
-import useBurgerStore from "../../stores/ProductStore";
+import {useBurgerStore} from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
-import { OrderUpdateDTO } from "../../models/OrderDtos";
+import { OrderUpdateDTO } from "../../models/OrderDtos"
 import { useAuthStore } from "../../stores/AuthStore";
+import UnAuthAdmin from "../../components/UnAuth(Admin).vue";
 
 const orderStore = useOrderStore();
 const productStore = useBurgerStore();
@@ -131,6 +132,7 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
+  <UnAuthAdmin/>
 </template>
 
 <style scoped>

@@ -70,20 +70,20 @@ onMounted(async () => {
             <p class="mb-4">{{ store.currentBurger.PreparingTime }} min</p>
           </div>
           <div
-            v-if="authStore.isLoggedIn && authStore.role === 'admin'"
-            class="bg-white p-6 rounded-lg shadow-md mt-6"
+          v-if="authStore.isLoggedIn && authStore.role === 'admin'"
+          class="bg-white p-6 rounded-lg shadow-md mt-6"
           >
             <h3 class="text-xl font-bold mb-6">Manage Burger</h3>
             <RouterLink
-              :to="`/burgers/edit/${store.currentBurger.Id}`"
-              class="bg-orange-500 hover:bg-orange-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
+            :to="`/burgers/edit/${store.currentBurger.Id}`"
+            class="bg-orange-500 hover:bg-orange-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
             >
               Edit Burger
             </RouterLink>
             <button
-              @click="deleteProduct"
+            @click="deleteProduct"
               class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
-            >
+              >
               Delete Burger
             </button>
           </div>
@@ -91,7 +91,7 @@ onMounted(async () => {
             v-if="authStore.isLoggedIn && authStore.role === 'customer'"
             class="bg-white p-6 rounded-lg shadow-md mt-6"
           >
-            <h3 class="text-xl font-bold mb-6">Manage Burger</h3>
+          <h3 class="text-xl font-bold mb-6">Manage Burger</h3>
             <button
               @click="orderStore.addToCart(store.currentBurger, 1)"
               class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-8 block"
@@ -103,7 +103,5 @@ onMounted(async () => {
       </div>
     </div>
   </section>
-  <section v-if="!authStore.isLoggedIn">
-    <UnAuthorized />
-  </section>
+<UnAuthorized/>
 </template>

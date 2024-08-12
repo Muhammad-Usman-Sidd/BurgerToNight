@@ -4,6 +4,7 @@ import { useOrderStore } from "../../stores/OrderStore";
 import useBurgerStore from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
 import { useAuthStore } from "../../stores/AuthStore";
+import UnAuthorized from "../../components/UnAuthorized.vue";
 
 const orderStore = useOrderStore();
 const productStore = useBurgerStore();
@@ -118,6 +119,7 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
+<UnAuthorized/>
 </template>
 
 <style scoped>

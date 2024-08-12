@@ -20,7 +20,7 @@ const router = createRouter({
     },
     {
       path: '/add-burgers',
-      name: 'addburger',
+      name: 'addburgers',
       component: ()=>import('../views/Product/AddBurger.vue')
     },
     {
