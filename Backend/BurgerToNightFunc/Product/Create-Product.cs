@@ -8,7 +8,6 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net;
-
 public class CreateProduct
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -22,7 +21,6 @@ public class CreateProduct
         _mapper = mapper;
         _blobService = blobService;
         _userRepo = userRepo;
-        _userRepo=userRepo;
     }
 
     [Function("CreateProduct")]
@@ -35,7 +33,8 @@ public class CreateProduct
 
         try
         {
-            var token = req.Headers.GetValues("Authorization").FirstOrDefault();
+            // Extract the token from the Authorization header
+            var token = req.Headers.GetValues("Authorization").FirstOrDefault()?.Split(" ").Last();
             if (token == null)
             {
                 response.StatusCode = HttpStatusCode.Unauthorized;
@@ -43,6 +42,27 @@ public class CreateProduct
                 response.ErrorMessages.Add("Unauthorized");
                 return response;
             }
+
+            // Validate and decode the JWT token
+            var principal = _userRepo.GetPrincipalFromToken(token);
+            if (principal == null)
+            {
+                response.StatusCode = HttpStatusCode.Unauthorized;
+                response.IsSuccess = false;
+                response.ErrorMessages.Add("Invalid token");
+                return response;
+            }
+
+            // Check if the user has the "admin" role
+            if (!principal.IsInRole("admin"))
+            {
+                response.StatusCode = HttpStatusCode.Forbidden;
+                response.IsSuccess = false;
+                response.ErrorMessages.Add("User is not authorized to perform this action");
+                return response;
+            }
+
+            // Proceed with the product creation logic
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var createDTO = JsonConvert.DeserializeObject<BProductPostDTO>(requestBody);
 
