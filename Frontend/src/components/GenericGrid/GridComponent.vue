@@ -4,13 +4,11 @@ import { defineProps } from "vue";
 import ImageCell from "./ImageCell.vue";
 import TextCell from "./TextCell.vue";
 
-// Define an enum for column types
 enum ColumnType {
   DEFAULT = "default",
   IMAGE = "image",
 }
 
-// Define a type for the columns
 interface Column {
   key: string;
   label: string;
@@ -18,7 +16,6 @@ interface Column {
   field?: string;
 }
 
-// Define props
 const props = defineProps<{
   items: Record<string, any>[];
   columns: Column[];
@@ -26,13 +23,11 @@ const props = defineProps<{
   base64Prefix?: string;
 }>();
 
-// Define a mapping object using the enum
 const componentMapping: Record<ColumnType, any> = {
   [ColumnType.DEFAULT]: TextCell,
   [ColumnType.IMAGE]: ImageCell,
 };
 
-// Factory function to get the component based on column type
 const getComponent = (column: Column) => {
   return componentMapping[column.type] || componentMapping[ColumnType.DEFAULT];
 };

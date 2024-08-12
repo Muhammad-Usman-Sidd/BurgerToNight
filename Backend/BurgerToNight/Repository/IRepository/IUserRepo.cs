@@ -4,6 +4,7 @@ namespace BurgerToNightAPI.Repository.IRepository
 {
     public interface IUserRepo
     {
+        Task<string> GetRole(string token);
         bool IsUniqueUser(string username);
         Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO);
         Task<UserDTO> Register(RegistrationRequestDTO registerationRequestDTO);

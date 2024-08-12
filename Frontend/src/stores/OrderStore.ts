@@ -19,7 +19,7 @@ export const useOrderStore = defineStore('order', {
   actions: {
     addToCart(burger: ProductGetDTO, quantity: number) {
       const authStore = useAuthStore();
-      if (authStore.isLoggedIn) {
+      if (authStore.isLoggedIn &&authStore.role==='customer') {
         try {
           const existingItem = this.cart.find((item) => item.burger.Id === burger.Id);
           if (existingItem) {
@@ -74,7 +74,7 @@ export const useOrderStore = defineStore('order', {
     },
     async loadUserPastOrders() {
       const authStore = useAuthStore();
-      if (authStore.isLoggedIn) {
+      if (authStore.isLoggedIn && authStore.role==='customer') {
         try {
           const response :APIResponse<OrderGetDTO[]> = await orderService.getUserOrders(authStore.user.id, authStore.token);
           if (response.IsSuccess) {
@@ -110,31 +110,43 @@ export const useOrderStore = defineStore('order', {
     },
     async updateOrder(dto: OrderUpdateDTO) {
       const authStore = useAuthStore();
-      try {
-        const response = await orderService.updateOrder(dto, authStore.token);
-        if (response.IsSuccess) {
-          toast.success('Order status updated successfully');
-          await this.loadOrders();
-        } else {
-          toast.error(response.ErrorMessages.join(', '));
+      if (authStore.isLoggedIn && authStore.role === "admin") {
+        try {
+          const response = await orderService.updateOrder(dto, authStore.token);
+          if (response.IsSuccess) {
+            toast.success('Order status updated successfully');
+            await this.loadOrders();
+          } else {
+            toast.error(response.ErrorMessages.join(', '));
+          }
+        } catch (error) {
+          toast.error('Error updating order status');
         }
-      } catch (error) {
-        toast.error('Error updating order status');
       }
+      else{
+        toast.error('Login to update order status');
+      }
+      
     },
     async deleteOrder(orderId: number) {
       const authStore = useAuthStore();
-      try {
-        const response = await orderService.deleteOrder(orderId, authStore.token);
-        if (response.IsSuccess) {
-          toast.success('Order deleted successfully');
-          await this.loadOrders();
-        } else {
-          toast.error(response.ErrorMessages.join(', '));
+      if (authStore.isLoggedIn && authStore.role === "admin") {
+        try {
+          const response = await orderService.deleteOrder(orderId, authStore.token);
+          if (response.IsSuccess) {
+            toast.success('Order deleted successfully');
+            await this.loadOrders();
+          } else {
+            toast.error(response.ErrorMessages.join(', '));
+          }
+        } catch (error) {
+          toast.error('Error deleting order');
         }
-      } catch (error) {
-        toast.error('Error deleting order');
       }
+      else{
+        toast.error('Admin can delete order');
+      }
+      
     },
   },
 });

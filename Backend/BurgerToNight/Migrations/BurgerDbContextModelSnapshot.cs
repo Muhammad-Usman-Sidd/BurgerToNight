@@ -119,7 +119,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BCategories");
+                    b.ToTable("BCategories", (string)null);
 
                     b.HasData(
                         new
@@ -200,7 +200,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasIndex("BCategoryId");
 
-                    b.ToTable("BProducts");
+                    b.ToTable("BProducts", (string)null);
 
                     b.HasData(
                         new
@@ -295,7 +295,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Cart", (string)null);
                 });
 
             modelBuilder.Entity("BurgerToNightAPI.Models.LocalUser", b =>
@@ -324,7 +324,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LocalUsers");
+                    b.ToTable("LocalUsers", (string)null);
                 });
 
             modelBuilder.Entity("BurgerToNightAPI.Models.OrderDetail", b =>
@@ -353,7 +353,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("BurgerToNightAPI.Models.OrderHeader", b =>
@@ -405,7 +405,7 @@ namespace BurgerToNightAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("OrderHeaders");
+                    b.ToTable("OrderHeaders", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
+import HeroPic from "../assets/img/hero.jpg";
 
 interface Props {
   title: string;
@@ -10,8 +11,9 @@ const props = defineProps<Props>();
 </script>
 
 <template>
-  <section class="bg-orange-700 py-20 mb-4">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+  <section class="relative py-20 mb-4">
+    <img :src="HeroPic" alt="Hero Image" class="absolute inset-0 w-full h-full object-cover -z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center relative z-10">
       <div class="text-center">
         <h1 class="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
           {{ props.title }}

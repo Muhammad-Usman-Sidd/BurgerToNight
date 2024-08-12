@@ -13,13 +13,16 @@ public class CreateProduct
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUserRepo _userRepo;
     private readonly IBlobService _blobService;
 
-    public CreateProduct(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
+    public CreateProduct(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService, IUserRepo userRepo)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _blobService = blobService;
+        _userRepo = userRepo;
+        _userRepo=userRepo;
     }
 
     [Function("CreateProduct")]
@@ -40,7 +43,6 @@ public class CreateProduct
                 response.ErrorMessages.Add("Unauthorized");
                 return response;
             }
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var createDTO = JsonConvert.DeserializeObject<BProductPostDTO>(requestBody);
 
