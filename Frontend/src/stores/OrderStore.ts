@@ -57,7 +57,7 @@ export const useOrderStore = defineStore('order', {
               Price: item.burger.Price,
             })) as OrderDetailCreateDTO[],
           };
-          const response = await orderService.placeOrder(orderDto, authStore.token);
+          const response = await orderService.placeOrder(orderDto);
           console.log(response);
           if (response.IsSuccess) {
             this.cart = [];
@@ -76,7 +76,7 @@ export const useOrderStore = defineStore('order', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role==='customer') {
         try {
-          const response :APIResponse<OrderGetDTO[]> = await orderService.getUserOrders(authStore.user.id, authStore.token);
+          const response :APIResponse<OrderGetDTO[]> = await orderService.getUserOrders(authStore.user.id);
           if (response.IsSuccess) {
             this.pastOrders = response.Result;
             console.log(response);
@@ -94,7 +94,8 @@ export const useOrderStore = defineStore('order', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role === "admin") {
         try {
-          const response :APIResponse<OrderGetDTO[]> = await orderService.getAllOrders(authStore.token);
+          const response :APIResponse<OrderGetDTO[]> = await orderService.getAllOrders();
+          console.log(response)
           if (response.IsSuccess) {
             this.pastOrders = response.Result;
             console.log(response);
@@ -112,7 +113,7 @@ export const useOrderStore = defineStore('order', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role === "admin") {
         try {
-          const response = await orderService.updateOrder(dto, authStore.token);
+          const response = await orderService.updateOrder(dto, );
           if (response.IsSuccess) {
             toast.success('Order status updated successfully');
             await this.loadOrders();
@@ -132,7 +133,7 @@ export const useOrderStore = defineStore('order', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role === "admin") {
         try {
-          const response = await orderService.deleteOrder(orderId, authStore.token);
+          const response = await orderService.deleteOrder(orderId, );
           if (response.IsSuccess) {
             toast.success('Order deleted successfully');
             await this.loadOrders();

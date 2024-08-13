@@ -1,5 +1,7 @@
 using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -12,12 +14,15 @@ namespace BurgerToNightFunc.Orders
     public class DeleteOrder
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepo _userRepo;
 
-        public DeleteOrder(IUnitOfWork unitOfWork)
+        public DeleteOrder(IUnitOfWork unitOfWork, IUserRepo userRepo)
         {
             _unitOfWork = unitOfWork;
+            _userRepo = userRepo;
         }
 
+        [Authorize(roles: "admin")]
         [Function("DeleteOrder")]
         public async Task<APIResponse> Run(
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "orders/{orderId}")] HttpRequestData req,

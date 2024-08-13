@@ -14,45 +14,40 @@ class OrderService extends BaseService implements IOrderService {
       super(import.meta.env.VITE_API_URL);
     }
 
-  async getUserOrders(userId: string, token: string): Promise<APIResponse<OrderGetDTO[]>> {
+  async getUserOrders(userId: string): Promise<APIResponse<OrderGetDTO[]>> {
     return this.sendRequest<OrderGetDTO[]>({
       Method: 'GET',
       Url: `orders/${userId}`,
-      Token: token
     });
   }
   
-  async getAllOrders(token: string): Promise<APIResponse<OrderGetDTO[]>> {
+  async getAllOrders(): Promise<APIResponse<OrderGetDTO[]>> {
     return this.sendRequest<OrderGetDTO[]>({
       Method: 'GET',
       Url: `orders`,
-      Token: token
     });
   }
 
-  async deleteOrder(id: number, token: string): Promise<APIResponse<null>> {
+  async deleteOrder(id: number): Promise<APIResponse<null>> {
     return this.sendRequest<null>({
       Method: 'DELETE',
       Url: `orders/${id}`,
-      Token: token
     });
   }
 
-  async placeOrder(dto:OrderCreateDTO, token: string): Promise<APIResponse<OrderGetDTO>> {
+  async placeOrder(dto:OrderCreateDTO): Promise<APIResponse<OrderGetDTO>> {
     return this.sendRequest<OrderGetDTO>({
       Method: 'POST',
       Url: `orders`,
       Data: dto,
-      Token: token
     });
   }
 
-  async updateOrder(dto:OrderUpdateDTO , token: string): Promise<APIResponse<null>> {
+  async updateOrder(dto:OrderUpdateDTO): Promise<APIResponse<null>> {
     return this.sendRequest<null>({
       Method: 'PUT',
       Url: `orders/${dto.Id}`,
       Data: dto,
-      Token: token
     });
   }
 }

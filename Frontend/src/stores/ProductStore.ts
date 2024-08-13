@@ -43,7 +43,7 @@ export const useBurgerStore = defineStore('product', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn &&authStore.role==='admin') {
         try {
-          await ProductService.createProduct(this.currentBurger as ProductCreateDTO, authStore.token);
+          await ProductService.createProduct(this.currentBurger as ProductCreateDTO);
           this.resetCurrentBurger();
           toast.success('Burger added successfully');
           this.fetchBurgers(this.pageIndex);
@@ -68,7 +68,7 @@ export const useBurgerStore = defineStore('product', {
             BCategoryId: this.currentBurger.BCategoryId || null,
             Image: this.currentBurger.Image || '',
           };
-          await ProductService.updateProduct(updateBurgerDTO, authStore.token);
+          await ProductService.updateProduct(updateBurgerDTO);
           toast.success('Burger updated successfully');
           this.resetCurrentBurger();
           this.fetchBurgers(this.pageIndex);
@@ -84,7 +84,7 @@ export const useBurgerStore = defineStore('product', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role==='admin') {
         try {
-          await ProductService.deleteProduct(id, authStore.token);
+          await ProductService.deleteProduct(id, );
           this.burgers = this.burgers.filter(burger => burger.Id !== id);
           toast.success('Burger deleted successfully');
         } catch (error) {

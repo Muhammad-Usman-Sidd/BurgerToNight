@@ -7,20 +7,24 @@ using Microsoft.Azure.Functions.Worker;
 using System.Net;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Worker.Http;
+using BurgerToNightAPI.Repository;
+using BurgerToNightFunc.Attributes;
 
 public class Get_Product
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IBlobService _blobService;
+    private readonly IUserRepo _userRepo;
 
-    public Get_Product(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
+    public Get_Product(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService, IUserRepo userRepo)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _blobService = blobService;
+        _userRepo = userRepo;
     }
-
+    [Authorize(roles: ["admin","customer"])]
     [Function("GetProduct")]
     public async Task<APIResponse> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "productAPI/{id}")] HttpRequestData req,
@@ -40,11 +44,11 @@ public class Get_Product
                 return response;
             }
 
+
             var mappedProduct = _mapper.Map<BProductGetDTO>(product);
             var burgerCategory = await _unitOfWork.BCategories.GetAsync(c => c.Id == mappedProduct.BCategoryId);
             mappedProduct.burgerCategory = burgerCategory?.Title;
 
-            // Retrieve the image as a base64 string using the blob name
             if (!string.IsNullOrEmpty(product.Image) && product.Image.StartsWith("Blob"))
             {
                 try

@@ -2,6 +2,7 @@ using System.Net;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -17,7 +18,7 @@ namespace BurgerToNightFunc.Auth
         {
             _userRepo = userRepo;
         }
-
+        [Authorize(roles:["customer","admin"])]
         [Function("ResetPassword")]
         public async Task<APIResponse> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "AuthResetPassword")] HttpRequestData req,
@@ -28,6 +29,22 @@ namespace BurgerToNightFunc.Auth
 
             try
             {
+                var token = req.Headers.GetValues("Authorization").FirstOrDefault();
+                if (token == null)
+                {
+                    response.StatusCode = HttpStatusCode.Unauthorized;
+                    response.IsSuccess = false;
+                    response.ErrorMessages.Add("Unauthorized");
+                    return response;
+                }
+                var principal = _userRepo.GetPrincipalFromToken(token);
+                if (principal == null)
+                {
+                    response.StatusCode = HttpStatusCode.Unauthorized;
+                    response.IsSuccess = false;
+                    response.ErrorMessages.Add("Invalid token");
+                    return response;
+                }
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var resetPasswordDTO = JsonConvert.DeserializeObject<ResetPasswordDTO>(requestBody);
 

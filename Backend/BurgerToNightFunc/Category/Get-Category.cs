@@ -3,6 +3,7 @@ using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ namespace BurgerToNightFunc.Category
         {
             _unitOfWork = unitOfWork;
         }
+        [Authorize(roles:"admin")]
         [Function("GetCategory")]
         public async Task<APIResponse> Run(
                     [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "CategoryAPI/{id}")] HttpRequestData req,

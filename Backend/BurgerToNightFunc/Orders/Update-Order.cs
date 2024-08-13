@@ -1,6 +1,8 @@
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
+using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -15,12 +17,15 @@ namespace BurgerToNightFunc.Orders
     public class UpdateOrder
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepo _userRepo;
 
-        public UpdateOrder(IUnitOfWork unitOfWork)
+        public UpdateOrder(IUnitOfWork unitOfWork, IUserRepo userRepo)
         {
             _unitOfWork = unitOfWork;
+            _userRepo = userRepo;
         }
 
+        [Authorize(roles: "admin")]
         [Function("UpdateOrder")]
         public async Task<APIResponse> Run(
             [HttpTrigger(AuthorizationLevel.Function, "put", Route = "orders/{orderId}")] HttpRequestData req,
@@ -28,7 +33,6 @@ namespace BurgerToNightFunc.Orders
         {
             var log = context.GetLogger("UpdateOrder");
             var response = new APIResponse();
-
             try
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();

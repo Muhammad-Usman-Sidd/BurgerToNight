@@ -32,7 +32,7 @@ export const useCategoryStore = defineStore('category', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn &&authStore.role==='admin') {
         try {
-          await CategoryService.createCategory(this.currentCategory, authStore.token);
+          await CategoryService.createCategory(this.currentCategory,);
           this.fetchCategories();
           toast.success('Category added successfully');
         } catch (error) {
@@ -49,7 +49,7 @@ export const useCategoryStore = defineStore('category', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role==='admin') {
         try {
-          await CategoryService.deleteCategory(id, authStore.token);
+          await CategoryService.deleteCategory(id);
           this.categories = this.categories.filter(u => u.Id !== id);
           toast.success('Burger deleted successfully');
         } catch (error) {

@@ -1,5 +1,7 @@
 using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -8,12 +10,14 @@ using System.Net;
 public class DeleteProduct
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserRepo _userRepo;
 
-    public DeleteProduct(IUnitOfWork unitOfWork)
+    public DeleteProduct(IUnitOfWork unitOfWork, IUserRepo userRepo)
     {
         _unitOfWork = unitOfWork;
+        _userRepo = userRepo;
     }
-
+    [Authorize(roles: "admin")]
     [Function("DeleteProduct")]
     public async Task<APIResponse> Run(
         [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "productAPI/{id}")] HttpRequestData req,
@@ -25,15 +29,6 @@ public class DeleteProduct
 
         try
         {
-            // Validate authentication
-            var token = req.Headers.GetValues("Authorization").FirstOrDefault();
-            if (token == null || !await IsUserAuthorized(token))
-            {
-                response.StatusCode = HttpStatusCode.Unauthorized;
-                response.IsSuccess = false;
-                response.ErrorMessages.Add("Unauthorized");
-                return response;
-            }
 
             var existingProduct = await _unitOfWork.BProducts.GetAsync(u=>u.Id==id);
             if (existingProduct == null)
@@ -60,9 +55,4 @@ public class DeleteProduct
         return response;
     }
 
-    private async Task<bool> IsUserAuthorized(string token)
-    {
-        // Implement authentication and authorization logic here
-        return true; // Replace with actual logic
-    }
 }

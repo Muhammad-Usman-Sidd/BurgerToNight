@@ -5,8 +5,10 @@ import {useBurgerStore} from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
 import { OrderUpdateDTO } from "../../models/OrderDtos"
 import { useAuthStore } from "../../stores/AuthStore";
+import { useRouter } from "vue-router";
 import UnAuthAdmin from "../../components/UnAuth(Admin).vue";
 
+const router =useRouter();
 const orderStore = useOrderStore();
 const productStore = useBurgerStore();
 const authStore = useAuthStore();
@@ -15,6 +17,7 @@ const productDetails = reactive<Record<number, ProductGetDTO | null>>({});
 
 const updateOrder = async (dto: OrderUpdateDTO) => {
   await orderStore.updateOrder(dto);
+  router.push('/orders')
 };
 
 const getProductDetails = async (Id: number): Promise<ProductGetDTO | null> => {

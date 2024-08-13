@@ -1,7 +1,7 @@
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightAPI.Repository;
 using AutoMapper;
@@ -20,10 +20,15 @@ var host = new HostBuilder()
         config.AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
               .AddEnvironmentVariables();
     })
-    .ConfigureFunctionsWorkerDefaults()
+    .ConfigureFunctionsWorkerDefaults(workerApp =>
+    {
+        workerApp.UseMiddleware<AuthorizationMiddleware>();
+    })
     .ConfigureServices((context, services) =>
     {
         var configuration = context.Configuration;
+
+        services.AddSingleton(configuration);
 
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
@@ -33,12 +38,15 @@ var host = new HostBuilder()
             var connectionString = configuration.GetValue<string>("BlobStorage:ConnectionString");
             return new BlobServiceClient(connectionString);
         });
+        services.AddTransient<AuthorizationMiddleware>();
 
         services.AddScoped<IBlobService, BlobService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepo, UserRepo>();
         services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<BurgerDbContext>().AddDefaultTokenProviders();
+            .AddEntityFrameworkStores<BurgerDbContext>()
+            .AddDefaultTokenProviders();
+
         services.AddAutoMapper(typeof(MapProfile));
 
         services.AddDbContext<BurgerDbContext>(options =>

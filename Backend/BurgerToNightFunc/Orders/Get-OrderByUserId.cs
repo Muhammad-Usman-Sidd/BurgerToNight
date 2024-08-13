@@ -1,7 +1,9 @@
 using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
+using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Collections.Generic;
@@ -15,13 +17,16 @@ namespace BurgerToNightFunc.Orders
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserRepo _userRepo;
 
-        public Get_OrderByUserId(IUnitOfWork unitOfWork, IMapper mapper)
+        public Get_OrderByUserId(IUnitOfWork unitOfWork, IMapper mapper, IUserRepo userRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userRepo = userRepo;
         }
 
+        [Authorize(roles: "customer")]
         [Function("GetUserOrders")]
         public async Task<APIResponse> GetUserOrders(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "orders/{userId}")] HttpRequestData req, string userId)

@@ -3,7 +3,9 @@ using AutoMapper;
 using BurgerToNightAPI.Data;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
+using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -15,13 +17,17 @@ namespace BurgerToNightFunc.Category
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepo _userRepo;
 
-        public Create_Category(IMapper mapper, IUnitOfWork unitOfWork)
+        public Create_Category(IMapper mapper, IUnitOfWork unitOfWork, IUserRepo userRepo)
         {
 
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _userRepo = userRepo;
         }
+
+        [Authorize(roles: "admin")]
         [Function("CreateCategory")]
         public async Task<APIResponse> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "CategoryAPI")] HttpRequestData req,
         FunctionContext context)
@@ -29,14 +35,7 @@ namespace BurgerToNightFunc.Category
             var response = new APIResponse();
             try
             {
-                var token = req.Headers.GetValues("Authorization").FirstOrDefault();
-                if (token == null)
-                {
-                    response.StatusCode = HttpStatusCode.Unauthorized;
-                    response.IsSuccess = false;
-                    response.ErrorMessages.Add("Unauthorized");
-                    return response;
-                }
+              
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var createDTO = JsonConvert.DeserializeObject<BCategoryPostDTO>(requestBody);
 

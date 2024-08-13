@@ -1,7 +1,9 @@
 using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
+using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using BurgerToNightFunc.Services.IServices;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -14,14 +16,16 @@ public class UpdateProduct
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IBlobService _blobService;
+    private readonly IUserRepo _userRepo;
 
-    public UpdateProduct(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
+    public UpdateProduct(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService, IUserRepo userRepo)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _blobService = blobService;
+        _userRepo = userRepo;
     }
-
+    [Authorize(roles:"admin")]
     [Function("UpdateProduct")]
     public async Task<APIResponse> Run(
         [HttpTrigger(AuthorizationLevel.Function, "put", Route = "productAPI/{id}")] HttpRequestData req,
@@ -33,15 +37,6 @@ public class UpdateProduct
 
         try
         {
-            // Validate authentication
-            var user = req.Headers.GetValues("Authorization").FirstOrDefault();
-            if (user == null || !await IsUserAuthorized(user))
-            {
-                response.StatusCode = HttpStatusCode.Unauthorized;
-                response.IsSuccess = false;
-                response.ErrorMessages.Add("Unauthorized");
-                return response;
-            }
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var updateDTO = JsonConvert.DeserializeObject<BProductUpdateDTO>(requestBody);
@@ -85,9 +80,4 @@ public class UpdateProduct
         return response;
     }
 
-    private async Task<bool> IsUserAuthorized(string token)
-    {
-        // Implement authentication and authorization logic here
-        return true; // Replace with actual logic
-    }
 }

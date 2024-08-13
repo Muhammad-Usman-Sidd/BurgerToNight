@@ -9,14 +9,14 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     isLoggedIn: false,
     user: {
-      id:'',
-      name:'',
-      phoneNumber:'',
-      address:''
+      id: '',
+      name: '',
+      phoneNumber: '',
+      address: ''
     } as any,
-    token: '',
-    role: '',
-    showDropdownButtons:false
+    token: localStorage.getItem('JWT token') || '',
+    role: localStorage.getItem('Role') || '',
+    showDropdownButtons: false
   }),
   actions: {
     async login(dto: LoginDTO) {
@@ -28,8 +28,11 @@ export const useAuthStore = defineStore('auth', {
           this.role = response.Result.Role;
           this.user.id = response.Result.User.Id;
           this.user.name = response.Result.User.Name;
-          this.user.phoneNumber=response.Result.User.PhoneNumber;
+          this.user.phoneNumber = response.Result.User.PhoneNumber;
           this.user.address = response.Result.User.Address;
+
+          localStorage.setItem('JWT token', this.token);
+          localStorage.setItem('Role', this.role);
 
           console.log(this.user);
         } else {
@@ -44,17 +47,21 @@ export const useAuthStore = defineStore('auth', {
       this.token = '';
       this.role = '';
       this.user = {};
-      console.log("Logout succefull :" + this.user)
+
+      localStorage.removeItem('JWT token');
+      localStorage.removeItem('Role');
+
+      console.log("Logout successful");
     },
     async register(dto: RegistrationRequestDTO) {
       try {
         const response: APIResponse<any> = await authService.register(dto);
-        console.log(response)
+        console.log(response);
       } catch (error: any) {
         throw new Error(error.message || 'Failed to register. Please try again.');
       }
     },
-    async resetPassword(dto : ResetPasswordDTO) {
+    async resetPassword(dto: ResetPasswordDTO) {
       try {
         const response: APIResponse<ResetPasswordDTO> = await authService.resetPassword(dto);
         if (!response.IsSuccess) {
@@ -64,8 +71,17 @@ export const useAuthStore = defineStore('auth', {
         throw new Error(error.message || 'Failed to reset password. Please try again.');
       }
     },
-    toggleDropdownButtons(){
+    toggleDropdownButtons() {
       this.showDropdownButtons = !this.showDropdownButtons;
+    },
+    initializeStore() {
+      const token = localStorage.getItem('JWT token');
+      const role = localStorage.getItem('Role');
+      if (token) {
+        this.token = token;
+        this.isLoggedIn = true;
+        this.role = role || '';
+      }
     }
   }
 });

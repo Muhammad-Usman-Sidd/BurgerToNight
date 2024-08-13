@@ -2,6 +2,7 @@ using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -19,20 +20,21 @@ namespace BurgerToNightFunc.Orders
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public Create_Order(IUnitOfWork unitOfWork,IMapper mapper)
+        private readonly IUserRepo _userRepo;
+        public Create_Order(IUnitOfWork unitOfWork, IMapper mapper, IUserRepo userRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userRepo = userRepo;
         }
 
+        [Authorize(roles: "customer")]
         [Function("CreateOrder")]
         public async Task<APIResponse> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "orders")] HttpRequestData req,
             FunctionContext context)
         {
             var response = new APIResponse();
-
             try
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
