@@ -97,7 +97,7 @@ namespace BurgerToNightAPI.Controllers
         {
             try
             {
-                if (await _unitOfWork.BCategories.GetAsync(u => u.Title.ToLower() == createDTO.Title.ToLower()) != null)
+                if (await _unitOfWork.BCategories.GetAsync(u => u.Name.ToLower() == createDTO.Name.ToLower()) != null)
                 {
                     ModelState.AddModelError("ErrorMessages", "Category already Exists!");
                     return BadRequest(ModelState);

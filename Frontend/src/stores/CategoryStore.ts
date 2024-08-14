@@ -45,7 +45,7 @@ export const useCategoryStore = defineStore('category', {
     },
 
      
-    async deleteBurger(id: number) {
+    async deleteCategory(id: number) {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role==='admin') {
         try {

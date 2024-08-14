@@ -1,10 +1,10 @@
 export interface CategoryGetDTO{
     Id:number,
-    Title:string,
+    Name:string,
     Description:string
 }
 export interface CategoryCreateDTO{
-    Title:string,
+    Name:string,
     Description:string
 }
 

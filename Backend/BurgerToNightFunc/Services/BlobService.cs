@@ -66,7 +66,7 @@ namespace BurgerToNightFunc.Services
 
                     // Convert the image to base64
                     var base64String = Convert.ToBase64String(memoryStream.ToArray());
-                    return $"{base64String}";
+                    return $"data:image/*;base64,{base64String}";
                 }
             }
             catch (Exception ex)

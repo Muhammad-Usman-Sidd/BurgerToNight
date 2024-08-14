@@ -68,7 +68,7 @@ public class CreateProduct
             await _unitOfWork.SaveAsync();
 
             var result = _mapper.Map<BProductGetDTO>(product);
-            result.burgerCategory = (await _unitOfWork.BCategories.GetAsync(c => c.Id == product.BCategoryId))?.Title;
+            result.burgerCategory = (await _unitOfWork.BCategories.GetAsync(c => c.Id == product.BCategoryId))?.Name;
 
             response.StatusCode = HttpStatusCode.Created;
             response.Result = result;

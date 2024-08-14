@@ -4,7 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useBurgerStore } from "../../stores/ProductStore";
 import { useAuthStore } from "../../stores/AuthStore";
 import { useOrderStore } from "../../stores/OrderStore";
-import UnAuthorized from "../../components/UnAuthorized.vue";
+import UnAuthorized from "../../components/Auth/UnAuthorized.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -17,16 +17,6 @@ const deleteProduct = async () => {
   await store.deleteBurger(+BurgerId);
   router.push("/burgers");
 };
-
-const image = computed((): any => {
-  const imageData = store.currentBurger.Image;
-  const base64Prefix = "data:image/*;base64,";
-  if (imageData && imageData.startsWith("data:image/")) {
-    return imageData;
-  } else {
-    return base64Prefix + imageData;
-  }
-});
 
 onMounted(async () => {
   await store.fetchBurgerById(+BurgerId);
@@ -42,7 +32,7 @@ onMounted(async () => {
             <h3 class="text-xl font-bold mb-6">Burger Info</h3>
             <div class="text-gray-600 grid place-items-center my-2">
               <img
-                :src="image"
+                :src="store.currentBurger.Image"
                 alt="Burger Image"
                 class="w-70 h-64 object-cover rounded mx-0"
               />

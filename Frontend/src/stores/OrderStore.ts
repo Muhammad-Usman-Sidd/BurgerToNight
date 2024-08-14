@@ -6,6 +6,7 @@ import OrderService from '../services/OrderService';
 import { OrderGetDTO, OrderCreateDTO, OrderUpdateDTO } from '../models/OrderDtos';
 import { OrderDetailCreateDTO } from '../models/OrderDetailDtos';
 import { APIResponse } from '../models/APIResult';
+import Swal from 'sweetalert2';
 
 const toast = useToast();
 const orderService=new OrderService();
@@ -95,11 +96,10 @@ export const useOrderStore = defineStore('order', {
       if (authStore.isLoggedIn && authStore.role === "admin") {
         try {
           const response :APIResponse<OrderGetDTO[]> = await orderService.getAllOrders();
-          console.log(response)
           if (response.IsSuccess) {
             this.pastOrders = response.Result;
             console.log(response);
-          } else {
+          } else{
             toast.error(response.ErrorMessages.join(', '));
           }
         } catch (error) {
@@ -131,17 +131,31 @@ export const useOrderStore = defineStore('order', {
     },
     async deleteOrder(orderId: number) {
       const authStore = useAuthStore();
-      if (authStore.isLoggedIn && authStore.role === "admin") {
-        try {
-          const response = await orderService.deleteOrder(orderId, );
-          if (response.IsSuccess) {
-            toast.success('Order deleted successfully');
-            await this.loadOrders();
-          } else {
-            toast.error(response.ErrorMessages.join(', '));
+      if (authStore.isLoggedIn && authStore.role === 'admin') {
+        const result = await Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        });
+    
+        if (result.isConfirmed) {
+          try {
+            const response = await orderService.deleteOrder(orderId);
+            if (response.IsSuccess) {
+              toast.success('Order deleted successfully');
+              await this.loadOrders();
+            }
+            else {
+              toast.error(response.ErrorMessages.join(', '));
+            }
+          } 
+          catch (error) {
+            toast.error('Error deleting order');
           }
-        } catch (error) {
-          toast.error('Error deleting order');
         }
       }
       else{

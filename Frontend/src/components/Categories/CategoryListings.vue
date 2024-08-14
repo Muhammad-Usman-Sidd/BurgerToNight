@@ -58,5 +58,6 @@ const toggleViewMode = (mode: "card" | "grid") => {
         <CategoryGrid :categories="categoryStore.categories" />
       </div>
     </div>
+    
   </section>
 </template>

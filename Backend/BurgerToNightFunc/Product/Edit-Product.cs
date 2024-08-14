@@ -64,7 +64,7 @@ public class UpdateProduct
             await _unitOfWork.SaveAsync();
 
             var result = _mapper.Map<BProductGetDTO>(existingProduct);
-            result.burgerCategory = (await _unitOfWork.BCategories.GetAsync(c => c.Id == existingProduct.BCategoryId))?.Title;
+            result.burgerCategory = (await _unitOfWork.BCategories.GetAsync(c => c.Id == existingProduct.BCategoryId))?.Name;
 
             response.StatusCode = HttpStatusCode.OK;
             response.Result = result;

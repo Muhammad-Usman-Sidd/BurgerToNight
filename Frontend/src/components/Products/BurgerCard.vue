@@ -18,16 +18,6 @@ const toggleFullDescription = () => {
   showFullDescription.value = !showFullDescription.value;
 };
 
-const image = computed(() => {
-  const imageData = props.burger.Image;
-  const base64Prefix = "data:image/*;base64,";
-
-  if (imageData && imageData.startsWith("data:image/")) {
-    return imageData;
-  } else {
-    return base64Prefix + imageData;
-  }
-});
 
 const halfDescription = computed(() => {
   const description = props.burger?.Description ?? "";
@@ -48,7 +38,7 @@ const addToCart = () => {
         <div class="mb-6">
           <div class="text-gray-600 grid place-items-center my-2">
             <img
-              :src="image"
+              :src="props.burger.Image"
               alt="Burger Image"
               class="w-70 h-64 object-cover rounded mx-0"
             />

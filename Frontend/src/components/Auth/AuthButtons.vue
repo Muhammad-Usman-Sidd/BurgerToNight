@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { useAuthStore } from "../stores/AuthStore";
+import { useAuthStore } from "../../stores/AuthStore";
 import { RouterLink } from "vue-router";
 import { useRouter } from "vue-router";
 

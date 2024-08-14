@@ -23,16 +23,25 @@ const router = createRouter({
       name: 'addburgers',
       component: ()=>import('../views/Product/AddBurger.vue')
     },
+    // {
+    //   path: '/categories/:id',
+    //   name: 'CategoryDetails',
+    //   component: ()=>import('../views/Product/Caetgory.vue')
+    // },
     {
       path: '/burgers/edit/:id',
       name: 'editburger',
       component: ()=>import('../views/Product/EditBurger.vue')
     },
-    
     {
       path: '/categories',
       name: 'categories',
       component: ()=>import('../views/Category/Categories.vue')
+    },
+    {
+      path: '/add-categories',
+      name: 'add-categories',
+      component: ()=>import('../views/Category/AddCategory.vue')
     },
     {
       path: '/past-orders',

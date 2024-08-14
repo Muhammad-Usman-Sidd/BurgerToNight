@@ -12,7 +12,7 @@ import {
 } from "@heroicons/vue/24/solid";
 import { useAuthStore } from "../stores/AuthStore";
 import { ref } from "vue";
-import AuthButtons from "./AuthButtons.vue";
+import AuthButtons from "./Auth/AuthButtons.vue";
 
 const authStore = useAuthStore();
 const route = useRoute();
@@ -61,7 +61,7 @@ const isMenuOpen = ref(false);
             <ListBulletIcon class="h-5 w-5 inline-block mr-1" />
             Burgers
           </RouterLink>
-          <RouterLink
+          <!-- <RouterLink
             v-if="authStore.isLoggedIn && authStore.role === 'admin'"
             to="/add-burgers"
             :class="[
@@ -73,7 +73,7 @@ const isMenuOpen = ref(false);
           >
             <PlusCircleIcon class="h-5 w-5 inline-block mr-1" />
             Add Burger
-          </RouterLink>
+          </RouterLink> -->
           <RouterLink
             v-if="authStore.isLoggedIn"
             to="/categories"
@@ -170,7 +170,7 @@ const isMenuOpen = ref(false);
       <ListBulletIcon class="h-5 w-5 inline-block mr-1" />
       Burgers
     </RouterLink>
-    <RouterLink
+    <!-- <RouterLink
             v-if="authStore.isLoggedIn && authStore.role === 'admin'"
             to="/add-burgers"
             :class="[
@@ -182,7 +182,7 @@ const isMenuOpen = ref(false);
     >
       <PlusCircleIcon class="h-5 w-5 inline-block mr-1" />
       Add Burger
-    </RouterLink>
+    </RouterLink> -->
     <RouterLink
             v-if="authStore.isLoggedIn"
             to="/categories"

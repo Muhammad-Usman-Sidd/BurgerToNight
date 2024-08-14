@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LockClosedIcon, ArrowRightIcon } from "@heroicons/vue/24/solid";
-import { useAuthStore } from "../stores/AuthStore";
+import { useAuthStore } from "../../stores/AuthStore";
 const authStore=useAuthStore()
 </script>
 <template>

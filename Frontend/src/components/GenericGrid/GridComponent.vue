@@ -1,6 +1,5 @@
-<!-- GridComponent.vue -->
 <script lang="ts" setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 import ImageCell from "./ImageCell.vue";
 import TextCell from "./TextCell.vue";
 
@@ -20,7 +19,10 @@ const props = defineProps<{
   items: Record<string, any>[];
   columns: Column[];
   limit?: number | null;
-  base64Prefix?: string;
+}>();
+
+const emits = defineEmits<{ 
+  'row-click': (item: Record<string, any>) => void 
 }>();
 
 const componentMapping: Record<ColumnType, any> = {
@@ -51,22 +53,20 @@ const getComponent = (column: Column) => {
         <tr
           v-for="item in props.items.slice(0, props.limit || props.items.length)"
           :key="item.Id"
-          class="hover:bg-gray-100"
+          class="hover:bg-gray-100 cursor-pointer"
+          @click="$emit('row-click', item)"
         >
-          <router-link :to="'burgers/' + item.Id" class="contents">
-            <td
-              v-for="column in props.columns"
-              :key="column.key"
-              class="py-2 px-4 border-b text-center align-middle"
-            >
-              <component
-                :is="getComponent(column)"
-                :item="item"
-                :base64Prefix="props.base64Prefix"
-                v-bind="column.field ? { field: column.field } : {}"
-              />
-            </td>
-          </router-link>
+          <td
+            v-for="column in props.columns"
+            :key="column.key"
+            class="py-2 px-4 border-b text-center align-middle"
+          >
+            <component
+              :is="getComponent(column)"
+              :item="item"
+              v-bind="column.field ? { field: column.field } : {}"
+            />
+          </td>
         </tr>
       </tbody>
     </table>

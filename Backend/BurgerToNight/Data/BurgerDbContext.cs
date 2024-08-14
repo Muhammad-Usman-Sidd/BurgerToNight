@@ -27,42 +27,42 @@ namespace BurgerToNightAPI.Data
                 new BurgerCategory
                 {
                     Id = 1,
-                    Title = "BBQ",
+                    Name = "BBQ",
                     Description = "Experience the smoky flavor and tender texture of our BBQ burgers, crafted with meticulous care in a controlled environment.",
                     CreationCategoryTime = DateTime.Now
                 },
                 new BurgerCategory
                 {
                     Id = 2,
-                    Title = "Grilled",
+                    Name = "Grilled",
                     Description = "Indulge in the wholesome goodness of our Grilled burgers, prepared in a hygienic oven for a perfect char and juicy bite.",
                     CreationCategoryTime = DateTime.Now
                 },
                 new BurgerCategory
                 {
                     Id = 3,
-                    Title = "Crunch",
+                    Name = "Crunch",
                     Description = "Savor the irresistible crunch of our burgers, made with the finest breadcrumbs and fresh, clean oil for an unforgettable taste.",
                     CreationCategoryTime = DateTime.Now
                 },
                 new BurgerCategory
                 {
                     Id = 4,
-                    Title = "Special",
+                    Name = "Special",
                     Description = "Discover our signature Special burgers, the ultimate favorite renowned for their exceptional flavor and quality.",
                     CreationCategoryTime = DateTime.Now
                 },
                 new BurgerCategory
                 {
                     Id = 5,
-                    Title = "Fish",
+                    Name = "Fish",
                     Description = "Dive into the deliciousness of our Fish burgers, served with love and a smile for a delightful seafood experience.",
                     CreationCategoryTime = DateTime.Now
                 },
                 new BurgerCategory
                 {
                     Id = 6,
-                    Title = "Lamb",
+                    Name = "Lamb",
                     Description = "Enjoy the rich and succulent taste of our Lamb burgers, made with premium lamb meat imported from Turkey just for you.",
                     CreationCategoryTime = DateTime.Now
                 }

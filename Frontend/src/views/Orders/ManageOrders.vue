@@ -6,7 +6,7 @@ import { ProductGetDTO } from "../../models/ProductDtos";
 import { OrderUpdateDTO } from "../../models/OrderDtos"
 import { useAuthStore } from "../../stores/AuthStore";
 import { useRouter } from "vue-router";
-import UnAuthAdmin from "../../components/UnAuth(Admin).vue";
+import UnAuthAdmin from "../../components/Auth/UnAuth(Admin).vue";
 
 const router =useRouter();
 const orderStore = useOrderStore();
@@ -17,8 +17,11 @@ const productDetails = reactive<Record<number, ProductGetDTO | null>>({});
 
 const updateOrder = async (dto: OrderUpdateDTO) => {
   await orderStore.updateOrder(dto);
-  router.push('/orders')
 };
+
+const deleteOrder = async (id:number)=>{
+  await orderStore.deleteOrder(id)
+}
 
 const getProductDetails = async (Id: number): Promise<ProductGetDTO | null> => {
   if (!productDetails[Id]) {
@@ -46,7 +49,7 @@ onMounted(async () => {
     <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Manage Orders</h1>
 
     <div v-if="!orderStore.pastOrders.length" class="block text-gray-700 text-center">
-      No past orders found.
+      No orders found.
     </div>
 
     <ul v-else class="w-full max-w-4xl">
@@ -130,6 +133,13 @@ onMounted(async () => {
             class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mt-2"
           >
             Save Changes
+          </button>
+          <button
+            @click="
+              deleteOrder(order.Id)"
+            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mt-2"
+          >
+            Delete Order
           </button>
         </div>
       </li>

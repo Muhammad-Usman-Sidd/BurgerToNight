@@ -1,17 +1,15 @@
-<!-- BurgerList.vue -->
 <script lang="ts" setup>
+import { defineProps } from "vue";
+import { useRouter } from "vue-router";
 import GridComponent from "../GenericGrid/GridComponent.vue";
 
-// Define an enum for column types
 enum ColumnType {
   DEFAULT = "default",
   IMAGE = "image",
 }
 
-// Define props
 const props = defineProps<{
   burgers: Record<string, any>[];
-  limit?: number;
 }>();
 
 const columns = [
@@ -37,13 +35,18 @@ const columns = [
     type: ColumnType.DEFAULT,
   },
 ];
+
+const router = useRouter();
+
+const handleRowClick = (burger: Record<string, any>) => {
+  router.push({ name: "burger", params: { id: burger.Id } });
+};
 </script>
 
 <template>
   <GridComponent
-    :items="props.burgers"
+    :items="burgers"
     :columns="columns"
-    :limit="props.limit"
-    base64Prefix="data:image/*;base64,"
+    @row-click="handleRowClick"
   />
 </template>

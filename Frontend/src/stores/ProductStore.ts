@@ -4,6 +4,8 @@ import ProductService from '../services/ProductService';
 import { ProductGetDTO, ProductCreateDTO, ProductUpdateDTO } from '../models/ProductDtos';
 import { APIResponse } from '../models/APIResult';
 import { useAuthStore } from './AuthStore';
+import Swal from 'sweetalert2';
+import { stringifyQuery, useRouter } from 'vue-router';
 
 const toast = useToast();
 export const useBurgerStore = defineStore('product', {
@@ -41,12 +43,13 @@ export const useBurgerStore = defineStore('product', {
     },
     async addBurger() {
       const authStore = useAuthStore();
-      if (authStore.isLoggedIn &&authStore.role==='admin') {
+      if (authStore.isLoggedIn && authStore.role==='admin') {
         try {
-          await ProductService.createProduct(this.currentBurger as ProductCreateDTO);
+          console.log(this.currentBurger)
+          await ProductService.createProduct(this.currentBurger);
           this.resetCurrentBurger();
           toast.success('Burger added successfully');
-          this.fetchBurgers(this.pageIndex);
+          this.fetchBurgers(1);
         } catch (error) {
           toast.error('Error adding burger');
         }
@@ -80,19 +83,32 @@ export const useBurgerStore = defineStore('product', {
         toast.error("You Don't have access")
       }
     },
+    
     async deleteBurger(id: number) {
       const authStore = useAuthStore();
-      if (authStore.isLoggedIn && authStore.role==='admin') {
-        try {
-          await ProductService.deleteProduct(id, );
-          this.burgers = this.burgers.filter(burger => burger.Id !== id);
-          toast.success('Burger deleted successfully');
-        } catch (error) {
-          toast.error('Error deleting burger');
+    
+      if (authStore.isLoggedIn && authStore.role === 'admin') {
+        const result = await Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        });
+    
+        if (result.isConfirmed) {
+          try {
+            await ProductService.deleteProduct(id);
+            this.burgers = this.burgers.filter(burger => burger.Id !== id);
+            toast.success('Burger deleted successfully');
+          } catch (error) {
+            toast.error('Error deleting burger');
+          }
         }
-      }
-      else{
-        toast.error("You Don't have access")
+      } else {
+        toast.error("You don't have access");
       }
     },
     handleImageUpload(event: Event) {
@@ -101,16 +117,16 @@ export const useBurgerStore = defineStore('product', {
         if (files && files.length != null) {
 
           const file = files[0];
-          const reader = new FileReader();
-          reader.onloadend = () => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
             this.currentBurger.Image = reader.result as string;
-          };
-          reader.readAsDataURL(file);
-        }
-      } catch (error) {
+        };
+        reader.readAsDataURL(file);
+      }}
+      catch (error) {
         toast.error('Error uploading image');
       }
-    },
+    },    
     resetCurrentBurger() {
       this.currentBurger = {
         Name: '',

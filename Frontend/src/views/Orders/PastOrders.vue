@@ -4,7 +4,7 @@ import { useOrderStore } from "../../stores/OrderStore";
 import useBurgerStore from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
 import { useAuthStore } from "../../stores/AuthStore";
-import UnAuthorized from "../../components/UnAuthorized.vue";
+import UnAuthorized from "../../components/Auth/UnAuthorized.vue";
 
 const orderStore = useOrderStore();
 const productStore = useBurgerStore();

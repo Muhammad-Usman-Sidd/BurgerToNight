@@ -14,7 +14,7 @@ const props = defineProps<{
   <div class="bg-white rounded-xl shadow-md relative">
     <div class="p-4">
       <div class="mb-6">
-        <h3 class="text-xl font-bold">{{ category.Title }}</h3>
+        <h3 class="text-xl font-bold">{{ category.Name }}</h3>
       </div>
       <div class="mb-5">
         <div>{{ category.Description }}</div>

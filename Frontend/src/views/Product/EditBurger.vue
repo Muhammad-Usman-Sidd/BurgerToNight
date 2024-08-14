@@ -4,7 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useBurgerStore } from "../../stores/ProductStore";
 import { useCategoryStore } from "../../stores/CategoryStore";
 import { useAuthStore } from "../../stores/AuthStore";
-import UnAuthAdmin from "../../components/UnAuth(Admin).vue";
+import UnAuthAdmin from "../../components/Auth/UnAuth(Admin).vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -67,7 +67,7 @@ onMounted(async () => {
               :key="category.Id"
               :value="category.Id"
             >
-              {{ category.Title }}
+              {{ category.Name }}
             </option>
           </select>
         </div>
