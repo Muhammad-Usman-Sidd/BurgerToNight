@@ -14,15 +14,14 @@ export const useBurgerStore = defineStore('product', {
     currentBurger: {} as any,
     totalItems: 0,
     pageIndex: 1,
-    pageSize: 3,
+    pageSize: 6,
   }),
   actions: {
-    async fetchBurgers(page = 1) {
+    async fetchBurgers() {
       try {
-        const response: APIResponse<any> = await ProductService.getAllProducts(page);
+        const response: APIResponse<any> = await ProductService.getAllProducts(this.pageIndex,this.pageSize);
         this.burgers = response.Result.Products;
         this.totalItems = response.Result.TotalCount;
-        this.pageIndex = page;
       } catch (error) {
         toast.error('Error fetching burgers');
       }
@@ -49,7 +48,7 @@ export const useBurgerStore = defineStore('product', {
           await ProductService.createProduct(this.currentBurger);
           this.resetCurrentBurger();
           toast.success('Burger added successfully');
-          this.fetchBurgers(1);
+          this.fetchBurgers();
         } catch (error) {
           toast.error('Error adding burger');
         }
@@ -74,7 +73,7 @@ export const useBurgerStore = defineStore('product', {
           await ProductService.updateProduct(updateBurgerDTO);
           toast.success('Burger updated successfully');
           this.resetCurrentBurger();
-          this.fetchBurgers(this.pageIndex);
+          this.fetchBurgers();
         } catch (error) {
           toast.error('Error updating burger');
         }

@@ -22,20 +22,21 @@ const totalPages = computed(() => {
 });
 
 onMounted(async () => {
-  await store.fetchBurgers(store.pageIndex);
+  await store.fetchBurgers();
+  console.log(store.burgers)
 });
 
 const nextPage = async () => {
   if (store.pageIndex < totalPages.value) {
     store.pageIndex += 1;
-    await store.fetchBurgers(store.pageIndex);
+    await store.fetchBurgers();
   }
 };
 
 const prevPage = async () => {
   if (store.pageIndex > 1) {
     store.pageIndex -= 1;
-    await store.fetchBurgers(store.pageIndex);
+    await store.fetchBurgers();
     console.log(store.burgers);
   }
 };

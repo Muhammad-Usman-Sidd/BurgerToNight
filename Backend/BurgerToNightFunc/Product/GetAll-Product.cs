@@ -39,7 +39,7 @@ namespace BurgerToNightFunc.Product
             {
                 var query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
                 int pageNumber = int.TryParse(query["pageNumber"], out pageNumber) ? pageNumber : 1;
-                int pageSize = 3; 
+                int pageSize = int.TryParse(query["pageSize"], out pageSize) ? pageSize : 6; 
 
                 var (products, totalCount) = await _unitOfWork.BProducts.GetAllPaginatedAsync(pageNumber, pageSize);
 
@@ -56,7 +56,7 @@ namespace BurgerToNightFunc.Product
                 {
                     var burgerCategory = await _unitOfWork.BCategories.GetAsync(c => c.Id == item.BCategoryId);
                     var mappedProduct = _mapper.Map<BProductGetDTO>(item);
-                    mappedProduct.burgerCategory = burgerCategory?.Title;
+                    mappedProduct.burgerCategory = burgerCategory?.Name;
                     if (!string.IsNullOrEmpty(item.Image) && item.Image.StartsWith("Blob"))
                     {
                         try

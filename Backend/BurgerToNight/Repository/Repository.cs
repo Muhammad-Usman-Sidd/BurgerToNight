@@ -75,7 +75,7 @@ namespace BurgerToNightAPI.Repository
             }
             return await query.FirstOrDefaultAsync();
         }
-        public async Task<(List<T> Items, int TotalCount)> GetAllPaginatedAsync(int pageNumber, int pageSize = 3, Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+        public async Task<(List<T> Items, int TotalCount)> GetAllPaginatedAsync(int pageNumber, int pageSize , Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
@@ -97,6 +97,7 @@ namespace BurgerToNightAPI.Repository
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
+
 
             return (items, totalCount);
         }
