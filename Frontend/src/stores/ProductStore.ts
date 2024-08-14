@@ -15,15 +15,16 @@ export const useBurgerStore = defineStore('product', {
     totalItems: 0,
     pageIndex: 1,
     pageSize: 6,
+    searchQuery: '',
   }),
   actions: {
     async fetchBurgers() {
       try {
-        const response: APIResponse<any> = await ProductService.getAllProducts(this.pageIndex,this.pageSize);
+        const response: APIResponse<any> = await ProductService.getAllProducts(this.pageIndex,this.pageSize,this.searchQuery);
         this.burgers = response.Result.Products;
         this.totalItems = response.Result.TotalCount;
       } catch (error) {
-        toast.error('Error fetching burgers');
+        console.log(`No burgers Found realted to Search :${this.searchQuery}`)
       }
     },
     async fetchBurgerById(id: number) {

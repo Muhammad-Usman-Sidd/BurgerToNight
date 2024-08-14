@@ -5,7 +5,7 @@ import { ProductGetDTO, ProductCreateDTO, ProductUpdateDTO } from '../models/Pro
 export interface IProductService {
   createProduct(dto: ProductCreateDTO): Promise<APIResponse<ProductGetDTO>>;
   deleteProduct(id: number): Promise<APIResponse<null>>;
-  getAllProducts(pageIndex:number,pageSize:number): Promise<APIResponse<ProductGetDTO[]>>;
+  getAllProducts(pageIndex: number, pageSize: number, searchQuery: string): Promise<APIResponse<ProductGetDTO[]>>;
   getProduct(id: number): Promise<APIResponse<ProductGetDTO>>;
   updateProduct(dto: ProductUpdateDTO): Promise<APIResponse<null>>;
 }
@@ -30,9 +30,10 @@ class ProductService extends BaseService implements IProductService {
     });
   }
 
-  async getAllProducts(pageIndex: number,pageSize:number): Promise<APIResponse<ProductGetDTO[]>> {
+  // Updated method to correctly include the searchQuery parameter
+  async getAllProducts(pageIndex: number, pageSize: number, searchQuery: string): Promise<APIResponse<ProductGetDTO[]>> {
     return this.sendRequest<ProductGetDTO[]>({
-      Url: `/ProductAPI?pageNumber=${pageIndex}&${pageSize}`,
+      Url: `/ProductAPI?pageNumber=${pageIndex}&pageSize=${pageSize}&searchQuery=${encodeURIComponent(searchQuery)}`,
       Method: 'GET'
     });
   }

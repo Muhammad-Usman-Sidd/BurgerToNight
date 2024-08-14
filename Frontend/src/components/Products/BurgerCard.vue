@@ -44,7 +44,7 @@ const addToCart = () => {
             />
           </div>
           <h3 class="text-xl font-bold">{{ burger.Name }}</h3>
-          <h4 class="text-gray-500">Category: {{ burger.BurgerCategory }}</h4>
+          <h4 class="text-gray-500">Category: {{ burger.burgerCategory }}</h4>
         </div>
 
         <div class="mb-5">
