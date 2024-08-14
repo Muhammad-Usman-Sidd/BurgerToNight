@@ -20,11 +20,12 @@ export const useBurgerStore = defineStore('product', {
   actions: {
     async fetchBurgers() {
       try {
-        const response: APIResponse<any> = await ProductService.getAllProducts(this.pageIndex,this.pageSize,this.searchQuery);
-        this.burgers = response.Result.Products;
+        const response: APIResponse<any> = await ProductService.getAllProducts(this.pageIndex, this.pageSize, this.searchQuery);
+        this.burgers = response.Result.Products || []; // Ensure it's always an array
         this.totalItems = response.Result.TotalCount;
       } catch (error) {
-        console.log(`No burgers Found realted to Search :${this.searchQuery}`)
+        console.log(`Error fetching burgers: ${error}`);
+        this.burgers = []; 
       }
     },
     async fetchBurgerById(id: number) {

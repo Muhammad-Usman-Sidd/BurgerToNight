@@ -69,7 +69,6 @@ namespace BurgerToNightFunc.Product
 
                 var totalCount = filteredProducts.Count;
 
-                // Apply pagination to the filtered products
                 var products = filteredProducts
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize)

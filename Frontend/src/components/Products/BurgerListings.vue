@@ -54,9 +54,10 @@ const fetchBurgers = async () => {
 const handleSearchChange = async (event: Event) => {
   store.searchQuery = (event.target as HTMLInputElement).value;
   store.pageIndex = 1; 
+  store.burgers = []; 
   await fetchBurgers();
-  console.log
 };
+
 </script>
 <template>
   <section class="bg-blue-50 px-4 py-10">
@@ -72,27 +73,25 @@ const handleSearchChange = async (event: Event) => {
         />
       </div>
 
-      <div v-if="store.burgers.length === 0" class="text-2xl text-center">
+      <div v-if="store.burgers.length === 0" class="text-2xl text-center text-gray-700 font-semibold">
         No Burgers Found
       </div>
 
       <div v-if="store.burgers.length > 0">
         <div class="flex justify-end mb-4">
           <button
-            @click="toggleViewMode('card')"
-            :class="{ 'bg-gray-300': viewMode === 'card' }"
-            class="px-4 py-2 bg-white border rounded mr-2"
+            @click="toggleViewMode(viewMode === 'card' ? 'grid' : 'card')"
+            class="px-4 py-2 bg-white border rounded transition-colors"
+            :class="{
+              'bg-gray-300': viewMode === 'card' || viewMode === 'grid',
+              'text-gray-700': viewMode === 'card' || viewMode === 'grid',
+              'hover:bg-gray-100': viewMode === 'card' || viewMode === 'grid'
+            }"
           >
-            Card View
-          </button>
-          <button
-            @click="toggleViewMode('grid')"
-            :class="{ 'bg-gray-300': viewMode === 'grid' }"
-            class="px-4 py-2 bg-white border rounded"
-          >
-            Grid View
+            {{ viewMode === 'card' ? 'Switch to Grid View' : 'Switch to Card View' }}
           </button>
         </div>
+
 
         <div
           v-if="viewMode === 'card'"
