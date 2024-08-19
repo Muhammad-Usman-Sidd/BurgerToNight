@@ -21,7 +21,8 @@ export const useBurgerStore = defineStore('product', {
     async fetchBurgers() {
       try {
         const response: APIResponse<any> = await ProductService.getAllProducts(this.pageIndex, this.pageSize, this.searchQuery);
-        this.burgers = response.Result.Products || []; // Ensure it's always an array
+        this.burgers = response.Result.Products || [];
+        console.log(this.burgers)
         this.totalItems = response.Result.TotalCount;
       } catch (error) {
         console.log(`Error fetching burgers: ${error}`);
@@ -69,7 +70,7 @@ export const useBurgerStore = defineStore('product', {
             Description: this.currentBurger.Description || '',
             Price: this.currentBurger.Price || 0,
             PreparingTime: this.currentBurger.PreparingTime || '',
-            BCategoryId: this.currentBurger.BCategoryId || null,
+            CategoryId: this.currentBurger.CategoryId || null,
             Image: this.currentBurger.Image || '',
           };
           await ProductService.updateProduct(updateBurgerDTO);
@@ -134,7 +135,7 @@ export const useBurgerStore = defineStore('product', {
         Description: '',
         Price: 0,
         PreparingTime: '',
-        BCategoryId: null,
+        CategoryId: null,
         Image: '',
         Id: null,
       };

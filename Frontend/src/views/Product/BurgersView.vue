@@ -7,7 +7,7 @@ const authStore = useAuthStore();
 
 <template>
   <BackButton />
-  <BurgerListings :showButton="false" />
+  <BurgerListings :showButton="false" class="justify-between" />
   <section :showButton="false" class="m-auto max-w-lg my-10 px-6">
     <RouterLink
       v-if="authStore.role === 'admin'"

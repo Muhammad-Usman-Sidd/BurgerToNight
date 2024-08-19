@@ -58,7 +58,7 @@ onMounted(async () => {
         <div class="mb-4">
           <label class="block text-gray-700">Category</label>
           <select
-            v-model="store.currentBurger.BCategoryId"
+            v-model="store.currentBurger.CategoryId"
             class="w-full p-2 border rounded"
           >
             <option value="" disabled>Select Category</option>

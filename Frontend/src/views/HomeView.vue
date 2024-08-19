@@ -10,6 +10,6 @@ const SubTitle = "Carving For Burgers...";
   <main>
     <Hero :title="Title" :subtitle="SubTitle" />
     <HomeCards />
-    <BurgerListing :limit="3" :showButton="true" :showAddButton="false" />
+    <BurgerListing :limit="4" :showButton="true" :showAddButton="false" />
   </main>
 </template>

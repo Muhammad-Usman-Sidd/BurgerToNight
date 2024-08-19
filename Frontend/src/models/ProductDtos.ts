@@ -3,7 +3,7 @@ export interface ProductCreateDTO {
   Description: string;
   Price: number;
   PreparingTime: string;
-  BCategoryId: number | null;
+  CategoryId: number | null;
   burgerCategory: string,
   Image: string;
 }
@@ -14,7 +14,7 @@ export interface ProductUpdateDTO {
   Description: string;
   Price: number;
   PreparingTime: string;
-  BCategoryId: number | null;
+  CategoryId: number | null;
   Image: string;
 }
 
@@ -24,7 +24,7 @@ export interface ProductGetDTO {
   Description: string;
   Price: number;
   PreparingTime: string;
-  BCategoryId: number;
+  CategoryId: number;
   burgerCategory:string;
   Image: string;
 }

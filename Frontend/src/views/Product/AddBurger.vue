@@ -23,14 +23,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <UnAuthAdmin/>
+  <UnAuthAdmin />
   <section
-  v-if="authStore.isLoggedIn && authStore.role==='admin'"
+    v-if="authStore.isLoggedIn && authStore.role === 'admin'"
     class="bg-blue-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Add Burger</h2>
-      <form @submit.prevent="addProduct" class="bg-white p-6 rounded-lg shadow-md">
+      <form @submit.prevent="addProduct()" class="bg-white p-6 rounded-lg shadow-md">
         <div class="mb-4">
           <label class="block text-gray-700">Name</label>
           <input
@@ -57,7 +57,7 @@ onMounted(() => {
         <div class="mb-4">
           <label class="block text-gray-700">Category</label>
           <select
-            v-model="store.currentBurger.BCategoryId"
+            v-model="store.currentBurger.CategoryId"
             class="w-full p-2 border rounded"
           >
             <option value="" disabled>Select Category</option>

@@ -4,7 +4,6 @@ import { useRoute } from "vue-router";
 import {
   HomeIcon,
   ListBulletIcon,
-  PlusCircleIcon,
   TagIcon,
   InboxStackIcon,
   Bars3Icon,
@@ -13,6 +12,7 @@ import {
 import { useAuthStore } from "../stores/AuthStore";
 import { ref } from "vue";
 import AuthButtons from "./Auth/AuthButtons.vue";
+import { TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 const authStore = useAuthStore();
 const route = useRoute();
@@ -24,7 +24,7 @@ const isMenuOpen = ref(false);
 </script>
 
 <template>
-  <nav class="bg-orange-700 border-b border-orange-500">
+  <nav class="bg-orange-700 border-b border-orange-500 relative">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="flex h-20 items-center justify-between">
         <div class="flex items-center">
@@ -36,13 +36,12 @@ const isMenuOpen = ref(false);
           </RouterLink>
         </div>
 
+        <!-- Desktop Menu Items -->
         <div class="hidden md:flex space-x-2">
           <RouterLink
             to="/"
             :class="[
-              isActiveLink('/')
-                ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+              isActiveLink('/') ? 'bg-orange-900' : 'hover:bg-gray-900 hover:text-white',
               'text-white rounded-md px-3 py-2',
             ]"
           >
@@ -61,19 +60,6 @@ const isMenuOpen = ref(false);
             <ListBulletIcon class="h-5 w-5 inline-block mr-1" />
             Burgers
           </RouterLink>
-          <!-- <RouterLink
-            v-if="authStore.isLoggedIn && authStore.role === 'admin'"
-            to="/add-burgers"
-            :class="[
-              isActiveLink('/add-burgers')
-                ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
-              'text-white rounded-md px-3 py-2',
-            ]"
-          >
-            <PlusCircleIcon class="h-5 w-5 inline-block mr-1" />
-            Add Burger
-          </RouterLink> -->
           <RouterLink
             v-if="authStore.isLoggedIn"
             to="/categories"
@@ -113,28 +99,28 @@ const isMenuOpen = ref(false);
             <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
             Orders
           </RouterLink>
+        </div>
 
-          <div class="relative">
-            <button
-              @click="authStore.toggleDropdownButtons"
-              class="text-white rounded-md px-3 py-2 hover:bg-gray-900 hover:text-white flex items-center"
-            >
-              <Cog8ToothIcon class="h-5 w-5 inline-block mr-1" />
-              Settings
-            </button>
-            <div
-              v-if="authStore.showDropdownButtons"
-              class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-10"
-            >
-              <AuthButtons />
-            </div>
+        <!-- Desktop Settings Icon -->
+        <div class="hidden md:flex items-center">
+          <button
+            @click="authStore.toggleDropdownButtons"
+            class="text-white flex items-center"
+          >
+            <Cog8ToothIcon class="h-6 w-6" />
+          </button>
+          <div
+            v-if="authStore.showDropdownButtons"
+            class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-10"
+          >
+            <AuthButtons />
           </div>
         </div>
 
-        <!--Mobile Menu Button -->
-        <div class="flex items-center">
+        <!-- Mobile Menu Button -->
+        <div class="flex items-center md:hidden">
           <button
-            class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white md:hidden"
+            class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
             @click="isMenuOpen = !isMenuOpen"
           >
             <Bars3Icon class="h-6 w-6" />
@@ -143,102 +129,100 @@ const isMenuOpen = ref(false);
       </div>
     </div>
 
-    <!-- mobile menu -->
-    <div v-show="isMenuOpen" class="md:hidden">
-  <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-    <RouterLink
-      to="/"
-      :class="[
-        isActiveLink('/')
-          ? 'bg-orange-900'
-          : 'hover:bg-gray-900 hover:text-white',
-        'block text-white rounded-md px-3 py-2 text-base font-medium',
-      ]"
-    >
-      <HomeIcon class="h-5 w-5 inline-block mr-1" />
-      Home
-    </RouterLink>
-    <RouterLink
-      to="/burgers"
-      :class="[
-        isActiveLink('/burgers')
-          ? 'bg-orange-900'
-          : 'hover:bg-gray-900 hover:text-white',
-        'block text-white rounded-md px-3 py-2 text-base font-medium',
-      ]"
-    >
-      <ListBulletIcon class="h-5 w-5 inline-block mr-1" />
-      Burgers
-    </RouterLink>
-    <!-- <RouterLink
-            v-if="authStore.isLoggedIn && authStore.role === 'admin'"
-            to="/add-burgers"
+    <!-- Mobile Menu with Transition Effect -->
+    <TransitionRoot as="template" :show="isMenuOpen">
+      <TransitionChild
+        as="div"
+        enter="transform transition ease-in-out duration-500 sm:duration-700"
+        enter-from="opacity-0 translate-x-[100%]"
+        enter-to="opacity-100 translate-x-0"
+        leave="transform transition ease-in-out duration-500 sm:duration-700"
+        leave-from="opacity-100 translate-x-0"
+        leave-to="opacity-0 translate-x-[100%]"
+        class="fixed inset-0 top-20 bg-orange-700 z-50"
+      >
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <RouterLink
+            to="/"
+            @click="isMenuOpen = !isMenuOpen"
             :class="[
-              isActiveLink('/add-burgers')
-          ? 'bg-orange-900'
-          : 'hover:bg-gray-900 hover:text-white',
-        'block text-white rounded-md px-3 py-2 text-base font-medium',
-      ]"
-    >
-      <PlusCircleIcon class="h-5 w-5 inline-block mr-1" />
-      Add Burger
-    </RouterLink> -->
-    <RouterLink
+              isActiveLink('/') ? 'bg-orange-900' : 'hover:bg-gray-900 hover:text-white',
+              'block text-white rounded-md px-3 py-2 text-base font-medium',
+            ]"
+          >
+            <HomeIcon class="h-5 w-5 inline-block mr-1" />
+            Home
+          </RouterLink>
+          <RouterLink
+            to="/burgers"
+            @click="isMenuOpen = !isMenuOpen"
+            :class="[
+              isActiveLink('/burgers')
+                ? 'bg-orange-900'
+                : 'hover:bg-gray-900 hover:text-white',
+              'block text-white rounded-md px-3 py-2 text-base font-medium',
+            ]"
+          >
+            <ListBulletIcon class="h-5 w-5 inline-block mr-1" />
+            Burgers
+          </RouterLink>
+          <RouterLink
             v-if="authStore.isLoggedIn"
+            @click="isMenuOpen = !isMenuOpen"
             to="/categories"
             :class="[
               isActiveLink('/categories')
-          ? 'bg-orange-900'
-          : 'hover:bg-gray-900 hover:text-white',
-        'block text-white rounded-md px-3 py-2 text-base font-medium',
-      ]"
-    >
-      <ListBulletIcon class="h-5 w-5 inline-block mr-1" />
-      Categories
-    </RouterLink>
-    <RouterLink
+                ? 'bg-orange-900'
+                : 'hover:bg-gray-900 hover:text-white',
+              'block text-white rounded-md px-3 py-2 text-base font-medium',
+            ]"
+          >
+            <TagIcon class="h-5 w-5 inline-block mr-1" />
+            Categories
+          </RouterLink>
+          <RouterLink
             v-if="authStore.isLoggedIn && authStore.role === 'admin'"
             to="/orders"
+            @click="isMenuOpen = !isMenuOpen"
             :class="[
               isActiveLink('/orders')
-          ? 'bg-orange-900'
-          : 'hover:bg-gray-900 hover:text-white',
-        'block text-white rounded-md px-3 py-2 text-base font-medium',
-      ]"
-    >
-      <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
-      Order
-    </RouterLink>
-    <RouterLink
+                ? 'bg-orange-900'
+                : 'hover:bg-gray-900 hover:text-white',
+              'block text-white rounded-md px-3 py-2 text-base font-medium',
+            ]"
+          >
+            <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
+            Orders
+          </RouterLink>
+          <RouterLink
             v-if="authStore.isLoggedIn && authStore.role === 'customer'"
-            to="/past-order"
+            to="/past-orders"
+            @click="isMenuOpen = !isMenuOpen"
             :class="[
               isActiveLink('/past-orders')
-          ? 'bg-orange-900'
-          : 'hover:bg-gray-900 hover:text-white',
-        'block text-white rounded-md px-3 py-2 text-base font-medium',
-      ]"
-    >
-      <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
-      Order
-    </RouterLink>
-
-    <div class="relative">
-      <button
-        @click="authStore.toggleDropdownButtons"
-        class="text-white rounded-md px-3 py-2 hover:bg-gray-900 hover:text-white flex items-center"
-      >
-        <Cog8ToothIcon class="h-5 w-5 inline-block mr-1" />
-        Settings
-      </button>
-      <div
-        v-if="authStore.showDropdownButtons"
-        class="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md z-10"
-      >
-        <AuthButtons />
-      </div>
-    </div>
-  </div>
-</div>
+                ? 'bg-orange-900'
+                : 'hover:bg-gray-900 hover:text-white',
+              'block text-white rounded-md px-3 py-2 text-base font-medium',
+            ]"
+          >
+            <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
+            Past Orders
+          </RouterLink>
+          <!-- Added Settings Icon to Mobile Menu -->
+          <div class="block text-white rounded-md px-3 py-2 text-base font-medium">
+            <button @click="authStore.toggleDropdownButtons">
+              <Cog8ToothIcon class="h-5 w-5 inline-block mr-1" />
+              Profile
+            </button>
+            <div
+              v-if="authStore.showDropdownButtons"
+              class="absolute mt-2 w-48 bg-white shadow-lg rounded-md z-10"
+            >
+              <AuthButtons />
+            </div>
+          </div>
+        </div>
+      </TransitionChild>
+    </TransitionRoot>
   </nav>
 </template>

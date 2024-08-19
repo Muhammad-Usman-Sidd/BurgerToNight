@@ -3,6 +3,13 @@ import { computed } from "vue";
 import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 import { ProductGetDTO } from "../models/ProductDtos";
 import { useOrderStore } from "../stores/OrderStore";
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  TransitionRoot,
+  TransitionChild,
+} from "@headlessui/vue";
 
 const orderStore = useOrderStore();
 
@@ -28,62 +35,136 @@ const totalPrice = computed((): string => {
 </script>
 
 <template>
-  <div
-    v-if="orderStore.showSidebar"
-    class="fixed top-0 right-0 w-full max-w-md h-full bg-white shadow-lg p-4 z-50 overflow-y-auto md:max-w-lg lg:max-w-xl"
-  >
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold">Cart</h2>
-      <button @click="toggleSidebar" class="text-gray-500 hover:text-gray-700">
-        <XMarkIcon class="h-6 w-6" />
-      </button>
-    </div>
+  <TransitionRoot as="template" :show="orderStore.showSidebar">
+    <Dialog class="relative z-10" @close="toggleSidebar">
+      <TransitionChild
+        as="template"
+        enter="ease-in-out duration-500"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="ease-in-out duration-500"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+      >
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+      </TransitionChild>
 
-    <table class="w-full border-collapse">
-      <thead>
-        <tr class="border-b">
-          <th class="text-left py-2 px-2">Product</th>
-          <th class="text-left py-2 px-2">Price</th>
-          <th class="text-left py-2 px-2">Quantity</th>
-          <th class="text-left py-2 px-2">Total</th>
-          <th class="text-left py-2 px-2">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in orderStore.cart" :key="index" class="border-b">
-          <td class="py-2 px-2">{{ item.burger.Name }}</td>
-          <td class="py-2 px-2">${{ item.burger.Price.toFixed(2) }}</td>
-          <td class="py-2 px-2">{{ item.quantity }}</td>
-          <td class="py-2 px-2">${{ (item.burger.Price * item.quantity).toFixed(2) }}</td>
-          <td class="py-2 px-2">
-            <button @click="removeFromCart(item.burger)" class="text-red-500">
-              <TrashIcon class="h-5 w-5" />
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <div class="fixed inset-0 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+          <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <TransitionChild
+              as="template"
+              enter="transform transition ease-in-out duration-500 sm:duration-700"
+              enter-from="translate-x-full"
+              enter-to="translate-x-0"
+              leave="transform transition ease-in-out duration-500 sm:duration-700"
+              leave-from="translate-x-0"
+              leave-to="translate-x-full"
+            >
+              <DialogPanel class="pointer-events-auto w-screen max-w-md">
+                <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                  <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                    <div class="flex items-start justify-between">
+                      <DialogTitle class="text-lg font-medium text-gray-900"
+                        >Shopping cart</DialogTitle
+                      >
+                      <div class="ml-3 flex h-7 items-center">
+                        <button
+                          type="button"
+                          class="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                          @click="toggleSidebar"
+                        >
+                          <span class="absolute -inset-0.5" />
+                          <span class="sr-only">Close panel</span>
+                          <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+                        </button>
+                      </div>
+                    </div>
 
-    <div class="flex justify-between items-center mt-4 border-t pt-2">
-      <span class="font-semibold">Total:</span>
-      <span class="text-orange-600">${{ totalPrice }}</span>
-    </div>
+                    <div class="mt-8">
+                      <div class="flow-root">
+                        <ul role="list" class="-my-6 divide-y divide-gray-200">
+                          <li
+                            v-for="(item, index) in orderStore.cart"
+                            :key="index"
+                            class="flex py-6"
+                          >
+                            <div
+                              class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+                            >
+                              <img
+                                :src="item.burger.Image"
+                                :alt="item.burger.Name"
+                                class="h-full w-full object-cover object-center"
+                              />
+                            </div>
 
-    <button @click="checkout" class="w-full mt-4 bg-green-500 text-white py-2 rounded">
-      Checkout
-    </button>
-  </div>
+                            <div class="ml-4 flex flex-1 flex-col">
+                              <div>
+                                <div
+                                  class="flex justify-between text-base font-medium text-gray-900"
+                                >
+                                  <h3>{{ item.burger.Name }}</h3>
+                                  <p class="ml-4">${{ item.burger.Price.toFixed(2) }}</p>
+                                </div>
+                              </div>
+                              <div class="flex flex-1 items-end justify-between text-sm">
+                                <p class="text-gray-500">Qty {{ item.quantity }}</p>
+
+                                <div class="flex">
+                                  <button
+                                    type="button"
+                                    class="font-medium text-red-600 hover:text-orange-500"
+                                    @click="removeFromCart(item.burger)"
+                                  >
+                                    Remove
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+                    <div class="flex justify-between text-base font-medium text-gray-900">
+                      <p>Subtotal</p>
+                      <p>${{ totalPrice }}</p>
+                    </div>
+                    <p class="mt-0.5 text-sm text-gray-500">
+                      Shipping and taxes calculated at checkout.
+                    </p>
+                    <div class="mt-6">
+                      <button
+                        @click="checkout"
+                        class="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-700"
+                      >
+                        Checkout
+                      </button>
+                    </div>
+                    <div
+                      class="mt-6 flex justify-center text-center text-sm text-gray-500"
+                    >
+                      <p>
+                        or
+                        <button
+                          type="button"
+                          class="font-medium text-green-600 hover:text-orange-500"
+                          @click="toggleSidebar"
+                        >
+                          Continue Shopping<span aria-hidden="true"> &rarr;</span>
+                        </button>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
-
-<style scoped>
-table {
-  border-collapse: collapse;
-}
-th,
-td {
-  border: 1px solid #ddd;
-}
-th {
-  background-color: #f4f4f4;
-}
-</style>
