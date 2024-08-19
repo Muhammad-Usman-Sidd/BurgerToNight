@@ -6,20 +6,20 @@ namespace BurgerToNightAPI.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly BurgerDbContext _db;
-        public IBCategoryRepo BCategories { get; }
-        public IBProductRepo BProducts { get; }
+        private readonly AppDbContext _db;
+        public ICategoryRepo Categories { get; }
+        public IProductRepo Products { get; }
         public IOrderHeaderRepo OrderHeaders { get; set; }
         public IOrderDetailRepo OrderDetails { get; set; }
         public ICartRepo Carts { get; set; }
 
        
 
-        public UnitOfWork(BurgerDbContext db)
+        public UnitOfWork(AppDbContext db)
         {
             _db = db;
-            BCategories = new BCategoryRepo(_db);
-            BProducts = new BProductRepo(_db);
+            Categories = new CategoryRepo(_db);
+            Products = new ProductRepo(_db);
             OrderDetails = new OrderDetailRepo(_db);
             OrderHeaders = new OrderHeaderRepo(_db);
             Carts = new CartRepo(_db);

@@ -13,49 +13,50 @@ const orderService=new OrderService();
 
 export const useOrderStore = defineStore('order', {
   state: () => ({
-    cart: [] as { burger: ProductGetDTO; quantity: number }[],
+    cart: [] as { product: ProductGetDTO; quantity: number }[],
     showSidebar: false,
     pastOrders: [] as OrderGetDTO[],
   }),
   actions: {
-    addToCart(burger: ProductGetDTO, quantity: number) {
+    addToCart(product: ProductGetDTO, quantity: number) {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn &&authStore.role==='customer') {
         try {
-          const existingItem = this.cart.find((item) => item.burger.Id === burger.Id);
+          const existingItem = this.cart.find((item) => item.product.Id === product.Id);
           if (existingItem) {
             existingItem.quantity += quantity;
           } else {
-            this.cart.push({ burger, quantity });
+            this.cart.push({ product, quantity });
           }
-          toast.success('Burger added to cart');
+          toast.success('Product added to cart');
         } catch (error) {
-          toast.error('Error adding burger to cart');
+          toast.error('Error adding product to cart');
         }
       } else {
-        toast.error('Please Login To Add Burger');
+        toast.error('Please Login To Add Product');
       }
     },
     toggleSidebar() {
       this.showSidebar = !this.showSidebar;
     },
-    removeItem(burger: ProductGetDTO) {
-      this.cart = this.cart.filter((item) => item.burger.Id !== burger.Id);
+    removeItem(product: ProductGetDTO) {
+      this.cart = this.cart.filter((item) => item.product.Id !== product.Id);
     },
     async checkout() {
       const authStore = useAuthStore();
+      await authStore.getUserById()
       if (authStore.isLoggedIn) {
         try {
           const orderDto: OrderCreateDTO = {
-            UserId: authStore.user.id,
-            OrderTotal: this.cart.reduce((total, item) => total + item.burger.Price * item.quantity, 0),
-            Name: authStore.user.name,
-            PhoneNumber:authStore.user.phoneNumber,
-            Address:authStore.user.address,
+            UserId:authStore.user.Id,
+            OrderTotal: this.cart.reduce((total, item) => total + item.product.Price * item.quantity, 0),
+            Name: authStore.user.Name,
+            PhoneNumber:authStore.user.PhoneNumber,
+            Address:authStore.user.Address,
             Items: this.cart.map((item) => ({
-              ProductId: item.burger.Id,
+              ProductId: item.product.Id,
               Quantity: item.quantity,
-              Price: item.burger.Price,
+              Price: item.product.Price,
             })) as OrderDetailCreateDTO[],
           };
           const response = await orderService.placeOrder(orderDto);

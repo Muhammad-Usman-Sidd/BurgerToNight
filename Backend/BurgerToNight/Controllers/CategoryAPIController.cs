@@ -37,8 +37,8 @@ namespace BurgerToNightAPI.Controllers
         {
             try
             {
-                IEnumerable <BurgerCategory> categoryList = await _unitOfWork.BCategories.GetAllAsync();
-                _response.Result = _mapper.Map<List<BCategoryGetDTO>>(categoryList);
+                IEnumerable <Category> categoryList = await _unitOfWork.Categories.GetAllAsync();
+                _response.Result = _mapper.Map<List<CategoryGetDTO>>(categoryList);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -69,13 +69,13 @@ namespace BurgerToNightAPI.Controllers
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                var category = await _unitOfWork.BCategories.GetAsync(u => u.Id == id);
+                var category = await _unitOfWork.Categories.GetAsync(u => u.Id == id);
                 if (category == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
-                _response.Result = _mapper.Map<BCategoryGetDTO>(category);
+                _response.Result = _mapper.Map<CategoryGetDTO>(category);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -93,11 +93,11 @@ namespace BurgerToNightAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> CreateCategory([FromBody] BCategoryPostDTO createDTO)
+        public async Task<ActionResult<APIResponse>> CreateCategory([FromBody] CategoryPostDTO createDTO)
         {
             try
             {
-                if (await _unitOfWork.BCategories.GetAsync(u => u.Name.ToLower() == createDTO.Name.ToLower()) != null)
+                if (await _unitOfWork.Categories.GetAsync(u => u.Name.ToLower() == createDTO.Name.ToLower()) != null)
                 {
                     ModelState.AddModelError("ErrorMessages", "Category already Exists!");
                     return BadRequest(ModelState);
@@ -107,9 +107,9 @@ namespace BurgerToNightAPI.Controllers
                 {
                     return BadRequest(createDTO);
                 }
-                BurgerCategory category = _mapper.Map<BurgerCategory>(createDTO);
-                await _unitOfWork.BCategories.CreateAsync(category);
-                _response.Result = _mapper.Map<BCategoryGetDTO>(category);
+                Category category = _mapper.Map<Category>(createDTO);
+                await _unitOfWork.Categories.CreateAsync(category);
+                _response.Result = _mapper.Map<CategoryGetDTO>(category);
                 _response.StatusCode = HttpStatusCode.Created;
                 return CreatedAtRoute("GetCategory", new { id = category.Id }, _response);
             }
@@ -137,12 +137,12 @@ namespace BurgerToNightAPI.Controllers
                 {
                     return BadRequest();
                 }
-                var category = await _unitOfWork.BCategories.GetAsync(u => u.Id == id);
+                var category = await _unitOfWork.Categories.GetAsync(u => u.Id == id);
                 if (category == null)
                 {
                     return NotFound();
                 }
-                await _unitOfWork.BCategories.RemoveAsync(category);
+                await _unitOfWork.Categories.RemoveAsync(category);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -159,7 +159,7 @@ namespace BurgerToNightAPI.Controllers
         [HttpPut("{id:int}", Name = "UpdateCategory")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdateCategory(int id, [FromBody] BCategoryUpdateDTO updateDTO)
+        public async Task<ActionResult<APIResponse>> UpdateCategory(int id, [FromBody] CategoryUpdateDTO updateDTO)
         {
             try
             {
@@ -168,9 +168,9 @@ namespace BurgerToNightAPI.Controllers
                     return BadRequest();
                 }
 
-                BurgerCategory model = _mapper.Map<BurgerCategory>(updateDTO);
+                Category model = _mapper.Map<Category>(updateDTO);
 
-                await _unitOfWork.BCategories.UpdateAsync(model);
+                await _unitOfWork.Categories.UpdateAsync(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -187,15 +187,15 @@ namespace BurgerToNightAPI.Controllers
         [HttpPatch("{id:int}", Name = "UpdatePartialCategory")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdatePartialCategory(int id, JsonPatchDocument<BCategoryUpdateDTO> patchDTO)
+        public async Task<IActionResult> UpdatePartialCategory(int id, JsonPatchDocument<CategoryUpdateDTO> patchDTO)
         {
             if (patchDTO == null || id == 0)
             {
                 return BadRequest();
             }
-            var category = await _unitOfWork.BCategories.GetAsync(u => u.Id == id, tracked: false);
+            var category = await _unitOfWork.Categories.GetAsync(u => u.Id == id, tracked: false);
 
-            BCategoryUpdateDTO categoryDTO = _mapper.Map<BCategoryUpdateDTO>(category);
+            CategoryUpdateDTO categoryDTO = _mapper.Map<CategoryUpdateDTO>(category);
 
 
             if (category == null)
@@ -203,9 +203,9 @@ namespace BurgerToNightAPI.Controllers
                 return BadRequest();
             }
             patchDTO.ApplyTo(categoryDTO);
-            BurgerCategory model = _mapper.Map<BurgerCategory>(categoryDTO);
+            Category model = _mapper.Map<Category>(categoryDTO);
 
-            await _unitOfWork.BCategories.UpdateAsync(model);
+            await _unitOfWork.Categories.UpdateAsync(model);
 
             if (!ModelState.IsValid)
             {

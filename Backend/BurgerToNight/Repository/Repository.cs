@@ -8,9 +8,9 @@ namespace BurgerToNightAPI.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly BurgerDbContext _db;
+        private readonly AppDbContext _db;
         internal DbSet<T> dbSet;
-        public Repository(BurgerDbContext db)
+        public Repository(AppDbContext db)
         {
             _db = db;
             this.dbSet = _db.Set<T>();

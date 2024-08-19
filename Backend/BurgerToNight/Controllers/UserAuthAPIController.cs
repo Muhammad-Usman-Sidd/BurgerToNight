@@ -15,9 +15,9 @@ public class UsersAuthAPIController : ControllerBase
 {
     private readonly IUserRepo _userRepo;
     protected APIResponse _response;
-    private BurgerDbContext _db;
+    private AppDbContext _db;
 
-    public UsersAuthAPIController(IUserRepo userRepo,BurgerDbContext db)
+    public UsersAuthAPIController(IUserRepo userRepo,AppDbContext db)
     {
         _userRepo = userRepo;
         _response = new();

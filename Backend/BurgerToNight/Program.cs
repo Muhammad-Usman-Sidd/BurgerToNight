@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<BurgerDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -28,7 +28,7 @@ builder.Services.AddScoped<ICartRepo, CartRepo>();
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<BurgerDbContext>().AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
 

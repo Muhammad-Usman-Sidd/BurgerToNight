@@ -1,84 +1,83 @@
 import { defineStore } from 'pinia';
 import { useToast } from 'vue-toastification';
 import ProductService from '../services/ProductService';
-import { ProductGetDTO, ProductCreateDTO, ProductUpdateDTO } from '../models/ProductDtos';
+import { ProductGetDTO, ProductUpdateDTO } from '../models/ProductDtos';
 import { APIResponse } from '../models/APIResult';
 import { useAuthStore } from './AuthStore';
 import Swal from 'sweetalert2';
-import { stringifyQuery, useRouter } from 'vue-router';
 
 const toast = useToast();
-export const useBurgerStore = defineStore('product', {
+export const useProductStore = defineStore('product', {
   state: () => ({
-    burgers: [] as ProductGetDTO[],
-    currentBurger: {} as any,
+    products: [] as ProductGetDTO[],
+    currentProduct: {} as any,
     totalItems: 0,
     pageIndex: 1,
-    pageSize: 6,
+    pageSize: 8,
     searchQuery: '',
   }),
   actions: {
-    async fetchBurgers() {
+    async fetchProducts() {
       try {
         const response: APIResponse<any> = await ProductService.getAllProducts(this.pageIndex, this.pageSize, this.searchQuery);
-        this.burgers = response.Result.Products || [];
-        console.log(this.burgers)
+        this.products = response.Result.Products || [];
+        console.log(this.products)
         this.totalItems = response.Result.TotalCount;
       } catch (error) {
-        console.log(`Error fetching burgers: ${error}`);
-        this.burgers = []; 
+        console.log(`Error fetching products: ${error}`);
+        this.products = []; 
       }
     },
-    async fetchBurgerById(id: number) {
+    async fetchProductById(id: number) {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn) {
         try {
           const response: APIResponse<ProductGetDTO> = await ProductService.getProduct(id);
-          this.currentBurger = response.Result;
+          this.currentProduct = response.Result;
         } catch (error) {
-          toast.error('Error fetching burger by ID');
+          toast.error('Error fetching product by ID');
         }
       }
       else{
         toast.error('Please login to access this feature');
       }
     },
-    async addBurger() {
+    async addProduct() {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role==='admin') {
         try {
-          console.log(this.currentBurger)
-          await ProductService.createProduct(this.currentBurger);
-          this.resetCurrentBurger();
-          toast.success('Burger added successfully');
-          this.fetchBurgers();
+          console.log(this.currentProduct)
+          await ProductService.createProduct(this.currentProduct);
+          this.resetCurrentProduct();
+          toast.success('Product added successfully');
+          this.fetchProducts();
         } catch (error) {
-          toast.error('Error adding burger');
+          toast.error('Error adding product');
         }
       }
       else{
         toast.error('Please login to access this feature');
       }
     },
-    async updateBurger(id: number) {
+    async updateProduct(id: number) {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn &&authStore.role==='admin') {
         try {
-          const updateBurgerDTO: ProductUpdateDTO = {
+          const updateProductDTO: ProductUpdateDTO = {
             Id: id,
-            Name: this.currentBurger.Name || '',
-            Description: this.currentBurger.Description || '',
-            Price: this.currentBurger.Price || 0,
-            PreparingTime: this.currentBurger.PreparingTime || '',
-            CategoryId: this.currentBurger.CategoryId || null,
-            Image: this.currentBurger.Image || '',
+            Name: this.currentProduct.Name || '',
+            Description: this.currentProduct.Description || '',
+            Price: this.currentProduct.Price || 0,
+            PreparingTime: this.currentProduct.PreparingTime || '',
+            CategoryId: this.currentProduct.CategoryId || null,
+            Image: this.currentProduct.Image || '',
           };
-          await ProductService.updateProduct(updateBurgerDTO);
-          toast.success('Burger updated successfully');
-          this.resetCurrentBurger();
-          this.fetchBurgers();
+          await ProductService.updateProduct(updateProductDTO);
+          toast.success('Product updated successfully');
+          this.resetCurrentProduct();
+          this.fetchProducts();
         } catch (error) {
-          toast.error('Error updating burger');
+          toast.error('Error updating product');
         }
       }
       else{
@@ -86,7 +85,7 @@ export const useBurgerStore = defineStore('product', {
       }
     },
     
-    async deleteBurger(id: number) {
+    async deleteProduct(id: number) {
       const authStore = useAuthStore();
     
       if (authStore.isLoggedIn && authStore.role === 'admin') {
@@ -103,10 +102,10 @@ export const useBurgerStore = defineStore('product', {
         if (result.isConfirmed) {
           try {
             await ProductService.deleteProduct(id);
-            this.burgers = this.burgers.filter(burger => burger.Id !== id);
-            toast.success('Burger deleted successfully');
+            this.products = this.products.filter(product => product.Id !== id);
+            toast.success('Product deleted successfully');
           } catch (error) {
-            toast.error('Error deleting burger');
+            toast.error('Error deleting product');
           }
         }
       } else {
@@ -117,11 +116,10 @@ export const useBurgerStore = defineStore('product', {
       try {
         const files = (event.target as HTMLInputElement).files;
         if (files && files.length != null) {
-
           const file = files[0];
         const reader = new FileReader();
         reader.onloadend = () => {
-            this.currentBurger.Image = reader.result as string;
+            this.currentProduct.Image = reader.result as string;
         };
         reader.readAsDataURL(file);
       }}
@@ -129,8 +127,8 @@ export const useBurgerStore = defineStore('product', {
         toast.error('Error uploading image');
       }
     },    
-    resetCurrentBurger() {
-      this.currentBurger = {
+    resetCurrentProduct() {
+      this.currentProduct = {
         Name: '',
         Description: '',
         Price: 0,
@@ -143,4 +141,4 @@ export const useBurgerStore = defineStore('product', {
   },
 });
 
-export default useBurgerStore;
+export default useProductStore;

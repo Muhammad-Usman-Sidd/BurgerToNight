@@ -6,6 +6,7 @@ interface IAuthService {
     login<T>(dto: LoginDTO): Promise<APIResponse<T>>;
     register<T>(dto: RegistrationRequestDTO): Promise<APIResponse<T>>;
     resetPassword<T>(dto: ResetPasswordDTO): Promise<APIResponse<T>>;
+    getUserById<T>(Id: number): Promise<APIResponse<T>>;
 }
 
 class AuthService extends BaseService implements IAuthService {
@@ -34,6 +35,13 @@ class AuthService extends BaseService implements IAuthService {
             Url: '/AuthResetPassword',
             Method: 'POST',
             Data: dto
+        });
+    }
+
+    async getUserById<T>(Id: number): Promise<APIResponse<T>> {
+        return this.sendRequest<T>({
+            Url: `/user/${Id}`,
+            Method: 'POST',
         });
     }
 }

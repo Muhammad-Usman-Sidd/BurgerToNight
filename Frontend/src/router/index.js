@@ -9,19 +9,19 @@ const router = createRouter({
       component: ()=>import('../views/HomeView.vue')
     },
     {
-      path: '/burgers',
-      name: 'burgers',
-      component: ()=>import('../views/Product/BurgersView.vue')
+      path: '/products',
+      name: 'products',
+      component: ()=>import('../views/Product/ProductsView.vue')
     },
     {
-      path: '/burgers/:id',
-      name: 'burger',
-      component: ()=>import('../views/Product/BurgerDetailsView.vue')
+      path: '/products/:id',
+      name: 'product',
+      component: ()=>import('../views/Product/ProductDetailsView.vue')
     },
     {
-      path: '/add-burgers',
-      name: 'addburgers',
-      component: ()=>import('../views/Product/AddBurger.vue')
+      path: '/add-products',
+      name: 'addproducts',
+      component: ()=>import('../views/Product/AddProduct.vue')
     },
     // {
     //   path: '/categories/:id',
@@ -29,9 +29,9 @@ const router = createRouter({
     //   component: ()=>import('../views/Product/Caetgory.vue')
     // },
     {
-      path: '/burgers/edit/:id',
-      name: 'editburger',
-      component: ()=>import('../views/Product/EditBurger.vue')
+      path: '/products/edit/:id',
+      name: 'editproduct',
+      component: ()=>import('../views/Product/EditProduct.vue')
     },
     {
       path: '/categories',
@@ -44,6 +44,11 @@ const router = createRouter({
       component: ()=>import('../views/Category/AddCategory.vue')
     },
     {
+      path: '/categories/edit/:id',
+      name: 'editcategory',
+      component: ()=>import('../views/Category/EditCategory.vue')
+    },
+    {
       path: '/past-orders',
       name: 'pastorders',
       component: ()=>import('../views/Orders/PastOrders.vue')
@@ -52,7 +57,13 @@ const router = createRouter({
       path: '/orders',
       name: 'orders',
       component: ()=>import('../views/Orders/ManageOrders.vue')
-    }, 
+    },
+    {
+      path: '/order-confirmation',
+      name: 'order-confirmation',
+      component: ()=>import('../components/CheckoutPage.vue')
+    },
+     
     {
       path: '/register',
       name: 'register',

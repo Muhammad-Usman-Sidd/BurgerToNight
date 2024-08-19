@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BurgerToNightAPI.Data
 {
-    public class BurgerDbContext : IdentityDbContext<ApplicationUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
-        public BurgerDbContext(DbContextOptions<BurgerDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
@@ -16,126 +16,289 @@ namespace BurgerToNightAPI.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Cart> Cart { get; set; }
         public DbSet<LocalUser> LocalUsers { get; set; }
-        public DbSet<BurgerCategory> BCategories { get; set; }
-        public DbSet<BurgerProduct> BProducts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<BurgerCategory>().HasData(
-                new BurgerCategory
+            modelBuilder.Entity<Category>().HasData(
+                new Category
                 {
                     Id = 1,
-                    Name = "BBQ",
-                    Description = "Experience the smoky flavor and tender texture of our BBQ burgers, crafted with meticulous care in a controlled environment.",
-                    CreationCategoryTime = DateTime.Now
+                    Name = "Pizza",
+                    Description = "Deliciously baked pizzas with a variety of toppings and flavors to satisfy every craving.",
+                    CreationCategoryTime = DateTime.Now,
+                    Icon = ""
                 },
-                new BurgerCategory
+                new Category
                 {
                     Id = 2,
-                    Name = "Grilled",
-                    Description = "Indulge in the wholesome goodness of our Grilled burgers, prepared in a hygienic oven for a perfect char and juicy bite.",
-                    CreationCategoryTime = DateTime.Now
+                    Name = "Burger",
+                    Description = "Juicy and flavorful burgers, crafted to perfection with fresh ingredients.",
+                    CreationCategoryTime = DateTime.Now,
+                    Icon = ""
                 },
-                new BurgerCategory
+                new Category
                 {
                     Id = 3,
-                    Name = "Crunch",
-                    Description = "Savor the irresistible crunch of our burgers, made with the finest breadcrumbs and fresh, clean oil for an unforgettable taste.",
-                    CreationCategoryTime = DateTime.Now
+                    Name = "Broast",
+                    Description = "Crispy and tender broasts, made with quality spices and cooked to golden perfection.",
+                    CreationCategoryTime = DateTime.Now,
+                    Icon = ""
                 },
-                new BurgerCategory
+                new Category
                 {
                     Id = 4,
-                    Name = "Special",
-                    Description = "Discover our signature Special burgers, the ultimate favorite renowned for their exceptional flavor and quality.",
-                    CreationCategoryTime = DateTime.Now
+                    Name = "Pasta",
+                    Description = "A selection of rich and creamy pasta dishes, cooked with authentic flavors.",
+                    CreationCategoryTime = DateTime.Now,
+                    Icon = ""
                 },
-                new BurgerCategory
+                new Category
                 {
                     Id = 5,
-                    Name = "Fish",
-                    Description = "Dive into the deliciousness of our Fish burgers, served with love and a smile for a delightful seafood experience.",
-                    CreationCategoryTime = DateTime.Now
+                    Name = "Wrap",
+                    Description = "Tasty wraps filled with a variety of meats and vegetables, wrapped in soft tortillas.",
+                    CreationCategoryTime = DateTime.Now,
+                    Icon = ""
                 },
-                new BurgerCategory
+                new Category
                 {
                     Id = 6,
-                    Name = "Lamb",
-                    Description = "Enjoy the rich and succulent taste of our Lamb burgers, made with premium lamb meat imported from Turkey just for you.",
-                    CreationCategoryTime = DateTime.Now
+                    Name = "Salad",
+                    Description = "Fresh and healthy salads, made with crisp vegetables and delicious dressings.",
+                    CreationCategoryTime = DateTime.Now,
+                    Icon = ""
                 }
             );
 
-            modelBuilder.Entity<BurgerProduct>().HasData(
-                new BurgerProduct
-                {
-                    Id = 1,
-                    Name = "Mighty Zinger",
-                    BCategoryId = 3,
-                    Description = "The Mighty Zinger is one of our most liked and extraordinarily large burgers! Made with a crunchy breadcrumb coating, fresh lettuce, juicy tomatoes, pickles, and topped with spicy mayo.",
-                    Price = 20,
-                    CreationDate = DateTime.UtcNow,
-                    PreparingTime = 10,
-                    Image = ""
-                },
-                new BurgerProduct
-                {
-                    Id = 2,
-                    Name = "Big Ben",
-                    BCategoryId = 2,
-                    Description = "Craving something delicious? Look no further than the Big Ben, a grilled delight featuring a charred patty, cheddar cheese, crispy bacon, onions, and a special smoky sauce.",
-                    Price = 18,
-                    CreationDate = DateTime.UtcNow,
-                    PreparingTime = 10,
-                    Image = ""
-                },
-                new BurgerProduct
-                {
-                    Id = 3,
-                    Name = "Big Bang",
-                    BCategoryId = 4,
-                    Description = "Need to fill a giant stomach? The Big Bang is here to deliver with its massive size and explosive flavor! Loaded with double beef patties, American cheese, onion rings, and BBQ sauce.",
-                    Price = 40,
-                    CreationDate = DateTime.UtcNow,
-                    PreparingTime = 10,
-                    Image = ""
-                },
-                new BurgerProduct
-                {
-                    Id = 4,
-                    Name = "Super BBQ",
-                    BCategoryId = 1,
-                    Description = "Our Super BBQ burgers are crafted with extreme care, offering a mouthwatering BBQ experience with smoky beef patties, pepper jack cheese, crispy onions, and tangy BBQ sauce.",
-                    Price = 30,
-                    CreationDate = DateTime.UtcNow,
-                    PreparingTime = 10,
-                    Image = ""
-                },
-                new BurgerProduct
-                {
-                    Id = 5,
-                    Name = "Selmon Burger",
-                    BCategoryId = 5,
-                    Description = "Our Selmon Fish burgers are in high demand. Order yours before it's too late and enjoy the taste of fresh, delectable fish! Made with crispy fish fillets, tartar sauce, lettuce, and pickles.",
-                    Price = 30,
-                    CreationDate = DateTime.UtcNow,
-                    PreparingTime = 10,
-                    Image = ""
-                },
-                new BurgerProduct
-                {
-                    Id = 6,
-                    Name = "Lamb Burger",
-                    BCategoryId = 6,
-                    Description = "Savor the exquisite flavor of our Lamb Burger, featuring premium lamb meat, mint yogurt sauce, feta cheese, cucumber slices, and arugula, all wrapped in a toasted bun.",
-                    Price = 30,
-                    CreationDate = DateTime.UtcNow,
-                    PreparingTime = 10,
-                    Image = ""
-                }
-            );
+
+
+            modelBuilder.Entity<Product>().HasData(
+                     new Product
+                     {
+                         Id = 1,
+                         Name = "Pepperoni Pizza",
+                         CategoryId = 1, // Pizza
+                         Description = "A classic Pepperoni Pizza topped with premium pepperoni slices, mozzarella cheese, and our signature tomato sauce.",
+                         Price = 15,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 15,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 2,
+                         Name = "Margherita Pizza",
+                         CategoryId = 1, // Pizza
+                         Description = "Simplicity at its best: the Margherita Pizza features fresh basil, tomatoes, mozzarella, and a drizzle of olive oil.",
+                         Price = 12,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 12,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 3,
+                         Name = "BBQ Chicken Pizza",
+                         CategoryId = 1, // Pizza
+                         Description = "BBQ Chicken Pizza loaded with grilled chicken, BBQ sauce, onions, and mozzarella cheese.",
+                         Price = 18,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 15,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 4,
+                         Name = "Veggie Pizza",
+                         CategoryId = 1, // Pizza
+                         Description = "A delightful Veggie Pizza topped with bell peppers, olives, mushrooms, onions, and mozzarella cheese.",
+                         Price = 14,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 15,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 5,
+                         Name = "Classic Cheeseburger",
+                         CategoryId = 2, // Burger
+                         Description = "Our Classic Cheeseburger is made with a juicy beef patty, melted cheddar cheese, lettuce, tomato, and pickles.",
+                         Price = 10,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 8,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 6,
+                         Name = "Double Bacon Burger",
+                         CategoryId = 2, // Burger
+                         Description = "A mouthwatering Double Bacon Burger with double beef patties, crispy bacon, cheddar cheese, and smoky sauce.",
+                         Price = 20,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 10,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 7,
+                         Name = "Mushroom Swiss Burger",
+                         CategoryId = 2, // Burger
+                         Description = "The Mushroom Swiss Burger features a savory beef patty, Swiss cheese, sautéed mushrooms, and garlic aioli.",
+                         Price = 15,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 10,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 8,
+                         Name = "Spicy Chicken Burger",
+                         CategoryId = 2, // Burger
+                         Description = "A spicy twist on a classic, the Spicy Chicken Burger is packed with flavor and heat, topped with jalapeños and pepper jack cheese.",
+                         Price = 12,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 10,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 9,
+                         Name = "Chicken Broast",
+                         CategoryId = 3, // Broast
+                         Description = "Golden crispy Chicken Broast, marinated in special spices and fried to perfection. Served with fries and coleslaw.",
+                         Price = 18,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 20,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 10,
+                         Name = "Beef Broast",
+                         CategoryId = 3, // Broast
+                         Description = "Tender and crispy Beef Broast, seasoned with a blend of herbs and spices. Served with a side of dipping sauce.",
+                         Price = 20,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 20,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 11,
+                         Name = "Spaghetti Carbonara",
+                         CategoryId = 4, // Pasta
+                         Description = "Traditional Spaghetti Carbonara made with creamy sauce, crispy pancetta, and Parmesan cheese.",
+                         Price = 14,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 15,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 12,
+                         Name = "Chicken Alfredo",
+                         CategoryId = 4, // Pasta
+                         Description = "A rich and creamy Chicken Alfredo pasta with grilled chicken, fettuccine noodles, and Alfredo sauce.",
+                         Price = 16,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 15,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 13,
+                         Name = "Penne Arrabbiata",
+                         CategoryId = 4, // Pasta
+                         Description = "Spicy and flavorful Penne Arrabbiata, made with penne pasta, garlic, red chili flakes, and tomato sauce.",
+                         Price = 13,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 12,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 14,
+                         Name = "Fettuccine Alfredo",
+                         CategoryId = 4, // Pasta
+                         Description = "Creamy and indulgent Fettuccine Alfredo, made with rich Alfredo sauce and topped with Parmesan cheese.",
+                         Price = 15,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 12,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 15,
+                         Name = "Grilled Chicken Wrap",
+                         CategoryId = 5, // Wrap
+                         Description = "A healthy and delicious Grilled Chicken Wrap with lettuce, tomatoes, cucumbers, and a tangy yogurt dressing.",
+                         Price = 10,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 10,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 16,
+                         Name = "Falafel Wrap",
+                         CategoryId = 5, // Wrap
+                         Description = "A tasty Falafel Wrap filled with crispy falafel, fresh vegetables, and a creamy tahini sauce.",
+                         Price = 9,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 10,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 17,
+                         Name = "Beef Shawarma Wrap",
+                         CategoryId = 5, // Wrap
+                         Description = "A flavorful Beef Shawarma Wrap, filled with seasoned beef, fresh vegetables, and garlic sauce, wrapped in a soft tortilla.",
+                         Price = 12,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 10,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 18,
+                         Name = "Grilled Veggie Wrap",
+                         CategoryId = 5, // Wrap
+                         Description = "A Grilled Veggie Wrap loaded with grilled vegetables, hummus, and fresh herbs, wrapped in a whole wheat tortilla.",
+                         Price = 10,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 10,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 19,
+                         Name = "Caesar Salad",
+                         CategoryId = 6, // Salad
+                         Description = "A fresh Caesar Salad with crisp romaine lettuce, croutons, Parmesan cheese, and Caesar dressing.",
+                         Price = 8,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 5,
+                         Image = ""
+                     },
+                     new Product
+                     {
+                         Id = 20,
+                         Name = "Greek Salad",
+                         CategoryId = 6, // Salad
+                         Description = "A refreshing Greek Salad made with cucumbers, tomatoes, olives, feta cheese, and a lemon-oregano dressing.",
+                         Price = 9,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 5,
+                         Image = ""
+                     }
+                 );
+
         }
     }
 }

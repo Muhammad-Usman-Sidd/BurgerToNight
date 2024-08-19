@@ -29,7 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="images\" />
+    <Folder Include="images\CategoryIcon\" />
+    <Folder Include="images\ProductImages\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

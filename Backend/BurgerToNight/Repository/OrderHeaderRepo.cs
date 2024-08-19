@@ -7,8 +7,8 @@ namespace BurgerToNightAPI.Repository
 {
     public class OrderHeaderRepo : Repository<OrderHeader>, IOrderHeaderRepo
     {
-        private readonly BurgerDbContext _db;
-        public OrderHeaderRepo(BurgerDbContext db) : base(db)
+        private readonly AppDbContext _db;
+        public OrderHeaderRepo(AppDbContext db) : base(db)
         {
             _db = db;
         }

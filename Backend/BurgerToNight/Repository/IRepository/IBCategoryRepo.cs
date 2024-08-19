@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BurgerToNightAPI.Repository.IRepository
 {
-    public interface IBCategoryRepo:IRepository<BurgerCategory>
+    public interface ICategoryRepo:IRepository<Category>
     {
-        Task<BurgerCategory> UpdateAsync(BurgerCategory entity);
+        Task<Category> UpdateAsync(Category entity);
 
     }
 }

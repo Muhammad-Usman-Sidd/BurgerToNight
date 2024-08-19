@@ -6,8 +6,8 @@ namespace BurgerToNightAPI.Repository
 {
     public class OrderDetailRepo : Repository<OrderDetail>, IOrderDetailRepo
     {
-        private readonly BurgerDbContext _db;
-        public OrderDetailRepo(BurgerDbContext db) : base(db)
+        private readonly AppDbContext _db;
+        public OrderDetailRepo(AppDbContext db) : base(db)
         {
             _db = db;
         }

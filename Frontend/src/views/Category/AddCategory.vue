@@ -15,6 +15,21 @@ const addCategory = async () => {
     toast.error("Error Adding Category");
   }
 };
+const handleImageUpload = (event: Event)=> {
+  try {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && files.length != null) {
+      const file = files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      categoryStore.currentCategory.Icon = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }}
+  catch (error) {
+    toast.error('Error uploading image');
+  }
+}    
 const categoryStore = useCategoryStore();
 </script>
 <template>
@@ -39,6 +54,14 @@ const categoryStore = useCategoryStore();
             v-model="categoryStore.currentCategory.Description"
             class="w-full p-2 border rounded"
           ></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700">Image</label>
+          <input
+            type="file"
+            @change="categoryStore.handleImageUpload"
+            class="w-full p-2 border rounded"
+          />
         </div>
         <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded">
           Add Category

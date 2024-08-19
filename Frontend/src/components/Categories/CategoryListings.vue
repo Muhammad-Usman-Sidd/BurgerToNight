@@ -45,7 +45,7 @@ const toggleViewMode = (mode: "card" | "grid") => {
       </div>
       <div
         v-if="viewMode === 'card'"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
       >
         <CategoryCard
           v-for="category in (categoryStore.categories || []).slice(0, categoryStore.categories.length)"

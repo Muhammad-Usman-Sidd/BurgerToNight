@@ -30,7 +30,6 @@ class ProductService extends BaseService implements IProductService {
     });
   }
 
-  // Updated method to correctly include the searchQuery parameter
   async getAllProducts(pageIndex: number, pageSize: number, searchQuery: string): Promise<APIResponse<ProductGetDTO[]>> {
     return this.sendRequest<ProductGetDTO[]>({
       Url: `/ProductAPI?pageNumber=${pageIndex}&pageSize=${pageSize}&searchQuery=${encodeURIComponent(searchQuery)}`,

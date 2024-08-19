@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import HomeCards from "../components/HomeCards.vue";
 import Hero from "../components/Hero.vue";
-import BurgerListing from "../components/Products/BurgerListings.vue";
-const Title = "Burger To Night";
-const SubTitle = "Carving For Burgers...";
+import HomeCards from "../components/CategoryFilter.vue";
+import ShuffledProductListing from "../components/Products/ShuffledProducts.vue";
+
+const Title = "Bite Quest";
+const SubTitle = "Carving For Fast Food...";
 </script>
 
 <template>
   <main>
     <Hero :title="Title" :subtitle="SubTitle" />
     <HomeCards />
-    <BurgerListing :limit="4" :showButton="true" :showAddButton="false" />
+    <ShuffledProductListing class="justify-between" :limit="4" />
   </main>
 </template>

@@ -11,20 +11,26 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="bg-white rounded-xl shadow-md relative">
-    <div class="p-4">
-      <div class="mb-6">
-        <h3 class="text-xl font-bold">{{ category.Name }}</h3>
-      </div>
-      <div class="mb-5">
-        <div>{{ category.Description }}</div>
-      </div>
-      <!-- <RouterLink
-        :to="'categories/'"
-        class="h-[36px] bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-center text-sm"
-      >
-        Read More
-      </RouterLink> -->
+  <div
+    class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden transform transition-transform hover:scale-105 text-center max-w-xs mx-auto"
+  >
+    <div class="p-5">
+      <RouterLink :to="'categories/edit/' + category.Id" class="block">
+        <div class="mb-3">
+          <div class="bg-gray-100 rounded-2xl overflow-hidden">
+            <img
+              :src="props.category.Icon"
+              alt="Product Icon"
+              class="w-full h-60 object-cover"
+            />
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-gray-800">{{ category.Name }}</h3>
+        </div>
+
+        <div class="mb-5">
+          <p class="text-gray-600">{{ category.Description }}</p>
+        </div>
+      </RouterLink>
     </div>
   </div>
 </template>

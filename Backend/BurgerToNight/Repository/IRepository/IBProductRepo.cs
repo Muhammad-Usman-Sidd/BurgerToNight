@@ -2,9 +2,9 @@
 
 namespace BurgerToNightAPI.Repository.IRepository
 {
-    public interface IBProductRepo:IRepository<BurgerProduct>
+    public interface IProductRepo:IRepository<Product>
     {
-        Task<BurgerProduct> UpdateAsync(BurgerProduct entity);
+        Task<Product> UpdateAsync(Product entity);
 
     }
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue";
 import { useOrderStore } from "../../stores/OrderStore";
-import {useBurgerStore} from "../../stores/ProductStore";
+import {useProductStore} from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
 import { OrderUpdateDTO } from "../../models/OrderDtos"
 import { useAuthStore } from "../../stores/AuthStore";
@@ -10,7 +10,7 @@ import UnAuthAdmin from "../../components/Auth/UnAuth(Admin).vue";
 
 const router =useRouter();
 const orderStore = useOrderStore();
-const productStore = useBurgerStore();
+const productStore = useProductStore();
 const authStore = useAuthStore();
 
 const productDetails = reactive<Record<number, ProductGetDTO | null>>({});
@@ -25,8 +25,8 @@ const deleteOrder = async (id:number)=>{
 
 const getProductDetails = async (Id: number): Promise<ProductGetDTO | null> => {
   if (!productDetails[Id]) {
-    await productStore.fetchBurgerById(Id);
-    productDetails[Id] = productStore.currentBurger;
+    await productStore.fetchProductById(Id);
+    productDetails[Id] = productStore.currentProduct;
   }
   return productDetails[Id];
 };

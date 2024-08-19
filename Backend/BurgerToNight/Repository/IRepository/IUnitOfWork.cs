@@ -2,8 +2,8 @@
 {
     public interface IUnitOfWork
     {
-        IBCategoryRepo BCategories { get; }
-        IBProductRepo BProducts { get; }
+        ICategoryRepo Categories { get; }
+        IProductRepo Products { get; }
         IOrderDetailRepo OrderDetails { get; }
 
         IOrderHeaderRepo OrderHeaders { get; }

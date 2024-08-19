@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue";
 import { useOrderStore } from "../../stores/OrderStore";
-import useBurgerStore from "../../stores/ProductStore";
+import useProductStore from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
 import { useAuthStore } from "../../stores/AuthStore";
 import UnAuthorized from "../../components/Auth/UnAuthorized.vue";
 
 const orderStore = useOrderStore();
-const productStore = useBurgerStore();
+const productStore = useProductStore();
 const authStore = useAuthStore();
 
 const productDetails = reactive<Record<number, ProductGetDTO | null>>({});
 
 const addToCart = async (Id: number, quantity: number) => {
-  await productStore.fetchBurgerById(Id);
-  orderStore.addToCart(productStore.currentBurger, quantity);
+  await productStore.fetchProductById(Id);
+  orderStore.addToCart(productStore.currentProduct, quantity);
 };
 
 const getProductDetails = async (Id: number): Promise<ProductGetDTO | null> => {
   if (!productDetails[Id]) {
-    await productStore.fetchBurgerById(Id);
-    productDetails[Id] = productStore.currentBurger;
+    await productStore.fetchProductById(Id);
+    productDetails[Id] = productStore.currentProduct;
   }
   return productDetails[Id];
 };

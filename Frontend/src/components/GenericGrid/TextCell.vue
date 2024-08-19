@@ -2,7 +2,7 @@
 import { defineProps } from "vue";
 
 const props = defineProps<{
-  item: { burger: object };
+  item: { product: object };
   field: string;
 }>();
 </script>

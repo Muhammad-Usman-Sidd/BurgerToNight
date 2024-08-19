@@ -7,8 +7,8 @@ namespace BurgerToNightAPI.Repository
 {
     public class CartRepo : Repository<Cart>, ICartRepo
     {
-        private readonly BurgerDbContext _db;
-        public CartRepo(BurgerDbContext db) : base(db)
+        private readonly AppDbContext _db;
+        public CartRepo(AppDbContext db) : base(db)
         {
             _db = db;
 

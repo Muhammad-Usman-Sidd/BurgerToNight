@@ -20,7 +20,7 @@ const login = async () => {
     await authStore.login(user.value);
     toast.success(`Hello ${user.value.UserName}`);
     user.value = loginUser();
-    router.push("/burgers");
+    router.push("/products");
   } catch (error: any) {
     errorMessage.value = error.message || "Failed to login. Please try again.";
   }

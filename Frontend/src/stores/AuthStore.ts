@@ -33,6 +33,7 @@ export const useAuthStore = defineStore('auth', {
 
           localStorage.setItem('JWT token', this.token);
           localStorage.setItem('Role', this.role);
+          localStorage.setItem('UserId',this.user.id)
 
           console.log(this.user);
         } else {
@@ -71,16 +72,27 @@ export const useAuthStore = defineStore('auth', {
         throw new Error(error.message || 'Failed to reset password. Please try again.');
       }
     },
+    async getUserById(){
+      try {
+        if(this.user.id !==null){
+          this.user = await authService.getUserById(this.user.id)
+        }
+      } catch (error) {
+        console.log("Error Getting User Details")
+      }
+    },
     toggleDropdownButtons() {
       this.showDropdownButtons = !this.showDropdownButtons;
     },
     initializeStore() {
       const token = localStorage.getItem('JWT token');
       const role = localStorage.getItem('Role');
+      const user =localStorage.getItem('UserId')
       if (token) {
         this.token = token;
         this.isLoggedIn = true;
         this.role = role || '';
+        this.user.id = user
       }
     }
   }

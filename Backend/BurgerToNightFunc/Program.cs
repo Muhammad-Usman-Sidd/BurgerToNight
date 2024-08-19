@@ -44,12 +44,12 @@ var host = new HostBuilder()
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepo, UserRepo>();
         services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<BurgerDbContext>()
+            .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
         services.AddAutoMapper(typeof(MapProfile));
 
-        services.AddDbContext<BurgerDbContext>(options =>
+        services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
         );
 

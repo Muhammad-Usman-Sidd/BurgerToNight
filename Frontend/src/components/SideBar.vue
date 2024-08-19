@@ -3,18 +3,11 @@ import { computed } from "vue";
 import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 import { ProductGetDTO } from "../models/ProductDtos";
 import { useOrderStore } from "../stores/OrderStore";
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  TransitionRoot,
-  TransitionChild,
-} from "@headlessui/vue";
-
+import { TransitionChild,TransitionRoot,Dialog,DialogTitle,DialogPanel } from "@headlessui/vue";
 const orderStore = useOrderStore();
 
-const removeFromCart = (burger: ProductGetDTO) => {
-  orderStore.removeItem(burger);
+const removeFromCart = (product: ProductGetDTO) => {
+  orderStore.removeItem(product);
 };
 
 const checkout = () => {
@@ -28,7 +21,7 @@ const toggleSidebar = () => {
 const totalPrice = computed((): string => {
   return Object.values(orderStore.cart)
     .reduce((total: number, item: any) => {
-      return total + item.burger.Price * item.quantity;
+      return total + item.product.Price * item.quantity;
     }, 0)
     .toFixed(2);
 });
@@ -93,8 +86,8 @@ const totalPrice = computed((): string => {
                               class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
                             >
                               <img
-                                :src="item.burger.Image"
-                                :alt="item.burger.Name"
+                                :src="item.product.Image"
+                                :alt="item.product.Name"
                                 class="h-full w-full object-cover object-center"
                               />
                             </div>
@@ -104,8 +97,8 @@ const totalPrice = computed((): string => {
                                 <div
                                   class="flex justify-between text-base font-medium text-gray-900"
                                 >
-                                  <h3>{{ item.burger.Name }}</h3>
-                                  <p class="ml-4">${{ item.burger.Price.toFixed(2) }}</p>
+                                  <h3>{{ item.product.Name }}</h3>
+                                  <p class="ml-4">${{ item.product.Price.toFixed(2) }}</p>
                                 </div>
                               </div>
                               <div class="flex flex-1 items-end justify-between text-sm">
@@ -115,7 +108,7 @@ const totalPrice = computed((): string => {
                                   <button
                                     type="button"
                                     class="font-medium text-red-600 hover:text-orange-500"
-                                    @click="removeFromCart(item.burger)"
+                                    @click="removeFromCart(item.product)"
                                   >
                                     Remove
                                   </button>

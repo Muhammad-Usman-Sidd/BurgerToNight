@@ -16,13 +16,13 @@ namespace BurgerToNightAPI.Repository
 {
     public class UserRepo : IUserRepo
     {
-        private readonly BurgerDbContext _db;
+        private readonly AppDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private string secretKey;
         private readonly IMapper _mapper;
 
-        public UserRepo(BurgerDbContext db, IConfiguration configuration,
+        public UserRepo(AppDbContext db, IConfiguration configuration,
             UserManager<ApplicationUser> userManager, IMapper mapper, RoleManager<IdentityRole> roleManager)
         {
             _db=db;

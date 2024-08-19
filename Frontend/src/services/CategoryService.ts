@@ -1,11 +1,12 @@
 import BaseService from './BaseService';
 import { APIResponse } from '../models/APIResult';
-import { CategoryGetDTO, CategoryCreateDTO } from '../models/CategoryDtos';
+import { CategoryGetDTO, CategoryCreateDTO, CategoryUpdateDTO } from '../models/CategoryDtos';
 
 export interface ICategoryService {
   createCategory(dto: CategoryCreateDTO): Promise<APIResponse<CategoryGetDTO>>;
   deleteCategory(id: number): Promise<APIResponse<null>>;
   getAllCategories(): Promise<APIResponse<CategoryGetDTO[]>>;
+  updateCategory(dto:CategoryUpdateDTO):Promise<APIResponse<null>>;
 }
 
 class CategoryService extends BaseService implements ICategoryService {
@@ -20,7 +21,13 @@ class CategoryService extends BaseService implements ICategoryService {
       Data: dto,
     });
   }
-
+  async updateCategory(dto: CategoryUpdateDTO): Promise<APIResponse<null>> {
+    return this.sendRequest<null>({
+      Url: `/CategoryAPI/${dto.Id}`,
+      Method: 'PUT',
+      Data: dto,
+    });
+  }
   async deleteCategory(id: number): Promise<APIResponse<null>> {
     return this.sendRequest<null>({
       Url: `/CategoryAPI/${id}`,
@@ -32,6 +39,12 @@ class CategoryService extends BaseService implements ICategoryService {
     return this.sendRequest<CategoryGetDTO[]>({
       Url: `/CategoryAPI`,
       Method: 'GET',
+    });
+  }
+  async getCategory(id: number): Promise<APIResponse<CategoryGetDTO>> {
+    return this.sendRequest<CategoryGetDTO>({
+      Url: `/CategoryAPI/${id}`,
+      Method: 'GET'
     });
   }
 }

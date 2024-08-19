@@ -9,10 +9,10 @@ import {
   Bars3Icon,
   Cog8ToothIcon,
 } from "@heroicons/vue/24/solid";
+import { TransitionChild,TransitionRoot } from "@headlessui/vue";
 import { useAuthStore } from "../stores/AuthStore";
 import { ref } from "vue";
 import AuthButtons from "./Auth/AuthButtons.vue";
-import { TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 const authStore = useAuthStore();
 const route = useRoute();
@@ -29,14 +29,13 @@ const isMenuOpen = ref(false);
       <div class="flex h-20 items-center justify-between">
         <div class="flex items-center">
           <RouterLink class="flex items-center" to="/">
-            <img class="h-10 w-auto" :src="logo" alt="Vue Burgers" />
+            <img class="h-10 w-auto" :src="logo" alt="Vue Products" />
             <span class="hidden md:block text-white text-2xl font-bold ml-2">
-              Burger To Night
+              Bite Quest
             </span>
           </RouterLink>
         </div>
 
-        <!-- Desktop Menu Items -->
         <div class="hidden md:flex space-x-2">
           <RouterLink
             to="/"
@@ -49,16 +48,16 @@ const isMenuOpen = ref(false);
             Home
           </RouterLink>
           <RouterLink
-            to="/burgers"
+            to="/products"
             :class="[
-              isActiveLink('/burgers')
+              isActiveLink('/products')
                 ? 'bg-orange-900'
                 : 'hover:bg-gray-900 hover:text-white',
               'text-white rounded-md px-3 py-2',
             ]"
           >
             <ListBulletIcon class="h-5 w-5 inline-block mr-1" />
-            Burgers
+            Products
           </RouterLink>
           <RouterLink
             v-if="authStore.isLoggedIn"
@@ -101,7 +100,6 @@ const isMenuOpen = ref(false);
           </RouterLink>
         </div>
 
-        <!-- Desktop Settings Icon -->
         <div class="hidden md:flex items-center">
           <button
             @click="authStore.toggleDropdownButtons"
@@ -129,7 +127,7 @@ const isMenuOpen = ref(false);
       </div>
     </div>
 
-    <!-- Mobile Menu with Transition Effect -->
+    <!-- Mobile Menu -->
     <TransitionRoot as="template" :show="isMenuOpen">
       <TransitionChild
         as="div"
@@ -154,17 +152,17 @@ const isMenuOpen = ref(false);
             Home
           </RouterLink>
           <RouterLink
-            to="/burgers"
+            to="/products"
             @click="isMenuOpen = !isMenuOpen"
             :class="[
-              isActiveLink('/burgers')
+              isActiveLink('/products')
                 ? 'bg-orange-900'
                 : 'hover:bg-gray-900 hover:text-white',
               'block text-white rounded-md px-3 py-2 text-base font-medium',
             ]"
           >
             <ListBulletIcon class="h-5 w-5 inline-block mr-1" />
-            Burgers
+            Products
           </RouterLink>
           <RouterLink
             v-if="authStore.isLoggedIn"
@@ -208,7 +206,6 @@ const isMenuOpen = ref(false);
             <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
             Past Orders
           </RouterLink>
-          <!-- Added Settings Icon to Mobile Menu -->
           <div class="block text-white rounded-md px-3 py-2 text-base font-medium">
             <button @click="authStore.toggleDropdownButtons">
               <Cog8ToothIcon class="h-5 w-5 inline-block mr-1" />

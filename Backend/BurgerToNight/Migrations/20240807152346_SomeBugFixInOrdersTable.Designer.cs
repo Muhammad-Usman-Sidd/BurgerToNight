@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BurgerToNightAPI.Migrations
 {
-    [DbContext(typeof(BurgerDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20240807152346_SomeBugFixInOrdersTable")]
     partial class SomeBugFixInOrdersTable
     {

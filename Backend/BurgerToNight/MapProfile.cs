@@ -10,13 +10,13 @@ namespace BurgerToNightAPI
 
         public MapProfile()
         {
-            CreateMap<BurgerCategory, BCategoryPostDTO>().ReverseMap();
-            CreateMap<BurgerCategory, BCategoryGetDTO>();
-            CreateMap<BurgerCategory,BCategoryUpdateDTO>().ReverseMap();
+            CreateMap<Category, CategoryPostDTO>().ReverseMap();
+            CreateMap<Category, CategoryGetDTO>();
+            CreateMap<Category,CategoryUpdateDTO>().ReverseMap();
 
-            CreateMap<BurgerProduct, BProductPostDTO>().ReverseMap();
-            CreateMap<BurgerProduct, BProductGetDTO>();
-            CreateMap<BurgerProduct, BProductUpdateDTO>().ReverseMap();
+            CreateMap<Product, ProductPostDTO>().ReverseMap();
+            CreateMap<Product, ProductGetDTO>();
+            CreateMap<Product, ProductUpdateDTO>().ReverseMap();
 
             CreateMap<OrderCreateDTO, OrderGetDTO>();
             CreateMap<OrderCreateDTO, OrderHeader>();

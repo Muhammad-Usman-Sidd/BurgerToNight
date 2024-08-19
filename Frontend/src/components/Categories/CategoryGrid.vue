@@ -13,7 +13,7 @@ const props = defineProps<{
 }>();
 
 const columns = [
-  { key: "title", label: "Title", field: "Title", type: ColumnType.DEFAULT },
+  { key: "name", label: "Name", field: "Name", type: ColumnType.DEFAULT },
   {
     key: "description",
     label: "Description",

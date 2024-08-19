@@ -41,8 +41,8 @@ namespace BurgeroNightAPI.Controllers
             try
             {
 
-                IEnumerable<BurgerProduct> productList = await _unitOfWork.BProducts.GetAllAsync(includeProperties: "BurgerCategory");
-                _response.Result = _mapper.Map<List<BProductGetDTO>>(productList);
+                IEnumerable<Product> productList = await _unitOfWork.Products.GetAllAsync(includeProperties: "Category");
+                _response.Result = _mapper.Map<List<ProductGetDTO>>(productList);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
 
@@ -71,13 +71,13 @@ namespace BurgeroNightAPI.Controllers
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                var product = await _unitOfWork.BProducts.GetAsync(u => u.Id == id);
+                var product = await _unitOfWork.Products.GetAsync(u => u.Id == id);
                 if (product == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
-                _response.Result = _mapper.Map<BProductGetDTO>(product);
+                _response.Result = _mapper.Map<ProductGetDTO>(product);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -94,17 +94,17 @@ namespace BurgeroNightAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> CreateProduct([FromBody] BProductPostDTO createDTO)
+        public async Task<ActionResult<APIResponse>> CreateProduct([FromBody] ProductPostDTO createDTO)
         {
             try
             {
 
-                if (await _unitOfWork.BProducts.GetAsync(u => u.Name.ToLower() == createDTO.Name.ToLower()) != null)
+                if (await _unitOfWork.Products.GetAsync(u => u.Name.ToLower() == createDTO.Name.ToLower()) != null)
                 {
                     ModelState.AddModelError("ErrorMessages", "Category Number already Exists!");
                     return BadRequest(ModelState);
                 }
-                if (await _unitOfWork.BCategories.GetAsync(u => u.Id == createDTO.BCategoryId) == null)
+                if (await _unitOfWork.Categories.GetAsync(u => u.Id == createDTO.CategoryId) == null)
                 {
                     ModelState.AddModelError("ErrorMessages", "ID is Invalid!");
                     return BadRequest(ModelState);
@@ -114,11 +114,11 @@ namespace BurgeroNightAPI.Controllers
                     return BadRequest(createDTO);
                 }
 
-                BurgerProduct product = _mapper.Map<BurgerProduct>(createDTO);
+                Product product = _mapper.Map<Product>(createDTO);
 
 
-                await _unitOfWork.BProducts.CreateAsync(product);
-                _response.Result = _mapper.Map<BProductGetDTO>(product);
+                await _unitOfWork.Products.CreateAsync(product);
+                _response.Result = _mapper.Map<ProductGetDTO>(product);
                 _response.StatusCode = HttpStatusCode.Created;
                 return CreatedAtRoute("GetCategory", new { id = product.Id }, _response);
             }
@@ -143,12 +143,12 @@ namespace BurgeroNightAPI.Controllers
                 {
                     return BadRequest();
                 }
-                var product = await _unitOfWork.BProducts.GetAsync(u => u.Id == id);
+                var product = await _unitOfWork.Products.GetAsync(u => u.Id == id);
                 if (product == null)
                 {
                     return NotFound();
                 }
-                await _unitOfWork.BProducts.RemoveAsync(product);
+                await _unitOfWork.Products.RemoveAsync(product);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -165,7 +165,7 @@ namespace BurgeroNightAPI.Controllers
         [HttpPut("{id:int}", Name = "UpdateProduct")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdateProduct(int id, [FromBody] BProductUpdateDTO updateDTO)
+        public async Task<ActionResult<APIResponse>> UpdateProduct(int id, [FromBody] ProductUpdateDTO updateDTO)
         {
             try
             {
@@ -173,14 +173,14 @@ namespace BurgeroNightAPI.Controllers
                 {
                     return BadRequest();
                 }
-                if (await _unitOfWork.BCategories.GetAsync(u => u.Id == updateDTO.BCategoryId) == null)
+                if (await _unitOfWork.Categories.GetAsync(u => u.Id == updateDTO.CategoryId) == null)
                 {
                     ModelState.AddModelError("ErrorMessages", "Category ID is Invalid!");
                     return BadRequest(ModelState);
                 }
-                BurgerProduct model = _mapper.Map<BurgerProduct>(updateDTO);
+                Product model = _mapper.Map<Product>(updateDTO);
 
-                await _unitOfWork.BProducts.UpdateAsync(model);
+                await _unitOfWork.Products.UpdateAsync(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
