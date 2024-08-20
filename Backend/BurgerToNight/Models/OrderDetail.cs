@@ -21,7 +21,7 @@ namespace BurgerToNightAPI.Models
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         [ValidateNever]
-        public Product burgerProduct { get; set; }
+        public Product Product { get; set; }
 
         public int Quantity { get; set; }
         public double Price { get; set; }

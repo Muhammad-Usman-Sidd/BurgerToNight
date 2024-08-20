@@ -25,10 +25,6 @@ namespace BurgerToNightAPI.Repository
             {
                 orderFromDb.OrderStatus = orderStatus.OrderStatus;
                 orderFromDb.PaymentStatus = orderStatus.PaymentStatus;
-                if (!string.IsNullOrEmpty(paymentStatus))
-                {
-                    orderFromDb.PaymentStatus = paymentStatus;
-                }
             }
         }
 

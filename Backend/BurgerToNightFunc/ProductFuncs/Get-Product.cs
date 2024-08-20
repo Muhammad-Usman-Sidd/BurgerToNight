@@ -47,7 +47,7 @@ public class Get_Product
 
             var mappedProduct = _mapper.Map<ProductGetDTO>(product);
             var burgerCategory = await _unitOfWork.Categories.GetAsync(c => c.Id == mappedProduct.CategoryId);
-            mappedProduct.burgerCategory = burgerCategory?.Name;
+            mappedProduct.productCategory = burgerCategory?.Name;
 
             if (!string.IsNullOrEmpty(product.Image) && product.Image.StartsWith("Blob"))
             {

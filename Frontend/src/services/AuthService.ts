@@ -41,7 +41,7 @@ class AuthService extends BaseService implements IAuthService {
     async getUserById<T>(Id: number): Promise<APIResponse<T>> {
         return this.sendRequest<T>({
             Url: `/user/${Id}`,
-            Method: 'POST',
+            Method: 'GET',
         });
     }
 }

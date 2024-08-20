@@ -9,10 +9,6 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     isLoggedIn: false,
     user: {
-      id: '',
-      name: '',
-      phoneNumber: '',
-      address: ''
     } as any,
     token: localStorage.getItem('JWT token') || '',
     role: localStorage.getItem('Role') || '',
@@ -26,16 +22,15 @@ export const useAuthStore = defineStore('auth', {
           this.isLoggedIn = true;
           this.token = response.Result.Token;
           this.role = response.Result.Role;
-          this.user.id = response.Result.User.Id;
-          this.user.name = response.Result.User.Name;
-          this.user.phoneNumber = response.Result.User.PhoneNumber;
-          this.user.address = response.Result.User.Address;
+          this.user.Id = response.Result.User.Id;
+          this.user.Name = response.Result.User.Name;
+          this.user.PhoneNumber = response.Result.User.PhoneNumber;
+          this.user.Address = response.Result.User.Address;
 
           localStorage.setItem('JWT token', this.token);
           localStorage.setItem('Role', this.role);
-          localStorage.setItem('UserId',this.user.id)
+          localStorage.setItem('UserId',this.user.Id)
 
-          console.log(this.user);
         } else {
           throw new Error(response.ErrorMessages.join(', '));
         }
@@ -51,6 +46,7 @@ export const useAuthStore = defineStore('auth', {
 
       localStorage.removeItem('JWT token');
       localStorage.removeItem('Role');
+      localStorage.removeItem('UserId')
 
       console.log("Logout successful");
     },
@@ -74,8 +70,9 @@ export const useAuthStore = defineStore('auth', {
     },
     async getUserById(){
       try {
-        if(this.user.id !==null){
-          this.user = await authService.getUserById(this.user.id)
+        if(this.user.Id !==null){
+          const response = await authService.getUserById(this.user.Id)
+          this.user=response.Result
         }
       } catch (error) {
         console.log("Error Getting User Details")
@@ -87,12 +84,12 @@ export const useAuthStore = defineStore('auth', {
     initializeStore() {
       const token = localStorage.getItem('JWT token');
       const role = localStorage.getItem('Role');
-      const user =localStorage.getItem('UserId')
+      const userId =localStorage.getItem('UserId')
       if (token) {
         this.token = token;
         this.isLoggedIn = true;
         this.role = role || '';
-        this.user.id = user
+        this.user.Id = userId
       }
     }
   }

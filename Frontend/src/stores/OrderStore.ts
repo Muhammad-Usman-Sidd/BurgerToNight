@@ -44,7 +44,8 @@ export const useOrderStore = defineStore('order', {
     },
     async checkout() {
       const authStore = useAuthStore();
-      await authStore.getUserById()
+      await authStore.getUserById();
+      console.log(authStore.user)
       if (authStore.isLoggedIn) {
         try {
           const orderDto: OrderCreateDTO = {
@@ -66,8 +67,6 @@ export const useOrderStore = defineStore('order', {
             this.toggleSidebar();
             await this.loadUserPastOrders();
             toast.success('Order placed successfully');
-          } else {
-            toast.error(response.ErrorMessages.join(', '));
           }
         } catch (error) {
           toast.error('Error during checkout');
@@ -78,7 +77,8 @@ export const useOrderStore = defineStore('order', {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn && authStore.role==='customer') {
         try {
-          const response :APIResponse<OrderGetDTO[]> = await orderService.getUserOrders(authStore.user.id);
+          console.log(authStore.user)
+          const response :APIResponse<OrderGetDTO[]> = await orderService.getUserOrders(authStore.user.Id);
           if (response.IsSuccess) {
             this.pastOrders = response.Result;
             console.log(response);

@@ -13,20 +13,13 @@ export const useCategoryStore = defineStore('category', {
     currentCategory : {} as any
   }),
   actions:{
-    async fetchCategories() {
-      const authStore=useAuthStore()
-      if (authStore.isLoggedIn) {
-        try {
-          const response: APIResponse<any> = await CategoryService.getAllCategories();
-          this.categories = response.Result;
-        } catch (error) {
-          toast.error('Error fetching categories');
-        }        
-      }
-      else{
-        toast.error('You must be logged in to view categories');
-      }
-
+    async fetchCategories() {    
+      try {
+        const response: APIResponse<any> = await CategoryService.getAllCategories();
+        this.categories = response.Result;
+      } catch (error) {
+        toast.error('Error fetching categories');
+      }        
     },
     async addCategory() {
       const authStore = useAuthStore();
@@ -72,7 +65,7 @@ export const useCategoryStore = defineStore('category', {
     },
     async fetchCategoryById(id: number) {
       const authStore = useAuthStore();
-      if (authStore.isLoggedIn) {
+      if (authStore.isLoggedIn && authStore.role==='admin') {
         try {
           const response: APIResponse<CategoryGetDTO> = await CategoryService.getCategory(id);
           this.currentCategory = response.Result;

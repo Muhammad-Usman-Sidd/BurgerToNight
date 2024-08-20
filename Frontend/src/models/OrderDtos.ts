@@ -2,7 +2,7 @@ import { OrderDetailCreateDTO,OrderDetailGetDTO } from "./OrderDetailDtos";
 
 export interface OrderGetDTO {
   Id: number;
-  UserId: number;
+  UserId: string;
   OrderDate: string;
   OrderTotal: number;
   OrderStatus: string;
@@ -16,7 +16,7 @@ export interface OrderGetDTO {
 }
 
 export interface OrderCreateDTO{
-  UserId: number;
+  UserId: string;
   OrderTotal: number;
   PhoneNumber?: string;
   Address?: string;

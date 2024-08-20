@@ -17,7 +17,7 @@ namespace BurgerToNightAPI.Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
-        public Category? burgerCategory { get; set; }
+        public Category? productCategory { get; set; }
         public string? Description { get; set; }
         public int Price { get; set; }
         public DateTime CreationDate { get; set; }

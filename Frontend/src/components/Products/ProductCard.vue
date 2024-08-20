@@ -49,7 +49,7 @@ const addToCart = () => {
         </div>
         <h3 class="text-lg font-bold text-orange-600 mb-4">Price: ${{ product.Price }}</h3>
       </RouterLink>
-      <div v-if="authStore.isLoggedIn && authStore.role === 'customer'">
+      <div>
         <button
           @click="addToCart"
           class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 mb-3 rounded-full text-sm font-medium"

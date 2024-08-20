@@ -64,7 +64,7 @@ namespace BurgerToNightFunc.Orders
                         orderHeader = orderHeaderobj,
                         OrderHeaderId = orderHeaderobj.Id,
                         ProductId = Item.ProductId,
-                        burgerProduct = await _unitOfWork.Products.GetAsync(u => u.Id == Item.ProductId),
+                        Product = await _unitOfWork.Products.GetAsync(u => u.Id == Item.ProductId),
                         Quantity = Item.Quantity,
                         Price = Item.Price
                     };
@@ -72,6 +72,7 @@ namespace BurgerToNightFunc.Orders
                 }
                 await _unitOfWork.SaveAsync();
                 var dto = _mapper.Map<OrderGetDTO>(orderDTO);
+                dto.Id = orderHeaderobj.Id;
 
                 response.StatusCode = HttpStatusCode.Created;
                 response.IsSuccess = true;

@@ -79,7 +79,7 @@ namespace BurgerToNightFunc.Product
                 {
                     var burgerCategory = await _unitOfWork.Categories.GetAsync(c => c.Id == item.CategoryId);
                     var mappedProduct = _mapper.Map<ProductGetDTO>(item);
-                    mappedProduct.burgerCategory = burgerCategory?.Name ?? "Unknown"; // Handle null case
+                    mappedProduct.productCategory = burgerCategory?.Name ?? "Unknown"; // Handle null case
 
                     if (!string.IsNullOrEmpty(item.Image) && item.Image.StartsWith("Blob"))
                     {

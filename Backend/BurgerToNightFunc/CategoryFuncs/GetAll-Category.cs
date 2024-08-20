@@ -17,7 +17,6 @@ public class GetAll_Category
     {
         _unitOfWork = unitOfWork;
     }
-    [Authorize(roles:["admin","customer"])]
     [Function("GetAllCategory")]
     public async Task<APIResponse> Run(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "CategoryAPI")] HttpRequestData req,
@@ -25,7 +24,6 @@ public class GetAll_Category
     {
         var log = context.GetLogger("GetAllCategory");
         var response = new APIResponse();
-
         try
         {
             var categories = await _unitOfWork.Categories.GetAllAsync();

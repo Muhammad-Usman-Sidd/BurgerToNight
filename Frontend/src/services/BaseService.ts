@@ -45,12 +45,10 @@ class BaseService {
     }
   }
 
-  // Method to store the token
   public setToken(token: string) {
     localStorage.setItem('jwtToken', token);
   }
 
-  // Method to remove the token (for logout)
   public clearToken() {
     localStorage.removeItem('jwtToken');
   }

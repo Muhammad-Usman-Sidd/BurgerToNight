@@ -3,10 +3,11 @@ using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
-using Microsoft.AspNetCore.Http;
+using BurgerToNightFunc.Attributes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
 namespace BurgerToNightFunc.Auth
@@ -17,15 +18,16 @@ namespace BurgerToNightFunc.Auth
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public GetUserDetails(ILogger<GetUserDetails> logger, UserManager<ApplicationUser> userManager,IMapper mapper)
+        public GetUserDetails(ILogger<GetUserDetails> logger, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _logger = logger;
             _userManager = userManager;
             _mapper = mapper;
         }
 
+        [Authorize(roles: "customer")]
         [Function("GetUserDetails")]
-        public async Task<APIResponse> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route="user/${userId}")] HttpRequest req,string userId)
+        public async Task<APIResponse> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route="user/{UserId}")] HttpRequestData req,string userId)
         {
             var response = new APIResponse();
             try
@@ -50,7 +52,7 @@ namespace BurgerToNightFunc.Auth
                 }
                 var userDTO = _mapper.Map<UserDTO>(user);
                 response.StatusCode = HttpStatusCode.OK;
-                response.Result = user;
+                response.Result = userDTO;
                 return (response);
             }
             catch (Exception ex)
