@@ -53,7 +53,7 @@ const getComponent = (column: Column) => {
         <tr
           v-for="item in props.items.slice(0, props.limit || props.items.length)"
           :key="item.Id"
-          class="hover:bg-gray-100 cursor-pointer"
+          class="hover:bg-orange-100 cursor-pointer"
           @click="$emit('row-click', item)"
         >
           <td

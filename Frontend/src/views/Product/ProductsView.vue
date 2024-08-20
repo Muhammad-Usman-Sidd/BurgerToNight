@@ -13,7 +13,7 @@ const Heading = "Menu";
     <RouterLink
       v-if="authStore.role === 'admin'"
       to="/add-products"
-      class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
+      class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-orange-700"
     >
       Add Product
     </RouterLink>

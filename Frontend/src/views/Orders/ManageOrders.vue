@@ -44,11 +44,11 @@ onMounted(async () => {
 <template>
   <div
     v-if="authStore.isLoggedIn && authStore.role === 'admin'"
-    class="bg-blue-50 px-4 py-10 flex flex-col items-center"
+    class="bg-orange-50 px-4 py-10 flex flex-col items-center"
   >
     <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Manage Orders</h1>
 
-    <div v-if="!orderStore.pastOrders.length" class="block text-gray-700 text-center">
+    <div v-if="!orderStore.pastOrders.length" class="block text-orange-700 text-center">
       No orders found.
     </div>
 
@@ -60,7 +60,7 @@ onMounted(async () => {
       >
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-semibold text-orange-700">Order #{{ order.Id }}</h2>
-          <span class="text-gray-500">{{
+          <span class="text-orange-500">{{
             new Date(order.OrderDate).toLocaleDateString()
           }}</span>
         </div>
@@ -98,7 +98,7 @@ onMounted(async () => {
             <select
               id="status"
               v-model="order.OrderStatus"
-              class="border border-gray-300 rounded px-3 py-1"
+              class="border border-orange-300 rounded px-3 py-1"
             >
               <option value="Order Accepted">Order Accepted</option>
               <option value="Preparing">Preparing</option>
@@ -114,7 +114,7 @@ onMounted(async () => {
             <select
               id="payment"
               v-model="order.PaymentStatus"
-              class="border border-gray-300 rounded px-3 py-1"
+              class="border border-orange-300 rounded px-3 py-1"
             >
               <option value="Pending">Pending</option>
               <option value="Verifying Payment">Verifying Payment</option>

@@ -27,13 +27,13 @@ onMounted(async () => {
 <template>
   <section
   v-if="authStore.isLoggedIn && authStore.role==='admin'"
-    class="bg-blue-50 px-4 py-10 flex justify-center items-center"
+    class="bg-orange-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Edit Product</h2>
       <form @submit.prevent="update" class="bg-white p-6 rounded-lg shadow-md">
         <div class="mb-4">
-          <label class="block text-gray-700">Name</label>
+          <label class="block text-orange-700">Name</label>
           <input
             v-model="store.currentProduct.Name"
             type="text"
@@ -41,14 +41,14 @@ onMounted(async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700">Description</label>
+          <label class="block text-orange-700">Description</label>
           <textarea
             v-model="store.currentProduct.Description"
             class="w-full p-2 border rounded"
           ></textarea>
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700">Price</label>
+          <label class="block text-orange-700">Price</label>
           <input
             v-model="store.currentProduct.Price"
             type="number"
@@ -56,7 +56,7 @@ onMounted(async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700">Category</label>
+          <label class="block text-orange-700">Category</label>
           <select
             v-model="store.currentProduct.CategoryId"
             class="w-full p-2 border rounded"
@@ -72,7 +72,7 @@ onMounted(async () => {
           </select>
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700">Preparing Time</label>
+          <label class="block text-orange-700">Preparing Time</label>
           <input
             v-model="store.currentProduct.PreparingTime"
             type="text"
@@ -80,7 +80,7 @@ onMounted(async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700">Image</label>
+          <label class="block text-orange-700">Image</label>
           <input
             type="file"
             @change="store.handleImageUpload"

@@ -35,13 +35,13 @@ const categoryStore = useCategoryStore();
 <template>
   <section
     v-if="authStore.role === 'admin'"
-    class="bg-blue-50 px-4 py-10 flex justify-center items-center"
+    class="bg-orange-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Add Category</h2>
       <form @submit.prevent="addCategory" class="bg-white p-6 rounded-lg shadow-md">
         <div class="mb-4">
-          <label class="block text-gray-700">Name</label>
+          <label class="block text-orange-700">Name</label>
           <input
             v-model="categoryStore.currentCategory.Name"
             type="text"
@@ -49,14 +49,14 @@ const categoryStore = useCategoryStore();
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700">Description</label>
+          <label class="block text-orange-700">Description</label>
           <textarea
             v-model="categoryStore.currentCategory.Description"
             class="w-full p-2 border rounded"
           ></textarea>
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700">Image</label>
+          <label class="block text-orange-700">Image</label>
           <input
             type="file"
             @change="categoryStore.handleImageUpload"

@@ -33,13 +33,13 @@ const register = async () => {
 <template>
   <div
     v-if="!authStore.isLoggedIn"
-    class="flex justify-center items-center min-h-screen bg-gray-100"
+    class="flex justify-center items-center min-h-screen bg-orange-100"
   >
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h2 class="text-2xl font-semibold mb-6">Register</h2>
       <form @submit.prevent="register">
         <div class="mb-4">
-          <label for="role" class="block text-gray-700">Role:</label>
+          <label for="role" class="block text-orange-700">Role:</label>
           <select
             id="role"
             v-model="registerUser.Role"
@@ -50,7 +50,7 @@ const register = async () => {
           </select>
         </div>
         <div v-if="registerUser.Role === 'admin'" class="mb-4">
-          <label for="secretKey" class="block text-gray-700">Secret Key:</label>
+          <label for="secretKey" class="block text-orange-700">Secret Key:</label>
           <input
             type="text"
             id="secretKey"
@@ -60,7 +60,7 @@ const register = async () => {
         </div>
 
         <div class="mb-4">
-          <label for="username" class="block text-gray-700">Username:</label>
+          <label for="username" class="block text-orange-700">Username:</label>
           <input
             type="text"
             id="username"
@@ -71,7 +71,7 @@ const register = async () => {
         </div>
 
         <div class="mb-4">
-          <label for="phoneNumber" class="block text-gray-700">PhoneNumber:</label>
+          <label for="phoneNumber" class="block text-orange-700">PhoneNumber:</label>
           <input
             type="text"
             id="phoneNumber"
@@ -81,7 +81,7 @@ const register = async () => {
           />
         </div>
         <div class="mb-4">
-          <label for="address" class="block text-gray-700">Address:</label>
+          <label for="address" class="block text-orange-700">Address:</label>
           <input
             type="text"
             id="address"
@@ -91,7 +91,7 @@ const register = async () => {
           />
         </div>
         <div class="mb-4">
-          <label for="email" class="block text-gray-700">Email:</label>
+          <label for="email" class="block text-orange-700">Email:</label>
           <input
             type="email"
             id="email"
@@ -101,7 +101,7 @@ const register = async () => {
           />
         </div>
         <div class="mb-4">
-          <label for="password" class="block text-gray-700">Password:</label>
+          <label for="password" class="block text-orange-700">Password:</label>
           <input
             type="password"
             id="password"

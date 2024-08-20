@@ -1,115 +1,79 @@
 <template>
-  <div class="bg-white">
-    <div class="pt-6">
-      <!-- Breadcrumb -->
-      <nav aria-label="Breadcrumb">
-        <ol
-          role="list"
-          class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-        >
-          <li v-for="breadcrumb in breadcrumbs" :key="breadcrumb.id">
-            <div class="flex items-center">
-              <a :href="breadcrumb.href" class="mr-2 text-sm font-medium text-gray-900">{{
-                breadcrumb.name
-              }}</a>
-              <svg
-                width="16"
-                height="20"
-                viewBox="0 0 16 20"
-                fill="currentColor"
-                aria-hidden="true"
-                class="h-5 w-4 text-gray-300"
-              >
-                <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-              </svg>
-            </div>
-          </li>
-          <li class="text-sm">
-            <a
-              aria-current="page"
-              class="font-medium text-gray-500 hover:text-gray-600"
-              >{{ product.name }}</a
-            >
-          </li>
-        </ol>
-      </nav>
+  <div class="min-h-screen bg-gray-100 flex flex-col items-center p-4">
+    <div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-6">
+      <h1 class="text-3xl font-bold text-center mb-4">Order Confirmation</h1>
 
-      <!-- Order Summary -->
-      <div
-        class="mx-auto max-w-2xl px-4 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8 lg:pt-16"
+      <div v-if="orderDto" class="mb-6">
+        <div class="text-lg font-semibold">Order Details</div>
+        <div class="mt-2">
+          <p><span class="font-medium">Name:</span> {{ orderDto.Name }}</p>
+          <p><span class="font-medium">Phone Number:</span> {{ orderDto.PhoneNumber }}</p>
+          <p><span class="font-medium">Address:</span> {{ orderDto.Address }}</p>
+          <p><span class="font-medium">Total Amount:</span> ${{ orderDto.OrderTotal.toFixed(2) }}</p>
+        </div>
+      </div>
+
+      <div v-if="orderDto.Items.length" class="mb-6">
+        <div class="text-lg font-semibold">Order Items</div>
+        <ul class="mt-2 list-disc list-inside">
+          <li v-for="item in orderDto.Items" :key="item.ProductId" class="flex justify-between">
+            <span>{{ item.ProductId }} - Quantity: {{ item.Quantity }}</span>
+            <span>${{ (item.Price * item.Quantity).toFixed(2) }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <button
+        @click="confirmOrder"
+        class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
       >
-        <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-          <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            Checkout
-          </h1>
-        </div>
-        <div class="mt-4 lg:mt-0 lg:row-span-3">
-          <h2 class="text-lg font-medium text-gray-900">Order Details</h2>
-          <ul class="mt-4 space-y-2">
-            <li
-              v-for="item in order.Items"
-              :key="item.ProductId"
-              class="text-sm text-gray-600"
-            >
-              {{ item.Quantity }}x {{ item.ProductName }} - {{ item.Price }} each
-            </li>
-          </ul>
-          <p class="mt-6 text-lg font-medium text-gray-900">
-            Total: {{ order.OrderTotal }}
-          </p>
-        </div>
-      </div>
-
-      <!-- User Details -->
-      <div class="mx-auto max-w-2xl px-4 pt-10 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-16">
-        <h2 class="text-lg font-medium text-gray-900">User Information</h2>
-        <div class="mt-4">
-          <p class="text-sm text-gray-600">Name: {{ order.Name }}</p>
-          <p class="text-sm text-gray-600">Phone: {{ order.PhoneNumber }}</p>
-          <p class="text-sm text-gray-600">Address: {{ order.Address }}</p>
-        </div>
-      </div>
-
-      <!-- Place Order Button -->
-      <div class="mx-auto max-w-2xl px-4 pt-10 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-16">
-        <button
-          @click="confirmOrder"
-          class="w-full bg-indigo-600 text-white py-3 px-6 rounded-md hover:bg-indigo-700"
-        >
-          Place Order
-        </button>
-      </div>
+        Confirm Order
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { OrderGetDTO } from "../models/OrderDtos";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useOrderStore } from "../stores/OrderStore";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/AuthStore";
+import { OrderDetailCreateDTO } from "../models/OrderDetailDtos";
+import { useToast } from "vue-toastification";
 
-const authStore= useAuthStore();
+const authStore = useAuthStore();
 const orderStore = useOrderStore();
 const router = useRouter();
+const toast = useToast()
 
-const order = ref<OrderGetDTO | null>(null);
-const breadcrumbs = ref([
-  { id: 1, name: "Home", href: "/" },
-  { id: 2, name: "Checkout", href: "/checkout" },
-]);
+const order = {} as OrderGetDTO;
+const orderDto = ref({
+  UserId: authStore.user.Id,
+  OrderTotal: orderStore.cart.reduce((total, item) => total + item.product.Price * item.quantity, 0),
+  Name: authStore.user.Name,
+  PhoneNumber: authStore.user.PhoneNumber,
+  Address: authStore.user.Address,
+  Items: orderStore.cart.map((item) => ({
+    ProductId: item.product.Id,
+    Quantity: item.quantity,
+    Price: item.product.Price,
+  })) as OrderDetailCreateDTO[],
+});
 
-onMounted(async() => {
- await authStore.getUserById();
+onMounted(async () => {
+  await authStore.getUserById();  
+  
 });
 
 const confirmOrder = async () => {
   try {
-    await orderStore.checkout();
-    router.push("/order-confirmation");
+    await orderStore.checkout(orderDto.value);
+    router.push(`/orders/${authStore.user.Id}`);
+    toast.success("Order placed successfully!");
   } catch (error) {
     console.error("Order placement failed:", error);
+    toast.error("Order placement failed. Please try again.");
   }
 };
 </script>

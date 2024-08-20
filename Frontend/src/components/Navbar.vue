@@ -24,11 +24,11 @@ const isMenuOpen = ref(false);
 </script>
 
 <template>
-  <nav class="bg-orange-700 border-b border-orange-500 relative">
+  <nav class="bg-orange-800 border-b border-orange-500 relative">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="flex h-20 items-center justify-between">
         <div class="flex items-center">
-          <RouterLink class="flex items-center" to="/">
+          <RouterLink class="flex absolute left-10 items-center" to="/">
             <img class="h-10 w-auto" :src="logo" alt="Vue Products" />
             <span class="hidden md:block text-white text-2xl font-bold ml-2">
               Bite Quest
@@ -40,7 +40,7 @@ const isMenuOpen = ref(false);
           <RouterLink
             to="/"
             :class="[
-              isActiveLink('/') ? 'bg-orange-900' : 'hover:bg-gray-900 hover:text-white',
+              isActiveLink('/') ? 'bg-orange-900' : 'hover:bg-orange-900 hover:text-white',
               'text-white rounded-md px-3 py-2',
             ]"
           >
@@ -52,7 +52,7 @@ const isMenuOpen = ref(false);
             :class="[
               isActiveLink('/products')
                 ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+                : 'hover:bg-orange-900 hover:text-white',
               'text-white rounded-md px-3 py-2',
             ]"
           >
@@ -65,7 +65,7 @@ const isMenuOpen = ref(false);
             :class="[
               isActiveLink('/categories')
                 ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+                : 'hover:bg-orange-900 hover:text-white',
               'text-white rounded-md px-3 py-2',
             ]"
           >
@@ -78,7 +78,7 @@ const isMenuOpen = ref(false);
             :class="[
               isActiveLink('/past-orders')
                 ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+                : 'hover:bg-orange-900 hover:text-white',
               'text-white rounded-md px-3 py-2',
             ]"
           >
@@ -91,7 +91,7 @@ const isMenuOpen = ref(false);
             :class="[
               isActiveLink('/orders')
                 ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+                : 'hover:bg-orange-900 hover:text-white',
               'text-white rounded-md px-3 py-2',
             ]"
           >
@@ -103,13 +103,13 @@ const isMenuOpen = ref(false);
         <div class="hidden md:flex items-center">
           <button
             @click="authStore.toggleDropdownButtons"
-            class="text-white flex items-center"
+            class="text-white absolute right-10 flex items-center"
           >
             <Cog8ToothIcon class="h-6 w-6" />
           </button>
           <div
             v-if="authStore.showDropdownButtons"
-            class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-10"
+            class="absolute right-10 mt-2 w-48 bg-white shadow-lg rounded-md z-10"
           >
             <AuthButtons />
           </div>
@@ -144,7 +144,7 @@ const isMenuOpen = ref(false);
             to="/"
             @click="isMenuOpen = !isMenuOpen"
             :class="[
-              isActiveLink('/') ? 'bg-orange-900' : 'hover:bg-gray-900 hover:text-white',
+              isActiveLink('/') ? 'bg-orange-900' : 'hover:bg-orange-900 hover:text-white',
               'block text-white rounded-md px-3 py-2 text-base font-medium',
             ]"
           >
@@ -157,7 +157,7 @@ const isMenuOpen = ref(false);
             :class="[
               isActiveLink('/products')
                 ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+                : 'hover:bg-orange-900 hover:text-white',
               'block text-white rounded-md px-3 py-2 text-base font-medium',
             ]"
           >
@@ -171,7 +171,7 @@ const isMenuOpen = ref(false);
             :class="[
               isActiveLink('/categories')
                 ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+                : 'hover:bg-orange-900 hover:text-white',
               'block text-white rounded-md px-3 py-2 text-base font-medium',
             ]"
           >
@@ -185,7 +185,7 @@ const isMenuOpen = ref(false);
             :class="[
               isActiveLink('/orders')
                 ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+                : 'hover:bg-orange-900 hover:text-white',
               'block text-white rounded-md px-3 py-2 text-base font-medium',
             ]"
           >
@@ -199,7 +199,7 @@ const isMenuOpen = ref(false);
             :class="[
               isActiveLink('/past-orders')
                 ? 'bg-orange-900'
-                : 'hover:bg-gray-900 hover:text-white',
+                : 'hover:bg-orange-900 hover:text-white',
               'block text-white rounded-md px-3 py-2 text-base font-medium',
             ]"
           >

@@ -42,25 +42,12 @@ export const useOrderStore = defineStore('order', {
     removeItem(product: ProductGetDTO) {
       this.cart = this.cart.filter((item) => item.product.Id !== product.Id);
     },
-    async checkout() {
+    async checkout(dto:OrderCreateDTO) {
       const authStore = useAuthStore();
-      await authStore.getUserById();
       console.log(authStore.user)
       if (authStore.isLoggedIn) {
         try {
-          const orderDto: OrderCreateDTO = {
-            UserId:authStore.user.Id,
-            OrderTotal: this.cart.reduce((total, item) => total + item.product.Price * item.quantity, 0),
-            Name: authStore.user.Name,
-            PhoneNumber:authStore.user.PhoneNumber,
-            Address:authStore.user.Address,
-            Items: this.cart.map((item) => ({
-              ProductId: item.product.Id,
-              Quantity: item.quantity,
-              Price: item.product.Price,
-            })) as OrderDetailCreateDTO[],
-          };
-          const response = await orderService.placeOrder(orderDto);
+          const response = await orderService.placeOrder(dto);
           console.log(response);
           if (response.IsSuccess) {
             this.cart = [];

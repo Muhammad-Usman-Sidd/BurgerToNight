@@ -59,7 +59,7 @@ const handleSearchChange = async (event: Event) => {
 };
 </script>
 <template>
-  <section class="bg-blue-50 px-4 py-10">
+  <section class="bg-orange-50 px-4 py-10">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Menu</h2>
       <div class="mb-4 flex justify-center">
@@ -74,7 +74,7 @@ const handleSearchChange = async (event: Event) => {
 
       <div
         v-if="store.products.length === 0"
-        class="text-2xl text-center text-gray-700 font-semibold"
+        class="text-2xl text-center text-orange-700 font-semibold"
       >
         No Products Found
       </div>
@@ -86,9 +86,9 @@ const handleSearchChange = async (event: Event) => {
             @click="toggleViewMode(viewMode === 'card' ? 'grid' : 'card')"
             class="px-4 py-2 bg-white border rounded transition-colors"
             :class="{
-              'bg-gray-300': viewMode === 'card' || viewMode === 'grid',
-              'text-gray-700': viewMode === 'card' || viewMode === 'grid',
-              'hover:bg-gray-100': viewMode === 'card' || viewMode === 'grid',
+              'bg-orange-300': viewMode === 'card' || viewMode === 'grid',
+              'text-orange-700': viewMode === 'card' || viewMode === 'grid',
+              'hover:bg-orange-100': viewMode === 'card' || viewMode === 'grid',
             }"
           >
             {{ viewMode === "card" ? "Switch to Grid View" : "Switch to Card View" }}
@@ -117,7 +117,7 @@ const handleSearchChange = async (event: Event) => {
         <section v-if="props.showButton" class="flex justify-center my-10 px-6">
           <RouterLink
             to="/products"
-            class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
+            class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-orange-700"
           >
             View All Products
           </RouterLink>
@@ -126,7 +126,7 @@ const handleSearchChange = async (event: Event) => {
           <button
             @click="prevPage"
             :disabled="store.pageIndex <= 1"
-            class="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+            class="px-4 py-2 bg-orange-300 text-orange-700 rounded disabled:opacity-50"
           >
             Previous
           </button>
@@ -136,7 +136,7 @@ const handleSearchChange = async (event: Event) => {
           <button
             @click="nextPage"
             :disabled="store.pageIndex >= totalPages"
-            class="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+            class="px-4 py-2 bg-orange-300 text-orange-700 rounded disabled:opacity-50"
           >
             Next
           </button>

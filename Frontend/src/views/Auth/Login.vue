@@ -30,13 +30,13 @@ const login = async () => {
 <template>
   <div
     v-if="!authStore.isLoggedIn"
-    class="flex justify-center items-center min-h-screen bg-gray-100"
+    class="flex justify-center items-center min-h-screen bg-orange-100"
   >
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h2 class="text-2xl font-semibold mb-6">Sign In</h2>
       <form @submit.prevent="login">
         <div class="mb-4">
-          <label for="userName" class="block text-gray-700">Username:</label>
+          <label for="userName" class="block text-orange-700">Username:</label>
           <input
             type="text"
             id="userName"
@@ -46,7 +46,7 @@ const login = async () => {
           />
         </div>
         <div class="mb-4">
-          <label for="password" class="block text-gray-700">Password:</label>
+          <label for="password" class="block text-orange-700">Password:</label>
           <input
             type="password"
             id="password"
@@ -55,7 +55,7 @@ const login = async () => {
             class="mt-1 p-2 w-full border rounded-lg"
           />
         </div>
-        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">
+        <button type="submit" class="bg-orange-500 text-white py-2 px-4 rounded-lg w-full">
           Sign In
         </button>
       </form>

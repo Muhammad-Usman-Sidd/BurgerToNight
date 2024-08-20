@@ -29,23 +29,23 @@ const addToCart = () => {
 
 <template>
   <div
-    class="bg-gray-50 rounded-full shadow-lg overflow-hidden transform transition-transform hover:scale-105 text-center max-w-xs mx-auto"
+    class="bg-orange-200 rounded-full shadow-lg overflow-hidden transform transition-transform hover:scale-105 text-center max-w-xs mx-auto"
   >
     <div class="p-5">
       <RouterLink :to="'products/' + product.Id" class="block">
         <div class="mb-3">
-          <div class="bg-gray-100 rounded-full overflow-hidden">
+          <div class="bg-orange-100 rounded-full overflow-hidden">
             <img
               :src="props.product.Image"
               alt="Product Image"
               class="w-full h-60 object-cover"
             />
           </div>
-          <h3 class="mt-4 text-lg font-semibold text-gray-800">{{ product.Name }}</h3>
+          <h3 class="mt-4 text-lg font-semibold text-orange-800">{{ product.Name }}</h3>
         </div>
 
         <div class="mb-5">
-          <p class="text-gray-600">{{ halfDescription }}</p>
+          <p class="text-orange-600">{{ halfDescription }}</p>
         </div>
         <h3 class="text-lg font-bold text-orange-600 mb-4">Price: ${{ product.Price }}</h3>
       </RouterLink>

@@ -30,7 +30,7 @@ onMounted(async () => {
         <aside>
           <div class="bg-white p-6 rounded-lg shadow-md">
             <h3 class="text-xl font-bold mb-6">Product Info</h3>
-            <div class="text-gray-600 grid place-items-center my-2">
+            <div class="text-orange-600 grid place-items-center my-2">
               <img
                 :src="store.currentProduct.Image"
                 alt="Product Image"
@@ -40,7 +40,7 @@ onMounted(async () => {
             <hr class="my-4" />
             <h3 class="text-xl">Category:</h3>
             <p class="my-2 bg-orange-100 p-2 font-bold">
-              {{ store.currentProduct.Category }}
+              {{ store.currentProduct.productCategory }}
             </p>
             <h3 class="text-xl">Price:</h3>
             <p class="my-2 bg-orange-100 p-2 font-bold">

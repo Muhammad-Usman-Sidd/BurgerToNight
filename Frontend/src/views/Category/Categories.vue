@@ -8,7 +8,7 @@ const authStore=useAuthStore()
     <RouterLink
       v-if="authStore.role === 'admin'"
       to="/add-categories"
-      class="block bg-black text-white text-center m-auto max-w-lg my-10 px-6 py-4 px-6 rounded-xl hover:bg-gray-700"
+      class="block bg-black text-white text-center m-auto max-w-lg my-10 px-6 py-4 px-6 rounded-xl hover:bg-orange-700"
     >
       Add Category
     </RouterLink>

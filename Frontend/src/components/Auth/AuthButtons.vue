@@ -23,7 +23,7 @@ const logout = async () => {
     >
       <div class="flex flex-col space-y-1 p-2">
         <RouterLink v-if="!isLoggedIn" to="/login">
-          <button class="w-full justify-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+          <button class="w-full justify-center px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-700">
             Sign In
           </button>
         </RouterLink>

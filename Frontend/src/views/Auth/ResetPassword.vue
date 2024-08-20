@@ -32,13 +32,13 @@ const resetPassword = async () => {
 <template>
   <div
     v-if="authStore.isLoggedIn"
-    class="flex justify-center items-center min-h-screen bg-gray-100"
+    class="flex justify-center items-center min-h-screen bg-orange-100"
   >
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h2 class="text-2xl font-semibold mb-6">Reset Password</h2>
       <form @submit.prevent="resetPassword">
         <div class="mb-4">
-          <label for="currentPassword" class="block text-gray-700"
+          <label for="currentPassword" class="block text-orange-700"
             >Current Password:</label
           >
           <input
@@ -50,7 +50,7 @@ const resetPassword = async () => {
           />
         </div>
         <div class="mb-4">
-          <label for="newPassword" class="block text-gray-700">New Password:</label>
+          <label for="newPassword" class="block text-orange-700">New Password:</label>
           <input
             type="password"
             id="newPassword"
@@ -60,7 +60,7 @@ const resetPassword = async () => {
           />
         </div>
         <div class="mb-4">
-          <label for="confirmPassword" class="block text-gray-700"
+          <label for="confirmPassword" class="block text-orange-700"
             >Confirm Password:</label
           >
           <input
