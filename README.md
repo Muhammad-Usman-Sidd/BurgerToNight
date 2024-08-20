@@ -39,11 +39,13 @@ This repository contains a food ordering web application developed using .NET an
 
 ## Screenshots
 
-![Screenshot 1](path/to/screenshot1.png)
+![Screenshot 2024-08-20 154925](https://github.com/user-attachments/assets/93011f34-922a-49c9-aed3-b38fe7d84f92)
+
 *Description of Screenshot 1*
 
-![Screenshot 2](path/to/screenshot2.png)
+![Screenshot 2024-08-20 153811](https://github.com/user-attachments/assets/f3880c2c-8a58-4c10-879b-d2e608a869c8)
 *Description of Screenshot 2*
+![Screenshot 2024-08-20 154102](https://github.com/user-attachments/assets/1c1b7b2c-69eb-4886-9718-ff03545a2c3b)
 
 ## Getting Started
 
