@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import { useProductStore } from "../../stores/ProductStore";
 import ProductCard from "./ProductCard.vue";
 import { ProductGetDTO } from "../../models/ProductDtos";
-import bgImage from "../../assets/img/bg hd.jpg"
+import bgImage from "../../assets/img/bg.jpg"
 
 const store = useProductStore();
 const shuffledProducts = ref<ProductGetDTO[]>([]);
@@ -64,7 +64,7 @@ const handleSearchChange = async (event: Event) => {
       </div>
 
       <div v-if="store.products.length > 0">
-        <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <ProductCard
             v-for="product in (shuffledProducts || []).slice(
               0,

@@ -10,10 +10,6 @@ const removeFromCart = (product: ProductGetDTO) => {
   orderStore.removeItem(product);
 };
 
-const checkout = () => {
-  orderStore.checkout();
-};
-
 const toggleSidebar = () => {
   orderStore.toggleSidebar();
 };

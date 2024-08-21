@@ -1,11 +1,12 @@
+import { ProductGetDTO } from "./ProductDtos";
+
 export interface OrderDetailGetDTO {
   Id: number;
-  ProductId: number;
+  product: ProductGetDTO;
   Quantity: number;
-  Price: number;
 }
 export interface OrderDetailCreateDTO {
-  ProductId: number;
+  ProductId: number; 
   Quantity: number;
   Price: number;
 }

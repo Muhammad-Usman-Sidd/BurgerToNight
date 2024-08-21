@@ -1,40 +1,23 @@
-
 <script setup lang="ts">
-import { OrderGetDTO } from "../models/OrderDtos";
-import { ref, onMounted, computed } from "vue";
+import { onMounted } from "vue";
 import { useOrderStore } from "../stores/OrderStore";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/AuthStore";
-import { OrderDetailCreateDTO } from "../models/OrderDetailDtos";
 import { useToast } from "vue-toastification";
 
 const authStore = useAuthStore();
 const orderStore = useOrderStore();
 const router = useRouter();
-const toast = useToast()
-
-const order = {} as OrderGetDTO;
-const orderDto = ref({
-  UserId: authStore.user.Id,
-  OrderTotal: orderStore.cart.reduce((total, item) => total + item.product.Price * item.quantity, 0),
-  Name: authStore.user.Name,
-  PhoneNumber: authStore.user.PhoneNumber,
-  Address: authStore.user.Address,
-  Items: orderStore.cart.map((item) => ({
-    ProductId: item.product.Id,
-    Quantity: item.quantity,
-    Price: item.product.Price,
-  })) as OrderDetailCreateDTO[],
-});
+const toast = useToast();
 
 onMounted(async () => {
-  await authStore.getUserById();  
-  
+  await orderStore.readCurrentOrder();
+  console.log(orderStore.currentOrder);
 });
 
 const confirmOrder = async () => {
   try {
-    await orderStore.checkout(orderDto.value);
+    await orderStore.checkout();
     router.push(`/orders/${authStore.user.Id}`);
     toast.success("Order placed successfully!");
   } catch (error) {
@@ -46,26 +29,38 @@ const confirmOrder = async () => {
 
 <template>
   <div
-  v-if="orderStore.cart.length >= 1 && authStore.isLoggedIn && authStore.role==='customer'"
-   class="min-h-screen bg-gray-100 flex flex-col items-center p-4">
-    <div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-6">
-      <h1 class="text-3xl font-bold text-center mb-4">Order Confirmation</h1>
+    v-if="orderStore.cart.length >= 1 && authStore.isLoggedIn && authStore.role === 'customer'"
+    class="min-h-screen bg-gray-100 flex flex-col items-center p-4"
+  >
+    <div class="w-full max-w-3xl bg-white rounded-lg shadow-lg p-6">
+      <h1 class="text-3xl font-bold text-center mb-4">Checkout</h1>
 
-      <div v-if="orderDto" class="mb-6">
-        <div class="text-lg font-semibold">Order Details</div>
+      <div v-if="orderStore.currentOrder" class="mb-6">
+        <div class="text-lg font-semibold">Personal Details</div>
         <div class="mt-2">
-          <p><span class="font-medium">Name:</span> {{ orderDto.Name }}</p>
-          <p><span class="font-medium">Phone Number:</span> {{ orderDto.PhoneNumber }}</p>
-          <p><span class="font-medium">Address:</span> {{ orderDto.Address }}</p>
-          <p><span class="font-medium">Total Amount:</span> ${{ orderDto.OrderTotal.toFixed(2) }}</p>
+          <label class="block mb-2">
+            <span class="font-medium">Name:</span>
+            <input v-model="orderStore.currentOrder.Name" type="text" class="block w-full mt-1 p-2 border rounded" />
+          </label>
+          <label class="block mb-2">
+            <span class="font-medium">Phone Number:</span>
+            <input v-model="orderStore.currentOrder.PhoneNumber" type="text" class="block w-full mt-1 p-2 border rounded" />
+          </label>
+          <label class="block mb-2">
+            <span class="font-medium">Address:</span>
+            <input v-model="orderStore.currentOrder.Address" type="text" class="block w-full mt-1 p-2 border rounded" />
+          </label>
+          <p><span class="font-medium">Total Amount:</span> ${{ orderStore.currentOrder.OrderTotal }}</p>
         </div>
       </div>
 
-      <div v-if="orderDto.Items.length" class="mb-6">
+      <!-- Order Items -->
+      <div v-if="orderStore.currentOrder.Items.length" class="mb-6">
         <div class="text-lg font-semibold">Order Items</div>
-        <ul class="mt-2 list-disc list-inside">
-          <li v-for="item in orderDto.Items" :key="item.ProductId" class="flex justify-between">
-            <span>{{ item.ProductId }} - Quantity: {{ item.Quantity }}</span>
+        <ul class="mt-2">
+          <li v-for="item in orderStore.currentOrder.Items" :key="item.ProductId" class="flex items-center justify-between mb-4">
+            <img :src="item.ProductImage" alt="Product Image" class="w-16 h-16 rounded" />
+            <span>{{ item.ProductName }} - Quantity: {{ item.Quantity }}</span>
             <span>${{ (item.Price * item.Quantity).toFixed(2) }}</span>
           </li>
         </ul>
@@ -77,6 +72,12 @@ const confirmOrder = async () => {
       >
         Confirm Order
       </button>
+      <RouterLink
+        to="/"
+        class="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+      >
+        Cancel
+      </RouterLink>
     </div>
   </div>
 </template>

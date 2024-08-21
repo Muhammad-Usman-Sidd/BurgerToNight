@@ -68,7 +68,7 @@ const handleSearchChange = async (event: Event) => {
           v-model="store.searchQuery"
           @input="handleSearchChange"
           placeholder="Search for products..."
-          class="px-4 py-2 border rounded w-full md:w-1/2"
+          class="px-4 py-2 border rounded-full w-full md:w-1/2"
         />
       </div>
 
@@ -97,7 +97,7 @@ const handleSearchChange = async (event: Event) => {
 
         <div
           v-if="viewMode === 'card'"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 xl:gap--10"
         >
           <ProductCard
             v-for="product in (store.products || []).slice(

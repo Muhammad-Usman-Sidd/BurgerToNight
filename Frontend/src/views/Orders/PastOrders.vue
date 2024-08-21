@@ -1,37 +1,14 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue";
 import { useOrderStore } from "../../stores/OrderStore";
-import useProductStore from "../../stores/ProductStore";
-import { ProductGetDTO } from "../../models/ProductDtos";
 import { useAuthStore } from "../../stores/AuthStore";
 import UnAuthorized from "../../components/Auth/UnAuthorized.vue";
 
 const orderStore = useOrderStore();
-const productStore = useProductStore();
 const authStore = useAuthStore();
-
-const productDetails = reactive<Record<number, ProductGetDTO | null>>({});
-
-const addToCart = async (Id: number, quantity: number) => {
-  await productStore.fetchProductById(Id);
-  orderStore.addToCart(productStore.currentProduct, quantity);
-};
-
-const getProductDetails = async (Id: number): Promise<ProductGetDTO | null> => {
-  if (!productDetails[Id]) {
-    await productStore.fetchProductById(Id);
-    productDetails[Id] = productStore.currentProduct;
-  }
-  return productDetails[Id];
-};
 
 onMounted(async () => {
   await orderStore.loadUserPastOrders();
-  for (const order of orderStore.pastOrders) {
-    for (const item of order.Items) {
-      await getProductDetails(item.ProductId);
-    }
-  }
 });
 </script>
 
@@ -75,28 +52,28 @@ onMounted(async () => {
         <ul class="mb-4">
           <li
             v-for="item in order.Items"
-            :key="item.ProductId"
+            :key="item.product.Id"
             class="flex justify-between items-center mb-2 p-2 border rounded-lg shadow-sm bg-orange-100"
           >
             <span>
               <img
-                v-if="productDetails[item.ProductId]?.Image"
-                :src="productDetails[item.ProductId]?.Image"
+                v-if="item.product?.Image"
+                :src="item.product?.Image"
                 alt="Product Image"
                 class="w-12 h-12 mr-2 object-cover rounded-full"
               />
-              {{ productDetails[item.ProductId]?.Name || "Loading..." }}
+              {{ item.product?.Name || "Loading..." }}
             </span>
             <span>Quantity: x{{ item.Quantity }}</span>
-            <span>Price: ${{ item.Price ? item.Price.toFixed(2) : "N/A" }}</span>
+            <span>Price: ${{ item.product.Price ? item.product.Price.toFixed(2) : "N/A" }}</span>
             <span
               >Total: ${{
-                item.Price ? (item.Price * item.Quantity).toFixed(2) : "N/A"
+                item.product.Price ? (item.product.Price * item.Quantity).toFixed(2) : "N/A"
               }}</span
             >
 
             <button
-              @click="addToCart(item.ProductId, item.Quantity)"
+              @click="orderStore.addToCart(item.product, item.Quantity)"
               class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             >
               Add to Cart
@@ -109,7 +86,7 @@ onMounted(async () => {
             Total: ${{
               (order.Items || [])
                 .reduce(
-                  (total, item) => total + (item.Price ? item.Price * item.Quantity : 0),
+                  (total, item) => total + (item.product.Price ? item.product.Price * item.Quantity : 0),
                   0
                 )
                 .toFixed(2)

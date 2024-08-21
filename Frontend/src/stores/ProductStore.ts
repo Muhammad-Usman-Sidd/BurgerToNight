@@ -28,18 +28,21 @@ export const useProductStore = defineStore('product', {
         this.products = []; 
       }
     },
-    async fetchProductById(id: number) {
+    async fetchProductById(id: number) :Promise<ProductGetDTO> {
       const authStore = useAuthStore();
       if (authStore.isLoggedIn) {
         try {
           const response: APIResponse<ProductGetDTO> = await ProductService.getProduct(id);
           this.currentProduct = response.Result;
+          return response.Result
         } catch (error) {
           toast.error('Error fetching product by ID');
+          return this.currentProduct
         }
       }
       else{
         toast.error('Please login to access this feature');
+        return this.currentProduct
       }
     },
     async addProduct() {

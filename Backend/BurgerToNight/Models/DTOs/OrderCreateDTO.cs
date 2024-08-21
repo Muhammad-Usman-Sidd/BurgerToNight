@@ -8,6 +8,6 @@
         public string? Address { get; set; }
 
         public string? Name { get; set; }
-        public List<OrderDetailDTO> Items { get; set; }
+        public List<OrderDetailCreateDTO> Items { get; set; }
     }
 }

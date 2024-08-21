@@ -52,14 +52,23 @@ namespace BurgerToNightFunc.Orders
                         var orderDetails = await _unitOfWork.OrderDetails.GetAllAsync(u => u.OrderHeaderId == order.Id);
                         var orderDTO = _mapper.Map<OrderGetDTO>(order);
 
-                        orderDTO.Items = orderDetails.Select(detail => new OrderDetailDTO
+                        orderDTO.Items = new List<OrderDetailGetDTO>();
+
+                        foreach (var detail in orderDetails)
                         {
-                            ProductId = detail.ProductId,
-                            Quantity = detail.Quantity,
-                            Price = detail.Price
-                        }).ToList();
+                            var orderDetailDTO = new OrderDetailGetDTO
+                            {
+                                Id = detail.Id,
+                                ProductId = detail.ProductId,
+                                product = await _unitOfWork.Products.GetAsync(u => u.Id == detail.ProductId),
+                                Quantity = detail.Quantity,
+                                Price = detail.Price
+                            };
+                            orderDTO.Items.Add(orderDetailDTO);
+                        }
 
                         orderDTOs.Add(orderDTO);
+
                     }
 
                     response.StatusCode = HttpStatusCode.OK;

@@ -64,11 +64,11 @@ namespace BurgerToNightFunc.Orders
                         orderHeader = orderHeaderobj,
                         OrderHeaderId = orderHeaderobj.Id,
                         ProductId = Item.ProductId,
-                        Product = await _unitOfWork.Products.GetAsync(u => u.Id == Item.ProductId),
                         Quantity = Item.Quantity,
                         Price = Item.Price
                     };
                     await _unitOfWork.OrderDetails.CreateAsync(orderDetail);
+                    orderDetail.Product = await _unitOfWork.Products.GetAsync(u => u.Id == Item.ProductId);
                 }
                 await _unitOfWork.SaveAsync();
                 var dto = _mapper.Map<OrderGetDTO>(orderDTO);

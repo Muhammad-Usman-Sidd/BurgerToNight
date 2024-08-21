@@ -19,53 +19,6 @@
   >
     <div class="p-5 w-1/2 sm:w-4/12 md:w-3/12">
       <div class="text-md uppercase text-orange-400 font-medium mb-6">
-        Community
-      </div>
-      <a
-        href="#"
-        class="
-          my-3
-          block
-          text-orange-300
-          hover:text-orange-100
-          text-sm
-          font-medium
-          duration-700
-        "
-      >
-        Become our sales agent
-      </a>
-      <a
-        href="#"
-        class="
-          my-3
-          block
-          text-orange-300
-          hover:text-orange-100
-          text-sm
-          font-medium
-          duration-700
-        "
-      >
-        Blog
-      </a>
-      <a
-        href="#"
-        class="
-          my-3
-          block
-          text-orange-300
-          hover:text-orange-100
-          text-sm
-          font-medium
-          duration-700
-        "
-      >
-        Help
-      </a>
-    </div>
-    <div class="p-5 w-1/2 sm:w-4/12 md:w-3/12">
-      <div class="text-md uppercase text-orange-400 font-medium mb-6">
         Contact us
       </div>
         <a
@@ -96,20 +49,7 @@
         >
           How to shop
         </a>
-        <a
-          href=""
-          class="
-            my-3
-            block
-            text-orange-300
-            hover:text-orange-100
-            text-sm
-            font-medium
-            duration-700
-          "
-        >
-          Careers
-        </a>
+
     </div>
     <div class="p-5 w-1/2 sm:w-4/12 md:w-3/12">
       <div class="text-md uppercase text-orange-400 font-medium mb-6">
