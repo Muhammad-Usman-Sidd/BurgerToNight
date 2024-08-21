@@ -131,6 +131,7 @@ const totalPrice = computed((): string => {
                     </p>
                     <div class="mt-6">
                       <RouterLink
+                      v-if="orderStore.cart.length >= 1"
                       to="/order-confirmation"  
                       class="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-700"
 

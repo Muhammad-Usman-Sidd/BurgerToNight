@@ -164,7 +164,7 @@
         md:flex-row
       "
     >
-      <div class="mt-2">(c) Copyright 2021-year. by Bite Quest</div>
+      <div class="mt-2">(c) Copyright 2024-year. by Bite Quest</div>
     </div>
   </div>
 </footer>
