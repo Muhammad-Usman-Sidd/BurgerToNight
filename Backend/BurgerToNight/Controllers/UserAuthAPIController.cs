@@ -2,12 +2,8 @@
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
-using System.Security.Claims;
 
 [Route("api/UsersAuthAPI")]
 [ApiController]
@@ -17,7 +13,7 @@ public class UsersAuthAPIController : ControllerBase
     protected APIResponse _response;
     private AppDbContext _db;
 
-    public UsersAuthAPIController(IUserRepo userRepo,AppDbContext db)
+    public UsersAuthAPIController(IUserRepo userRepo, AppDbContext db)
     {
         _userRepo = userRepo;
         _response = new();

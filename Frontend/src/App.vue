@@ -13,5 +13,5 @@ authStore.initializeStore();
   <Navbar />
   <SideBar />
   <RouterView />
-  <Footer/>
+  <Footer />
 </template>

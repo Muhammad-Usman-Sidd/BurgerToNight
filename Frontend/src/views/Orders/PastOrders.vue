@@ -17,9 +17,14 @@ onMounted(async () => {
     v-if="authStore.isLoggedIn"
     class="bg-orange-50 px-4 py-10 flex flex-col items-center"
   >
-    <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Past Orders</h1>
+    <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">
+      Past Orders
+    </h1>
 
-    <div v-if="!orderStore.pastOrders.length" class="block text-orange-700 text-center">
+    <div
+      v-if="!orderStore.pastOrders.length"
+      class="block text-orange-700 text-center"
+    >
       No past orders found.
     </div>
 
@@ -30,7 +35,9 @@ onMounted(async () => {
         class="border rounded-lg shadow-md p-4 mb-4 bg-white"
       >
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-semibold text-orange-700">Order #{{ order.Id }}</h2>
+          <h2 class="text-xl font-semibold text-orange-700">
+            Order #{{ order.Id }}
+          </h2>
           <span class="text-orange-500">{{
             new Date(order.OrderDate).toLocaleDateString()
           }}</span>
@@ -38,13 +45,17 @@ onMounted(async () => {
 
         <div class="mb-2 flex items-center">
           <div class="flex items-center mr-6">
-            <span class="font-semibold text-orange-700 mr-1">Order Status:</span>
+            <span class="font-semibold text-orange-700 mr-1"
+              >Order Status:</span
+            >
             <span class="text-orange-700">{{ order.OrderStatus }}</span>
           </div>
         </div>
         <div>
           <div class="flex items-center">
-            <span class="font-semibold text-orange-700 mr-1">Payment Status:</span>
+            <span class="font-semibold text-orange-700 mr-1"
+              >Payment Status:</span
+            >
             <span class="text-orange-700">{{ order.PaymentStatus }}</span>
           </div>
         </div>
@@ -65,10 +76,16 @@ onMounted(async () => {
               {{ item.product?.Name || "Loading..." }}
             </span>
             <span>Quantity: x{{ item.Quantity }}</span>
-            <span>Price: ${{ item.product.Price ? item.product.Price.toFixed(2) : "N/A" }}</span>
+            <span
+              >Price: ${{
+                item.product.Price ? item.product.Price.toFixed(2) : "N/A"
+              }}</span
+            >
             <span
               >Total: ${{
-                item.product.Price ? (item.product.Price * item.Quantity).toFixed(2) : "N/A"
+                item.product.Price
+                  ? (item.product.Price * item.Quantity).toFixed(2)
+                  : "N/A"
               }}</span
             >
 
@@ -86,7 +103,11 @@ onMounted(async () => {
             Total: ${{
               (order.Items || [])
                 .reduce(
-                  (total, item) => total + (item.product.Price ? item.product.Price * item.Quantity : 0),
+                  (total, item) =>
+                    total +
+                    (item.product.Price
+                      ? item.product.Price * item.Quantity
+                      : 0),
                   0
                 )
                 .toFixed(2)
@@ -96,7 +117,7 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-<UnAuthorized/>
+  <UnAuthorized />
 </template>
 
 <style scoped>

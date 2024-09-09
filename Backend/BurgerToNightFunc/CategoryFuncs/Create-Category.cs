@@ -1,15 +1,12 @@
-using System.Net;
 using AutoMapper;
-using BurgerToNightAPI.Data;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
-using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Net;
 
 public class Create_Category
 {
@@ -29,11 +26,11 @@ public class Create_Category
     [Function("CreateCategory")]
     public async Task<APIResponse> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "CategoryAPI")] HttpRequestData req,
     FunctionContext context)
-        {
+    {
         var response = new APIResponse();
         try
         {
-              
+
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var createDTO = JsonConvert.DeserializeObject<CategoryPostDTO>(requestBody);
 

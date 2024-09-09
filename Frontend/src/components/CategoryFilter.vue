@@ -26,7 +26,11 @@ onMounted(() => {
 <template>
   <section class="py-8 bg-orange-800">
     <div class="container mx-auto px-4">
-     <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white font-bold text-center mb-8">Explore Menu</h2>
+      <h2
+        class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white font-bold text-center mb-8"
+      >
+        Explore Menu
+      </h2>
       <div class="flex items-center justify-center gap-2 whitespace-nowrap">
         <div
           v-for="category in categoryStore.categories.slice(0, 6)"
@@ -36,20 +40,20 @@ onMounted(() => {
           <RouterLink to="/products" @click="categoryFilter(category.Name)">
             <div class="h-10/12 lg:w-24 md:w-12 sm:w-6">
               <img
-              :src="category.Icon"
-              :alt="category.Name"
-              class="object-contain"
+                :src="category.Icon"
+                :alt="category.Name"
+                class="object-contain"
               />
             </div>
-            <p class="text-xs font-semibold text-center mt-1">{{ category.Name }}</p>
+            <p class="text-xs font-semibold text-center mt-1">
+              {{ category.Name }}
+            </p>
           </RouterLink>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-
 
 <style scoped>
 .container {

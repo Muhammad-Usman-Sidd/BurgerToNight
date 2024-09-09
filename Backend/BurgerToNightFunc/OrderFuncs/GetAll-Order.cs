@@ -1,15 +1,11 @@
 using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
-using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace BurgerToNightFunc.Orders
 {

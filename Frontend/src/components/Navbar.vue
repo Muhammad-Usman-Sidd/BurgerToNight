@@ -9,7 +9,7 @@ import {
   Bars3Icon,
   Cog8ToothIcon,
 } from "@heroicons/vue/24/solid";
-import { TransitionChild,TransitionRoot } from "@headlessui/vue";
+import { TransitionChild, TransitionRoot } from "@headlessui/vue";
 import { useAuthStore } from "../stores/AuthStore";
 import { ref } from "vue";
 import AuthButtons from "./Auth/AuthButtons.vue";
@@ -40,7 +40,9 @@ const isMenuOpen = ref(false);
           <RouterLink
             to="/"
             :class="[
-              isActiveLink('/') ? 'bg-orange-900' : 'hover:bg-orange-900 hover:text-white',
+              isActiveLink('/')
+                ? 'bg-orange-900'
+                : 'hover:bg-orange-900 hover:text-white',
               'text-white rounded-md px-3 py-2',
             ]"
           >
@@ -144,7 +146,9 @@ const isMenuOpen = ref(false);
             to="/"
             @click="isMenuOpen = !isMenuOpen"
             :class="[
-              isActiveLink('/') ? 'bg-orange-900' : 'hover:bg-orange-900 hover:text-white',
+              isActiveLink('/')
+                ? 'bg-orange-900'
+                : 'hover:bg-orange-900 hover:text-white',
               'block text-white rounded-md px-3 py-2 text-base font-medium',
             ]"
           >
@@ -206,7 +210,9 @@ const isMenuOpen = ref(false);
             <InboxStackIcon class="h-5 w-5 inline-block mr-1" />
             Past Orders
           </RouterLink>
-          <div class="block text-white rounded-md px-3 py-2 text-base font-medium">
+          <div
+            class="block text-white rounded-md px-3 py-2 text-base font-medium"
+          >
             <button @click="authStore.toggleDropdownButtons">
               <Cog8ToothIcon class="h-5 w-5 inline-block mr-1" />
               Profile

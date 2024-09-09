@@ -1,5 +1,4 @@
 using BurgerToNightAPI.Models;
-using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
@@ -30,7 +29,7 @@ public class DeleteProduct
         try
         {
 
-            var existingProduct = await _unitOfWork.Products.GetAsync(u=>u.Id==id);
+            var existingProduct = await _unitOfWork.Products.GetAsync(u => u.Id == id);
             if (existingProduct == null)
             {
                 response.StatusCode = HttpStatusCode.NotFound;

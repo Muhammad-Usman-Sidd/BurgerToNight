@@ -1,7 +1,6 @@
 using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
-using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using BurgerToNightFunc.Services.IServices;
@@ -25,7 +24,7 @@ public class UpdateProduct
         _blobService = blobService;
         _userRepo = userRepo;
     }
-    [Authorize(roles:"admin")]
+    [Authorize(roles: "admin")]
     [Function("UpdateProduct")]
     public async Task<APIResponse> Run(
         [HttpTrigger(AuthorizationLevel.Function, "put", Route = "productAPI/{id}")] HttpRequestData req,
@@ -49,7 +48,7 @@ public class UpdateProduct
                 return response;
             }
 
-            var existingProduct = await _unitOfWork.Products.GetAsync(u=>u.Id==id);
+            var existingProduct = await _unitOfWork.Products.GetAsync(u => u.Id == id);
             if (existingProduct == null)
             {
                 response.StatusCode = HttpStatusCode.NotFound;

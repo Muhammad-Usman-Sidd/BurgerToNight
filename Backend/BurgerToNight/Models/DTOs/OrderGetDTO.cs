@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace BurgerToNightAPI.Models.DTOs
+﻿namespace BurgerToNightAPI.Models.DTOs
 {
     public class OrderGetDTO
     {

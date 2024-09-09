@@ -1,18 +1,17 @@
+using Azure.Storage.Blobs;
+using BurgerToNightAPI;
+using BurgerToNightAPI.Data;
+using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Repository;
+using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Services;
+using BurgerToNightFunc.Services.IServices;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BurgerToNightAPI.Repository.IRepository;
-using BurgerToNightAPI.Repository;
-using AutoMapper;
-using BurgerToNightAPI;
-using Microsoft.EntityFrameworkCore;
-using BurgerToNightAPI.Data;
-using BurgerToNightFunc.Services.IServices;
-using BurgerToNightFunc.Services;
-using Azure.Storage.Blobs;
-using BurgerToNightAPI.Models;
-using Microsoft.AspNetCore.Identity;
 
 var host = new HostBuilder()
     .ConfigureAppConfiguration(config =>
@@ -56,7 +55,7 @@ var host = new HostBuilder()
         services.AddCors(options =>
         {
             options.AddPolicy("AllowSpecificOrigin",
-                builder => builder.WithOrigins("http://192.168.15.76:5173")
+                builder => builder.WithOrigins("http://192.168.15.59:5173")
                                   .AllowAnyHeader()
                                   .AllowAnyMethod());
         });

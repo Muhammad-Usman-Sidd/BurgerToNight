@@ -3,13 +3,9 @@ using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Net;
-using System.Text.Json;
 
 namespace BurgerToNightAPI.Controllers
 {
@@ -20,7 +16,7 @@ namespace BurgerToNightAPI.Controllers
         protected APIResponse _response;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CategoryAPIController(IUnitOfWork unitOfWork, IMapper mapper,IUserRepo userRepo)
+        public CategoryAPIController(IUnitOfWork unitOfWork, IMapper mapper, IUserRepo userRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -37,7 +33,7 @@ namespace BurgerToNightAPI.Controllers
         {
             try
             {
-                IEnumerable <Category> categoryList = await _unitOfWork.Categories.GetAllAsync();
+                IEnumerable<Category> categoryList = await _unitOfWork.Categories.GetAllAsync();
                 _response.Result = _mapper.Map<List<CategoryGetDTO>>(categoryList);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);

@@ -5,14 +5,8 @@ using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace BurgerToNightFunc.Orders
 {
@@ -39,7 +33,7 @@ namespace BurgerToNightFunc.Orders
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var orderDTO = JsonConvert.DeserializeObject<OrderCreateDTO>(requestBody);
-                
+
                 if (orderDTO == null || !orderDTO.Items.Any())
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
@@ -52,7 +46,7 @@ namespace BurgerToNightFunc.Orders
                 orderHeaderobj.OrderDate = DateTime.UtcNow;
                 orderHeaderobj.OrderStatus = "Order Accepted";
                 orderHeaderobj.PaymentStatus = "Pending";
-   
+
 
                 await _unitOfWork.OrderHeaders.CreateAsync(orderHeaderobj);
                 await _unitOfWork.SaveAsync();

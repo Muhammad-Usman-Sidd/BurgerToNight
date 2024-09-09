@@ -29,7 +29,11 @@ const confirmOrder = async () => {
 
 <template>
   <div
-    v-if="orderStore.cart.length >= 1 && authStore.isLoggedIn && authStore.role === 'customer'"
+    v-if="
+      orderStore.cart.length >= 1 &&
+      authStore.isLoggedIn &&
+      authStore.role === 'customer'
+    "
     class="min-h-screen bg-gray-100 flex flex-col items-center p-4"
   >
     <div class="w-full max-w-3xl bg-white rounded-lg shadow-lg p-6">
@@ -40,26 +44,49 @@ const confirmOrder = async () => {
         <div class="mt-2">
           <label class="block mb-2">
             <span class="font-medium">Name:</span>
-            <input v-model="orderStore.currentOrder.Name" type="text" class="block w-full mt-1 p-2 border rounded" />
+            <input
+              v-model="orderStore.currentOrder.Name"
+              type="text"
+              class="block w-full mt-1 p-2 border rounded"
+            />
           </label>
           <label class="block mb-2">
             <span class="font-medium">Phone Number:</span>
-            <input v-model="orderStore.currentOrder.PhoneNumber" type="text" class="block w-full mt-1 p-2 border rounded" />
+            <input
+              v-model="orderStore.currentOrder.PhoneNumber"
+              type="text"
+              class="block w-full mt-1 p-2 border rounded"
+            />
           </label>
           <label class="block mb-2">
             <span class="font-medium">Address:</span>
-            <input v-model="orderStore.currentOrder.Address" type="text" class="block w-full mt-1 p-2 border rounded" />
+            <input
+              v-model="orderStore.currentOrder.Address"
+              type="text"
+              class="block w-full mt-1 p-2 border rounded"
+            />
           </label>
-          <p><span class="font-medium">Total Amount:</span> ${{ orderStore.currentOrder.OrderTotal }}</p>
+          <p>
+            <span class="font-medium">Total Amount:</span> ${{
+              orderStore.currentOrder.OrderTotal
+            }}
+          </p>
         </div>
       </div>
 
-      <!-- Order Items -->
       <div v-if="orderStore.currentOrder.Items.length" class="mb-6">
         <div class="text-lg font-semibold">Order Items</div>
         <ul class="mt-2">
-          <li v-for="item in orderStore.currentOrder.Items" :key="item.ProductId" class="flex items-center justify-between mb-4">
-            <img :src="item.ProductImage" alt="Product Image" class="w-16 h-16 rounded" />
+          <li
+            v-for="item in orderStore.currentOrder.Items"
+            :key="item.ProductId"
+            class="flex items-center justify-between mb-4"
+          >
+            <img
+              :src="item.ProductImage"
+              alt="Product Image"
+              class="w-16 h-16 rounded"
+            />
             <span>{{ item.ProductName }} - Quantity: {{ item.Quantity }}</span>
             <span>${{ (item.Price * item.Quantity).toFixed(2) }}</span>
           </li>

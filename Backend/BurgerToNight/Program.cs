@@ -51,7 +51,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://192.168.15.76:5173")
+        builder => builder.WithOrigins("http://192.168.15.59:5173")
                           .AllowAnyHeader()
                           .AllowAnyMethod());
 });
@@ -65,7 +65,8 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 }).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options =>
+{
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description =

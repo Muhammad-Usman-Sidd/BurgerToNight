@@ -50,7 +50,9 @@ const resetPassword = async () => {
           />
         </div>
         <div class="mb-4">
-          <label for="newPassword" class="block text-orange-700">New Password:</label>
+          <label for="newPassword" class="block text-orange-700"
+            >New Password:</label
+          >
           <input
             type="password"
             id="newPassword"
@@ -78,7 +80,9 @@ const resetPassword = async () => {
           Reset Password
         </button>
       </form>
-      <div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
+      <div v-if="errorMessage" class="text-red-500 mt-4">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
 </template>

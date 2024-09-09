@@ -24,7 +24,9 @@ const props = defineProps<{
               class="w-full h-60 object-cover"
             />
           </div>
-          <h3 class="mt-4 text-lg font-semibold text-orange-800">{{ category.Name }}</h3>
+          <h3 class="mt-4 text-lg font-semibold text-orange-800">
+            {{ category.Name }}
+          </h3>
         </div>
 
         <div class="mb-5">

@@ -15,21 +15,21 @@ const addCategory = async () => {
     toast.error("Error Adding Category");
   }
 };
-const handleImageUpload = (event: Event)=> {
+const handleImageUpload = (event: Event) => {
   try {
     const files = (event.target as HTMLInputElement).files;
     if (files && files.length != null) {
       const file = files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      categoryStore.currentCategory.Icon = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-  }}
-  catch (error) {
-    toast.error('Error uploading image');
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        categoryStore.currentCategory.Icon = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  } catch (error) {
+    toast.error("Error uploading image");
   }
-}    
+};
 const categoryStore = useCategoryStore();
 </script>
 <template>
@@ -38,8 +38,13 @@ const categoryStore = useCategoryStore();
     class="bg-orange-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
-      <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Add Category</h2>
-      <form @submit.prevent="addCategory" class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">
+        Add Category
+      </h2>
+      <form
+        @submit.prevent="addCategory"
+        class="bg-white p-6 rounded-lg shadow-md"
+      >
         <div class="mb-4">
           <label class="block text-orange-700">Name</label>
           <input

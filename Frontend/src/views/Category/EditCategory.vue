@@ -15,9 +15,9 @@ const update = async () => {
   await categoryStore.updateCategory(+categoryId);
   router.push("/categories");
 };
-const deleteCategory = async () =>{
-    await categoryStore.deleteCategory(+categoryId);
-}
+const deleteCategory = async () => {
+  await categoryStore.deleteCategory(+categoryId);
+};
 
 onMounted(async () => {
   await categoryStore.fetchCategoryById(+categoryId);
@@ -26,11 +26,13 @@ onMounted(async () => {
 
 <template>
   <section
-  v-if="authStore.isLoggedIn && authStore.role==='admin'"
+    v-if="authStore.isLoggedIn && authStore.role === 'admin'"
     class="bg-orange-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
-      <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Edit Product</h2>
+      <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">
+        Edit Product
+      </h2>
       <form @submit.prevent="update" class="bg-white p-6 rounded-lg shadow-md">
         <div class="mb-4">
           <label class="block text-orange-700">Name</label>
@@ -55,17 +57,20 @@ onMounted(async () => {
             class="w-full p-2 border rounded"
           />
         </div>
-        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
+        <button
+          type="submit"
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
+        >
           Save
         </button>
         <button
-        @click="deleteCategory"
-            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
-            >
-            Delete Product
+          @click="deleteCategory"
+          class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
+        >
+          Delete Product
         </button>
       </form>
     </div>
   </section>
-<UnAuthAdmin/>
+  <UnAuthAdmin />
 </template>

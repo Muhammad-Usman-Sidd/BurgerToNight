@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BurgerToNightAPI.Infrastructure
 {
@@ -20,7 +15,7 @@ namespace BurgerToNightAPI.Infrastructure
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             _logger.LogError(exception, $"An Exception occurred: {exception.Message}");
-            if (httpContext.Response.StatusCode==StatusCodes.Status401Unauthorized)
+            if (httpContext.Response.StatusCode == StatusCodes.Status401Unauthorized)
             {
                 var problemDetails = new ProblemDetails
                 {

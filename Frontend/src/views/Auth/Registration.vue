@@ -50,7 +50,9 @@ const register = async () => {
           </select>
         </div>
         <div v-if="registerUser.Role === 'admin'" class="mb-4">
-          <label for="secretKey" class="block text-orange-700">Secret Key:</label>
+          <label for="secretKey" class="block text-orange-700"
+            >Secret Key:</label
+          >
           <input
             type="text"
             id="secretKey"
@@ -71,7 +73,9 @@ const register = async () => {
         </div>
 
         <div class="mb-4">
-          <label for="phoneNumber" class="block text-orange-700">PhoneNumber:</label>
+          <label for="phoneNumber" class="block text-orange-700"
+            >PhoneNumber:</label
+          >
           <input
             type="text"
             id="phoneNumber"
@@ -110,7 +114,10 @@ const register = async () => {
             class="mt-1 p-2 w-full border rounded-lg"
           />
         </div>
-        <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-lg w-full">
+        <button
+          type="submit"
+          class="bg-green-500 text-white py-2 px-4 rounded-lg w-full"
+        >
           Register
         </button>
       </form>

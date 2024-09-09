@@ -1,4 +1,3 @@
-using System.Net;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
@@ -7,6 +6,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace BurgerToNightFunc.Auth
 {
@@ -18,7 +18,7 @@ namespace BurgerToNightFunc.Auth
         {
             _userRepo = userRepo;
         }
-        [Authorize(roles:["customer","admin"])]
+        [Authorize(roles: ["customer", "admin"])]
         [Function("ResetPassword")]
         public async Task<APIResponse> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "AuthResetPassword")] HttpRequestData req,
@@ -48,7 +48,6 @@ namespace BurgerToNightFunc.Auth
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var resetPasswordDTO = JsonConvert.DeserializeObject<ResetPasswordDTO>(requestBody);
 
-                //var userId = req.Headers.GetValues("userId").FirstOrDefault();
                 if (string.IsNullOrEmpty(resetPasswordDTO.UserId))
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;

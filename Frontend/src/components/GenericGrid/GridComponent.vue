@@ -21,8 +21,8 @@ const props = defineProps<{
   limit?: number | null;
 }>();
 
-const emits = defineEmits<{ 
-  'row-click': (item: Record<string, any>) => void 
+const emits = defineEmits<{
+  "row-click": (item: Record<string, any>) => void;
 }>();
 
 const componentMapping: Record<ColumnType, any> = {
@@ -51,7 +51,10 @@ const getComponent = (column: Column) => {
       </thead>
       <tbody>
         <tr
-          v-for="item in props.items.slice(0, props.limit || props.items.length)"
+          v-for="item in props.items.slice(
+            0,
+            props.limit || props.items.length
+          )"
           :key="item.Id"
           class="hover:bg-orange-100 cursor-pointer"
           @click="$emit('row-click', item)"

@@ -1,14 +1,12 @@
-using System.Net;
 using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
-using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace BurgerToNightFunc.Auth
 {
@@ -27,7 +25,7 @@ namespace BurgerToNightFunc.Auth
 
         [Authorize(roles: "customer")]
         [Function("GetUserDetails")]
-        public async Task<APIResponse> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route="user/{UserId}")] HttpRequestData req,string userId)
+        public async Task<APIResponse> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "user/{UserId}")] HttpRequestData req, string userId)
         {
             var response = new APIResponse();
             try
@@ -38,7 +36,7 @@ namespace BurgerToNightFunc.Auth
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.IsSuccess = false;
                     response.ErrorMessages.Add("User ID is missing");
-                    return (response);
+                    return response;
                 }
 
                 var user = await _userManager.FindByIdAsync(userId);
@@ -48,12 +46,12 @@ namespace BurgerToNightFunc.Auth
                     response.StatusCode = HttpStatusCode.NotFound;
                     response.IsSuccess = false;
                     response.ErrorMessages.Add("User not found");
-                    return (response);
+                    return response;
                 }
                 var userDTO = _mapper.Map<UserDTO>(user);
                 response.StatusCode = HttpStatusCode.OK;
                 response.Result = userDTO;
-                return (response);
+                return response;
             }
             catch (Exception ex)
             {
@@ -61,7 +59,7 @@ namespace BurgerToNightFunc.Auth
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.IsSuccess = false;
                 response.ErrorMessages.Add("Internal server error");
-                return  response ;
+                return response;
             }
         }
     }

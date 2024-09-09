@@ -1,5 +1,4 @@
 using BurgerToNightAPI.Models;
-using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;

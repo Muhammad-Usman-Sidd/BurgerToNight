@@ -1,12 +1,11 @@
-using System.Net;
 using AutoMapper;
 using BurgerToNightAPI.Models;
-using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 
 public class Get_Category
@@ -17,18 +16,18 @@ public class Get_Category
     {
         _unitOfWork = unitOfWork;
     }
-    [Authorize(roles:"admin")]
+    [Authorize(roles: "admin")]
     [Function("GetCategory")]
     public async Task<APIResponse> Run(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "CategoryAPI/{id}")] HttpRequestData req,
-                FunctionContext context,int id)
+                FunctionContext context, int id)
     {
         var log = context.GetLogger("GetCategory");
         var response = new APIResponse();
 
         try
         {
-            var category = await _unitOfWork.Categories.GetAsync(u=>u.Id==id);
+            var category = await _unitOfWork.Categories.GetAsync(u => u.Id == id);
             if (category == null)
             {
                 response.StatusCode = HttpStatusCode.NotFound;

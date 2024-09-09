@@ -1,113 +1,65 @@
 <template>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@3.0.6/css/line.css"
-/>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@3.0.6/css/line.css"
+  />
 
-<footer class="h-auto w-auto bg-orange-900 ">
-  <div
-    class="
-      max-w-6xl
-      mx-2
-      text-orange-800
-      flex flex-wrap
-      justify-left
-      inset-x-0
-      bottom-0
-      lg:mx-20
-    "
-  >
-    <div class="p-5 w-1/2 sm:w-4/12 md:w-3/12">
-      <div class="text-md uppercase text-orange-400 font-medium mb-6">
-        Contact us
-      </div>
+  <footer class="h-auto w-auto bg-orange-900">
+    <div
+      class="max-w-6xl mx-2 text-orange-800 flex flex-wrap justify-left inset-x-0 bottom-0 lg:mx-20"
+    >
+      <div class="p-5 w-1/2 sm:w-4/12 md:w-3/12">
+        <div class="text-md uppercase text-orange-400 font-medium mb-6">
+          Contact us
+        </div>
         <a
           href=""
-          class="
-            my-3
-            block
-            text-orange-300
-            hover:text-orange-100
-            text-sm
-            font-medium
-            duration-700
-          "
+          class="my-3 block text-orange-300 hover:text-orange-100 text-sm font-medium duration-700"
         >
           Help center
         </a>
         <a
           href=""
-          class="
-            my-3
-            block
-            text-orange-300
-            hover:text-orange-100
-            text-sm
-            font-medium
-            duration-700
-          "
+          class="my-3 block text-orange-300 hover:text-orange-100 text-sm font-medium duration-700"
         >
           How to shop
         </a>
-
-    </div>
-    <div class="p-5 w-1/2 sm:w-4/12 md:w-3/12">
-      <div class="text-md uppercase text-orange-400 font-medium mb-6">
-        About Us
       </div>
-      <a
-        href=""
-        class="
-          my-3
-          block
-          text-orange-300
-          hover:text-orange-100
-          text-sm
-          font-medium
-          duration-700
-        "
+      <div class="p-5 w-1/2 sm:w-4/12 md:w-3/12">
+        <div class="text-md uppercase text-orange-400 font-medium mb-6">
+          About Us
+        </div>
+        <a
+          href=""
+          class="my-3 block text-orange-300 hover:text-orange-100 text-sm font-medium duration-700"
+        >
+          What's new
+        </a>
+      </div>
+      <div class="lg:flex space-x-10 p-5 w-1/2 sm:w-4/12 md:w-3/12">
+        <div class="text-md uppercase text-orange-400 font-medium mb-6">
+          <a href="#" class="w-10 h-10 mx-1">
+            <i class="uil uil-facebook-f"></i>
+          </a>
+        </div>
+        <div class="text-md uppercase text-orange-400 font-medium mb-6">
+          <a href="#" class="w-10 h-10 mx-1">
+            <i class="uil uil-twitter-alt"></i>
+          </a>
+        </div>
+        <div class="text-md uppercase text-orange-400 font-medium mb-6">
+          <a href="#" class="w-10 h-10 mx-1">
+            <i class="uil uil-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-2">
+      <div
+        class="flex justify-center pb-5 m-auto pt-5 border-t border-orange-500 text-orange-400 text-sm flex-col px-2 lg:px-20 md:flex-row"
       >
-        What's new
-      </a>
-    </div>
-    <div class="lg:flex space-x-10 p-5 w-1/2 sm:w-4/12 md:w-3/12">
-      <div class="text-md uppercase text-orange-400 font-medium mb-6">
-        <a href="#" class="w-10 h-10 mx-1">
-          <i class="uil uil-facebook-f"></i>
-        </a>
-      </div>
-      <div class="text-md uppercase text-orange-400 font-medium mb-6">
-        <a href="#" class="w-10 h-10 mx-1">
-          <i class="uil uil-twitter-alt"></i>
-        </a>
-      </div>
-      <div class="text-md uppercase text-orange-400 font-medium mb-6">
-        <a href="#" class="w-10 h-10 mx-1">
-          <i class="uil uil-linkedin"></i>
-        </a>
+        <div class="mt-2">(c) Copyright 2024-year. by Bite Quest</div>
       </div>
     </div>
-  </div>
-  <div class="pt-2">
-    <div
-      class="
-        flex
-        justify-center
-        pb-5
-        m-auto
-        pt-5
-        border-t border-orange-500
-        text-orange-400 text-sm
-        flex-col
-        px-2
-        lg:px-20
-        md:flex-row
-      "
-    >
-      <div class="mt-2">(c) Copyright 2024-year. by Bite Quest</div>
-    </div>
-  </div>
-</footer>
+  </footer>
 </template>
-  
-  

@@ -1,14 +1,10 @@
 ﻿using BurgerToNightAPI.Data;
 using BurgerToNightAPI.Models;
-using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BurgerToNightAPI.Repository
 {
-    public class CategoryRepo:Repository<Category>, ICategoryRepo
+    public class CategoryRepo : Repository<Category>, ICategoryRepo
     {
         private readonly AppDbContext _db;
 

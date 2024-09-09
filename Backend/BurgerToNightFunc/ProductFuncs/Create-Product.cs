@@ -6,7 +6,6 @@ using BurgerToNightFunc.Attributes;
 using BurgerToNightFunc.Services.IServices;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net;
 public class CreateProduct
@@ -23,7 +22,7 @@ public class CreateProduct
         _blobService = blobService;
         _userRepo = userRepo;
     }
-    [Authorize(roles:"admin")]
+    [Authorize(roles: "admin")]
     [Function("CreateProduct")]
     public async Task<APIResponse> Run(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = "productAPI")] HttpRequestData req)

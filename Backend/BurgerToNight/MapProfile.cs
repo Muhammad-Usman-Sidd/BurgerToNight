@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
-using Microsoft.Azure.Cosmos;
 
 namespace BurgerToNightAPI
 {
@@ -12,7 +11,7 @@ namespace BurgerToNightAPI
         {
             CreateMap<Category, CategoryPostDTO>().ReverseMap();
             CreateMap<Category, CategoryGetDTO>();
-            CreateMap<Category,CategoryUpdateDTO>().ReverseMap();
+            CreateMap<Category, CategoryUpdateDTO>().ReverseMap();
 
             CreateMap<Product, ProductPostDTO>().ReverseMap();
             CreateMap<Product, ProductGetDTO>();

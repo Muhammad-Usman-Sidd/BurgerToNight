@@ -1,5 +1,4 @@
 ﻿using BurgerToNightAPI.Data;
-using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Repository.IRepository;
 
 namespace BurgerToNightAPI.Repository
@@ -12,8 +11,6 @@ namespace BurgerToNightAPI.Repository
         public IOrderHeaderRepo OrderHeaders { get; set; }
         public IOrderDetailRepo OrderDetails { get; set; }
         public ICartRepo Carts { get; set; }
-
-       
 
         public UnitOfWork(AppDbContext db)
         {
@@ -28,7 +25,7 @@ namespace BurgerToNightAPI.Repository
 
         public async Task SaveAsync()
         {
-           await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
     }
 

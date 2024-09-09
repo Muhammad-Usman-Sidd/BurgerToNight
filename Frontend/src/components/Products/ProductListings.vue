@@ -91,7 +91,11 @@ const handleSearchChange = async (event: Event) => {
               'hover:bg-orange-100': viewMode === 'card' || viewMode === 'grid',
             }"
           >
-            {{ viewMode === "card" ? "Switch to Grid View" : "Switch to Card View" }}
+            {{
+              viewMode === "card"
+                ? "Switch to Grid View"
+                : "Switch to Card View"
+            }}
           </button>
         </div>
 
@@ -122,7 +126,10 @@ const handleSearchChange = async (event: Event) => {
             View All Products
           </RouterLink>
         </section>
-        <div v-if="!props.showButton" class="flex justify-center mt-6 space-x-4">
+        <div
+          v-if="!props.showButton"
+          class="flex justify-center mt-6 space-x-4"
+        >
           <button
             @click="prevPage"
             :disabled="store.pageIndex <= 1"

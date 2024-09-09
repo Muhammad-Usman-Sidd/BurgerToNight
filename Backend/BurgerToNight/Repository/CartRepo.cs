@@ -1,6 +1,5 @@
 ﻿using BurgerToNightAPI.Data;
 using BurgerToNightAPI.Models;
-using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
 
 namespace BurgerToNightAPI.Repository

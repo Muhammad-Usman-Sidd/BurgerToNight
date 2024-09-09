@@ -23,10 +23,11 @@ const toggleViewMode = (mode: "card" | "grid") => {
 </script>
 
 <template>
-  <section 
-  v-if="authStore.isLoggedIn " class="bg-orange-50 px-4 py-10">
+  <section v-if="authStore.isLoggedIn" class="bg-orange-50 px-4 py-10">
     <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Categories</h2>
+      <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">
+        Categories
+      </h2>
       <div class="flex justify-end mb-4">
         <button
           @click="toggleViewMode('card')"
@@ -48,16 +49,18 @@ const toggleViewMode = (mode: "card" | "grid") => {
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
       >
         <CategoryCard
-          v-for="category in (categoryStore.categories || []).slice(0, categoryStore.categories.length)"
+          v-for="category in (categoryStore.categories || []).slice(
+            0,
+            categoryStore.categories.length
+          )"
           :key="category.Id"
           :category="category"
         />
       </div>
-      
+
       <div v-if="viewMode === 'grid'">
         <CategoryGrid :categories="categoryStore.categories" />
       </div>
     </div>
-    
   </section>
 </template>

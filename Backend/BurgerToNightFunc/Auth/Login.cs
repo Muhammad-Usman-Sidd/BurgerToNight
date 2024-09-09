@@ -1,8 +1,3 @@
-using System;
-using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using AutoMapper;
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
@@ -10,6 +5,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace BurgerToNightFunc.Auth
 {

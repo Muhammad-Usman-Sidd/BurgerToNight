@@ -3,7 +3,13 @@ import { computed } from "vue";
 import { TrashIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 import { ProductGetDTO } from "../models/ProductDtos";
 import { useOrderStore } from "../stores/OrderStore";
-import { TransitionChild,TransitionRoot,Dialog,DialogTitle,DialogPanel } from "@headlessui/vue";
+import {
+  TransitionChild,
+  TransitionRoot,
+  Dialog,
+  DialogTitle,
+  DialogPanel,
+} from "@headlessui/vue";
 const orderStore = useOrderStore();
 
 const removeFromCart = (product: ProductGetDTO) => {
@@ -35,12 +41,16 @@ const totalPrice = computed((): string => {
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-orange-500 bg-opacity-75 transition-opacity" />
+        <div
+          class="fixed inset-0 bg-orange-500 bg-opacity-75 transition-opacity"
+        />
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-hidden">
         <div class="absolute inset-0 overflow-hidden">
-          <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+          <div
+            class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+          >
             <TransitionChild
               as="template"
               enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -51,7 +61,9 @@ const totalPrice = computed((): string => {
               leave-to="translate-x-full"
             >
               <DialogPanel class="pointer-events-auto w-screen max-w-md">
-                <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                <div
+                  class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
+                >
                   <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                     <div class="flex items-start justify-between">
                       <DialogTitle class="text-lg font-medium text-orange-900"
@@ -72,7 +84,10 @@ const totalPrice = computed((): string => {
 
                     <div class="mt-8">
                       <div class="flow-root">
-                        <ul role="list" class="-my-6 divide-y divide-orange-200">
+                        <ul
+                          role="list"
+                          class="-my-6 divide-y divide-orange-200"
+                        >
                           <li
                             v-for="(item, index) in orderStore.cart"
                             :key="index"
@@ -94,11 +109,17 @@ const totalPrice = computed((): string => {
                                   class="flex justify-between text-base font-medium text-orange-900"
                                 >
                                   <h3>{{ item.product.Name }}</h3>
-                                  <p class="ml-4">${{ item.product.Price.toFixed(2) }}</p>
+                                  <p class="ml-4">
+                                    ${{ item.product.Price.toFixed(2) }}
+                                  </p>
                                 </div>
                               </div>
-                              <div class="flex flex-1 items-end justify-between text-sm">
-                                <p class="text-orange-500">Qty {{ item.quantity }}</p>
+                              <div
+                                class="flex flex-1 items-end justify-between text-sm"
+                              >
+                                <p class="text-orange-500">
+                                  Qty {{ item.quantity }}
+                                </p>
 
                                 <div class="flex">
                                   <button
@@ -118,7 +139,9 @@ const totalPrice = computed((): string => {
                   </div>
 
                   <div class="border-t border-orange-200 px-4 py-6 sm:px-6">
-                    <div class="flex justify-between text-base font-medium text-orange-900">
+                    <div
+                      class="flex justify-between text-base font-medium text-orange-900"
+                    >
                       <p>Subtotal</p>
                       <p>${{ totalPrice }}</p>
                     </div>
@@ -127,10 +150,9 @@ const totalPrice = computed((): string => {
                     </p>
                     <div class="mt-6">
                       <RouterLink
-                      v-if="orderStore.cart.length >= 1"
-                      to="/order-confirmation"  
-                      class="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-700"
-
+                        v-if="orderStore.cart.length >= 1"
+                        to="/order-confirmation"
+                        class="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-700"
                       >
                         Checkout
                       </RouterLink>
@@ -145,7 +167,9 @@ const totalPrice = computed((): string => {
                           class="font-medium text-green-600 hover:text-orange-500"
                           @click="toggleSidebar"
                         >
-                          Continue Shopping<span aria-hidden="true"> &rarr;</span>
+                          Continue Shopping<span aria-hidden="true">
+                            &rarr;</span
+                          >
                         </button>
                       </p>
                     </div>

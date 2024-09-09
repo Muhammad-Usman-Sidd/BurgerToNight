@@ -13,7 +13,6 @@ const props = defineProps<{
 
 const showFullDescription = ref(false);
 
-
 const halfDescription = computed(() => {
   const description = props.product?.Description ?? "";
   if (!showFullDescription.value) {
@@ -41,13 +40,17 @@ const addToCart = () => {
               class="w-full h-60 object-cover"
             />
           </div>
-          <h3 class="mt-4 text-lg font-semibold text-orange-800">{{ product.Name }}</h3>
+          <h3 class="mt-4 text-lg font-semibold text-orange-800">
+            {{ product.Name }}
+          </h3>
         </div>
 
         <div class="mb-5">
           <p class="text-orange-600">{{ halfDescription }}</p>
         </div>
-        <h3 class="text-lg font-bold text-orange-600 mb-4">Price: ${{ product.Price }}</h3>
+        <h3 class="text-lg font-bold text-orange-600 mb-4">
+          Price: ${{ product.Price }}
+        </h3>
       </RouterLink>
       <div>
         <button

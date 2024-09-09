@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue";
 import { useOrderStore } from "../../stores/OrderStore";
-import {useProductStore} from "../../stores/ProductStore";
+import { useProductStore } from "../../stores/ProductStore";
 import { ProductGetDTO } from "../../models/ProductDtos";
-import { OrderUpdateDTO } from "../../models/OrderDtos"
+import { OrderUpdateDTO } from "../../models/OrderDtos";
 import { useAuthStore } from "../../stores/AuthStore";
 import { useRouter } from "vue-router";
 import UnAuthAdmin from "../../components/Auth/UnAuth(Admin).vue";
 
-const router =useRouter();
+const router = useRouter();
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
 
@@ -16,12 +16,12 @@ const updateOrder = async () => {
   await orderStore.updateOrder();
 };
 
-const deleteOrder = async (id:number)=>{
-  await orderStore.deleteOrder(id)
-}
+const deleteOrder = async (id: number) => {
+  await orderStore.deleteOrder(id);
+};
 
 onMounted(async () => {
-  await orderStore.loadOrders(); 
+  await orderStore.loadOrders();
 });
 </script>
 
@@ -30,9 +30,14 @@ onMounted(async () => {
     v-if="authStore.isLoggedIn && authStore.role === 'admin'"
     class="bg-orange-50 px-4 py-10 flex flex-col items-center"
   >
-    <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Manage Orders</h1>
+    <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">
+      Manage Orders
+    </h1>
 
-    <div v-if="!orderStore.pastOrders.length" class="block text-orange-700 text-center">
+    <div
+      v-if="!orderStore.pastOrders.length"
+      class="block text-orange-700 text-center"
+    >
       No orders found.
     </div>
 
@@ -43,7 +48,9 @@ onMounted(async () => {
         class="border rounded-lg shadow-md p-4 mb-4 bg-white"
       >
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-semibold text-orange-700">Order #{{ order.Id }}</h2>
+          <h2 class="text-xl font-semibold text-orange-700">
+            Order #{{ order.Id }}
+          </h2>
           <span class="text-orange-500">{{
             new Date(order.OrderDate).toLocaleDateString()
           }}</span>
@@ -65,10 +72,16 @@ onMounted(async () => {
               {{ item.product?.Name || "Loading..." }}
             </span>
             <span>Quantity: x{{ item.Quantity }}</span>
-            <span>Price: ${{ item.product.Price ? item.product.Price.toFixed(2) : "N/A" }}</span>
+            <span
+              >Price: ${{
+                item.product.Price ? item.product.Price.toFixed(2) : "N/A"
+              }}</span
+            >
             <span
               >Total: ${{
-                item.product.Price ? (item.product.Price * item.Quantity).toFixed(2) : "N/A"
+                item.product.Price
+                  ? (item.product.Price * item.Quantity).toFixed(2)
+                  : "N/A"
               }}</span
             >
           </li>
@@ -113,8 +126,7 @@ onMounted(async () => {
             Save Changes
           </button>
           <button
-            @click="
-              deleteOrder(order.Id)"
+            @click="deleteOrder(order.Id)"
             class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mt-2"
           >
             Delete Order
@@ -123,7 +135,7 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-  <UnAuthAdmin/>
+  <UnAuthAdmin />
 </template>
 
 <style scoped>

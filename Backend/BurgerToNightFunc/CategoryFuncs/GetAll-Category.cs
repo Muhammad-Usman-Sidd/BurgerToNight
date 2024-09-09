@@ -1,12 +1,10 @@
-using System.Net;
 using AutoMapper;
 using BurgerToNightAPI.Models;
-using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
-using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 
 public class GetAll_Category

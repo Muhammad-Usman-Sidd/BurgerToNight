@@ -55,11 +55,16 @@ const login = async () => {
             class="mt-1 p-2 w-full border rounded-lg"
           />
         </div>
-        <button type="submit" class="bg-orange-500 text-white py-2 px-4 rounded-lg w-full">
+        <button
+          type="submit"
+          class="bg-orange-500 text-white py-2 px-4 rounded-lg w-full"
+        >
           Sign In
         </button>
       </form>
-      <div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
+      <div v-if="errorMessage" class="text-red-500 mt-4">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
 </template>

@@ -1,14 +1,13 @@
 using AutoMapper;
-using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
+using BurgerToNightFunc.Attributes;
 using BurgerToNightFunc.Services.IServices;
 using Microsoft.Azure.Functions.Worker;
-using System.Net;
-using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Worker.Http;
-using BurgerToNightAPI.Repository;
-using BurgerToNightFunc.Attributes;
+using Microsoft.Extensions.Logging;
+using System.Net;
 
 public class Get_Product
 {
@@ -24,7 +23,7 @@ public class Get_Product
         _blobService = blobService;
         _userRepo = userRepo;
     }
-    [Authorize(roles: ["admin","customer"])]
+    [Authorize(roles: ["admin", "customer"])]
     [Function("GetProduct")]
     public async Task<APIResponse> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "productAPI/{id}")] HttpRequestData req,

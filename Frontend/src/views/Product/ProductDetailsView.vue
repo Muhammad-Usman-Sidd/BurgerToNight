@@ -49,14 +49,22 @@ onMounted(async () => {
           </div>
         </aside>
         <main class="md:col-span-2">
-          <div class="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
-            <h1 class="text-3xl font-bold mb-4">{{ store.currentProduct.Name }}</h1>
+          <div
+            class="bg-white p-6 rounded-lg shadow-md text-center md:text-left"
+          >
+            <h1 class="text-3xl font-bold mb-4">
+              {{ store.currentProduct.Name }}
+            </h1>
           </div>
 
           <div class="bg-white p-6 rounded-lg shadow-md mt-6">
-            <h3 class="text-orange-800 text-lg font-bold mb-6">Product Description</h3>
+            <h3 class="text-orange-800 text-lg font-bold mb-6">
+              Product Description
+            </h3>
             <p class="mb-4">{{ store.currentProduct.Description }}</p>
-            <h3 class="text-orange-800 text-lg font-bold mb-2">Preparing Time:</h3>
+            <h3 class="text-orange-800 text-lg font-bold mb-2">
+              Preparing Time:
+            </h3>
             <p class="mb-4">{{ store.currentProduct.PreparingTime }} min</p>
           </div>
           <div

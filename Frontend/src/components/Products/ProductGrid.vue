@@ -44,5 +44,9 @@ const handleRowClick = (product: Record<string, any>) => {
 </script>
 
 <template>
-  <GridComponent :items="products" :columns="columns" @row-click="handleRowClick" />
+  <GridComponent
+    :items="products"
+    :columns="columns"
+    @row-click="handleRowClick"
+  />
 </template>

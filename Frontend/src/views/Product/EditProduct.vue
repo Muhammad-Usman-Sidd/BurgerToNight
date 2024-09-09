@@ -26,11 +26,13 @@ onMounted(async () => {
 
 <template>
   <section
-  v-if="authStore.isLoggedIn && authStore.role==='admin'"
+    v-if="authStore.isLoggedIn && authStore.role === 'admin'"
     class="bg-orange-50 px-4 py-10 flex justify-center items-center"
   >
     <div class="container-xl lg:container">
-      <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">Edit Product</h2>
+      <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">
+        Edit Product
+      </h2>
       <form @submit.prevent="update" class="bg-white p-6 rounded-lg shadow-md">
         <div class="mb-4">
           <label class="block text-orange-700">Name</label>
@@ -93,5 +95,5 @@ onMounted(async () => {
       </form>
     </div>
   </section>
-<UnAuthAdmin/>
+  <UnAuthAdmin />
 </template>

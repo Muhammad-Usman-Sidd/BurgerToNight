@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
-using BurgerToNightAPI.Models.DTOs;
+using BurgerToNightAPI.Data;
 using BurgerToNightAPI.Models;
+using BurgerToNightAPI.Models.DTOs;
+using BurgerToNightAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using BurgerToNightAPI.Data;
-using BurgerToNightAPI.Repository.IRepository;
-using Org.BouncyCastle.Crypto.Generators;
-using BCrypt.Net;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BurgerToNightAPI.Repository
 {
@@ -25,7 +22,7 @@ namespace BurgerToNightAPI.Repository
         public UserRepo(AppDbContext db, IConfiguration configuration,
             UserManager<ApplicationUser> userManager, IMapper mapper, RoleManager<IdentityRole> roleManager)
         {
-            _db=db;
+            _db = db;
             _mapper = mapper;
             _userManager = userManager;
             secretKey = configuration.GetValue<string>("ApiSettings:Secret");
@@ -48,13 +45,13 @@ namespace BurgerToNightAPI.Repository
             var user = _db.ApplicationUsers
                 .FirstOrDefault(u => u.UserName.ToLower() == loginRequestDTO.UserName.ToLower());
             var IsValid = BCrypt.Net.BCrypt.Verify(loginRequestDTO.Password, user.PasswordHash);
-            if (user == null || IsValid==false)
+            if (user == null || IsValid == false)
             {
                 return new LoginResponseDTO()
                 {
                     Token = "",
                     User = null,
-                    Role =string.Empty
+                    Role = string.Empty
                 };
             }
 
@@ -80,7 +77,7 @@ namespace BurgerToNightAPI.Repository
             {
                 Token = tokenHandler.WriteToken(token),
                 User = _mapper.Map<UserDTO>(user),
-                Role= roles.FirstOrDefault()?? string.Empty
+                Role = roles.FirstOrDefault() ?? string.Empty
             };
             return loginResponseDTO;
         }
@@ -92,7 +89,7 @@ namespace BurgerToNightAPI.Repository
                 Email = registrationRequestDTO.Email,
                 NormalizedEmail = registrationRequestDTO.Email.ToUpper(),
                 Name = registrationRequestDTO.UserName,
-                Address=registrationRequestDTO.Address,
+                Address = registrationRequestDTO.Address,
                 PhoneNumber = registrationRequestDTO.PhoneNumber,
             };
 

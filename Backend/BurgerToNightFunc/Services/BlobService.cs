@@ -1,8 +1,5 @@
 ﻿using Azure.Storage.Blobs;
 using BurgerToNightFunc.Services.IServices;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace BurgerToNightFunc.Services
 {
@@ -18,7 +15,7 @@ namespace BurgerToNightFunc.Services
 
         private string GenerateBlobName()
         {
-            return ("Blob"+Guid.NewGuid().ToString());
+            return "Blob" + Guid.NewGuid().ToString();
         }
 
         public async Task<string> UploadBase64ImageAsync(string base64Image)

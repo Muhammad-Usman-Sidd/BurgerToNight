@@ -13,4 +13,3 @@ const orderStore = useOrderStore();
     <ShoppingCartIcon class="h-6 w-6" />
   </button>
 </template>
-

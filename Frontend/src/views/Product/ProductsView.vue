@@ -8,7 +8,11 @@ const Heading = "Menu";
 
 <template>
   <BackButton />
-  <ProductListings :showButton="false" class="justify-between" :heading="Heading" />
+  <ProductListings
+    :showButton="false"
+    class="justify-between"
+    :heading="Heading"
+  />
   <section :showButton="false" class="m-auto max-w-lg my-10 px-6">
     <RouterLink
       v-if="authStore.role === 'admin'"

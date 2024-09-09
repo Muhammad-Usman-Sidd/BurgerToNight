@@ -1,16 +1,12 @@
 using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
-using BurgerToNightAPI.Repository;
 using BurgerToNightAPI.Repository.IRepository;
 using BurgerToNightFunc.Attributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace BurgerToNightFunc.Orders
 {
