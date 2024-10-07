@@ -18,11 +18,14 @@ namespace BurgerToNightAPI.Repository
             _db.OrderHeaders.Update(obj);
         }
 
-        public void UpdateStatus(int id, OrderUpdateDTO orderStatus, string? paymentStatus = null)
+        public void UpdateOrder(int id, OrderUpdateDTO orderStatus, string? paymentStatus = null)
         {
             var orderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.Id == id);
             if (orderFromDb != null)
             {
+                orderFromDb.Name = orderStatus.Name;
+                orderFromDb.Address = orderStatus.Address;
+                orderFromDb.PhoneNumber = orderStatus.PhoneNumber;
                 orderFromDb.OrderStatus = orderStatus.OrderStatus;
                 orderFromDb.PaymentStatus = orderStatus.PaymentStatus;
             }

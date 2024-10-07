@@ -21,6 +21,6 @@ namespace BurgerToNightAPI.Models
         public DateTime CreationDate { get; set; }
         public int? PreparingTime { get; set; }
         public string? Image { get; set; }
-
+        public int? TotalSales { get; set; }
     }
 }

@@ -37,14 +37,6 @@ namespace BurgerToNightFunc.Auth
                     response.ErrorMessages.Add("Unauthorized");
                     return response;
                 }
-                var principal = _userRepo.GetPrincipalFromToken(token);
-                if (principal == null)
-                {
-                    response.StatusCode = HttpStatusCode.Unauthorized;
-                    response.IsSuccess = false;
-                    response.ErrorMessages.Add("Invalid token");
-                    return response;
-                }
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var resetPasswordDTO = JsonConvert.DeserializeObject<ResetPasswordDTO>(requestBody);
 

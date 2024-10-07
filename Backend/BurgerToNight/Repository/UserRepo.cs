@@ -55,7 +55,6 @@ namespace BurgerToNightAPI.Repository
                 };
             }
 
-            // If user was found, generate JWT Token
             var roles = await _userManager.GetRolesAsync(user);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);
@@ -147,30 +146,5 @@ namespace BurgerToNightAPI.Repository
             var result = await _userManager.UpdateAsync(user);
             return result.Succeeded;
         }
-        public ClaimsPrincipal GetPrincipalFromToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secretKey);
-
-            try
-            {
-                var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
-
-                return principal;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-
     }
 }

@@ -71,6 +71,14 @@ namespace BurgerToNightAPI.Data
                     Description = "Fresh and healthy salads, made with crisp vegetables and delicious dressings.",
                     CreationCategoryTime = DateTime.Now,
                     Icon = ""
+                },
+                new Category
+                {
+                    Id = 7,
+                    Name = "Deals",
+                    Description = "Special deals just hanging around the corner for you!",
+                    CreationCategoryTime = DateTime.Now,
+                    Icon = ""
                 }
             );
 
@@ -296,7 +304,67 @@ namespace BurgerToNightAPI.Data
                          CreationDate = DateTime.UtcNow,
                          PreparingTime = 5,
                          Image = ""
-                     }
+                     },
+                     new Product
+                     {
+                         Id = 21,
+                         Name = "Mega Burger Feast",
+                         CategoryId = 7, // Deals
+                         Description = "A delicious deal with two juicy beef burgers, loaded with cheese, fresh veggies, and a side of crispy fries.",
+                         Price = 120,
+                         CreationDate = DateTime.UtcNow,
+                         PreparingTime = 30,
+                         Image = ""
+                     },
+                    new Product
+                    {
+                        Id = 22,
+                        Name = "Family Pizza Bundle",
+                        CategoryId = 7, // Deals
+                        Description = "Get two large pizzas with a variety of toppings, plus a family-size portion of garlic bread and a liter of soda.",
+                        Price = 180,
+                        CreationDate = DateTime.UtcNow,
+                        PreparingTime = 45,
+                        Image = ""
+                    },
+
+                    new Product
+                    {
+                        Id = 23,
+                        Name = "Chicken Bucket Special",
+                        CategoryId = 7, // Deals
+                        Description = "Enjoy a bucket filled with 12 pieces of crispy fried chicken, a large side of coleslaw, and mashed potatoes with gravy.",
+                        Price = 150,
+                        CreationDate = DateTime.UtcNow,
+                        PreparingTime = 35,
+                        Image = ""
+                    },
+
+                    new Product
+                    {
+                        Id = 24,
+                        Name = "Wrap Fiesta Box",
+                        CategoryId = 7, // Deals
+                        Description = "A box of 10 flavorful Wraps, with your choice of beef or chicken, served with salsa, guacamole, and chips.",
+                        Price = 100,
+                        CreationDate = DateTime.UtcNow,
+                        PreparingTime = 25,
+                        Image = ""
+                    },
+
+                    new Product
+                    {
+                        Id = 25,
+                        Name = "Cheese Lover's Pizza",
+                        CategoryId = 7, // Deals
+                        Description = "Indulge in a cheesy delight with a large pizza smothered in four types of cheese, baked to perfection.",
+                        Price = 95,
+                        CreationDate = DateTime.UtcNow,
+                        PreparingTime = 40,
+                        Image = ""
+                    }
+
+
                  );
 
         }

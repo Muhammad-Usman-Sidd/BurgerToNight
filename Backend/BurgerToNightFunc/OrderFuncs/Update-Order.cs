@@ -51,6 +51,9 @@ namespace BurgerToNightFunc.Orders
                     return response;
                 }
 
+                orderHeader.Name = orderDTO.Name ?? orderHeader.Name;
+                orderHeader.Address = orderDTO.Address ?? orderHeader.Address;
+                orderHeader.PhoneNumber = orderDTO.PhoneNumber ?? orderHeader.PhoneNumber;
                 orderHeader.OrderStatus = orderDTO.OrderStatus ?? orderHeader.OrderStatus;
                 orderHeader.PaymentStatus = orderDTO.PaymentStatus ?? orderHeader.PaymentStatus;
 
