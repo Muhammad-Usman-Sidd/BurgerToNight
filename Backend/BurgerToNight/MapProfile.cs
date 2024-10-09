@@ -22,7 +22,6 @@ namespace BurgerToNightAPI
             CreateMap<OrderHeader, OrderGetDTO>();
 
             CreateMap<ApplicationUser, UserDTO>().ReverseMap();
-
         }
     }
 }

@@ -23,7 +23,6 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
 builder.Services.AddScoped<IOrderHeaderRepo, OrderHeaderRepo>();
-builder.Services.AddScoped<ICartRepo, CartRepo>();
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
@@ -97,7 +96,6 @@ builder.Services.AddSwaggerGen(options =>
 });
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

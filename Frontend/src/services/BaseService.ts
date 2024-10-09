@@ -1,5 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { APIRequest, APIResponse } from '../models/APIResult';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { APIRequest, APIResponse } from "../models/APIResult";
 
 class BaseService {
   private axiosInstance: AxiosInstance;
@@ -9,7 +9,7 @@ class BaseService {
 
     this.axiosInstance.interceptors.request.use(
       (config: any) => {
-        const token = localStorage.getItem('JWT token');
+        const token = localStorage.getItem("JWT token");
         if (token) {
           config.headers = {
             ...config.headers,
@@ -24,33 +24,39 @@ class BaseService {
     );
   }
 
-  protected async sendRequest<T>(apiRequest: APIRequest): Promise<APIResponse<T>> {
+  protected async sendRequest<T>(
+    apiRequest: APIRequest
+  ): Promise<APIResponse<T>> {
     try {
       const config: AxiosRequestConfig = {
         method: apiRequest.Method,
         url: apiRequest.Url,
         data: apiRequest.Data,
-        headers: apiRequest.Token ? { Authorization: `Bearer ${apiRequest.Token}` } : {}
+        headers: apiRequest.Token
+          ? { Authorization: `Bearer ${apiRequest.Token}` }
+          : {},
       };
-      const response: AxiosResponse<APIResponse<T>> = await this.axiosInstance(config);
+      const response: AxiosResponse<APIResponse<T>> = await this.axiosInstance(
+        config
+      );
       return response.data;
-    } catch (e :any) {
+    } catch (e: any) {
       const apiResponse: APIResponse<T> = {
         Result: {} as T,
         IsSuccess: false,
         ErrorMessages: [e.message],
-        StatusCode: e.response?.status || 500
+        StatusCode: e.response?.status || 500,
       };
       return apiResponse;
     }
   }
 
   public setToken(token: string) {
-    localStorage.setItem('jwtToken', token);
+    localStorage.setItem("jwtToken", token);
   }
 
   public clearToken() {
-    localStorage.removeItem('jwtToken');
+    localStorage.removeItem("jwtToken");
   }
 }
 

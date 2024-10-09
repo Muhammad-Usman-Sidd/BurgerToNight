@@ -6,7 +6,7 @@ export interface OrderDetailGetDTO {
   Quantity: number;
 }
 export interface OrderDetailCreateDTO {
-  ProductId: number; 
+  ProductId: number;
   Quantity: number;
   Price: number;
 }

@@ -1,4 +1,4 @@
-export interface APIResponse<T=any> {
+export interface APIResponse<T = any> {
   Result: T;
   IsSuccess: boolean;
   ErrorMessages: string[];
@@ -6,8 +6,8 @@ export interface APIResponse<T=any> {
 }
 
 export interface APIRequest {
-Url: string;
-Method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-Data?: any;
-Token?: string;
+  Url: string;
+  Method: "GET" | "POST" | "PUT" | "DELETE";
+  Data?: any;
+  Token?: string;
 }

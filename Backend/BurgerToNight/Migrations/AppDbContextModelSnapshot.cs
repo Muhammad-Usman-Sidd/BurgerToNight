@@ -156,7 +156,7 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreationCategoryTime = new DateTime(2024, 9, 25, 18, 56, 58, 710, DateTimeKind.Local).AddTicks(3557),
+                            CreationCategoryTime = new DateTime(2024, 10, 7, 19, 54, 9, 220, DateTimeKind.Local).AddTicks(7546),
                             Description = "Deliciously baked pizzas with a variety of toppings and flavors to satisfy every craving.",
                             Icon = "",
                             Name = "Pizza"
@@ -164,7 +164,7 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 2,
-                            CreationCategoryTime = new DateTime(2024, 9, 25, 18, 56, 58, 710, DateTimeKind.Local).AddTicks(3575),
+                            CreationCategoryTime = new DateTime(2024, 10, 7, 19, 54, 9, 220, DateTimeKind.Local).AddTicks(7567),
                             Description = "Juicy and flavorful burgers, crafted to perfection with fresh ingredients.",
                             Icon = "",
                             Name = "Burger"
@@ -172,7 +172,7 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 3,
-                            CreationCategoryTime = new DateTime(2024, 9, 25, 18, 56, 58, 710, DateTimeKind.Local).AddTicks(3576),
+                            CreationCategoryTime = new DateTime(2024, 10, 7, 19, 54, 9, 220, DateTimeKind.Local).AddTicks(7569),
                             Description = "Crispy and tender broasts, made with quality spices and cooked to golden perfection.",
                             Icon = "",
                             Name = "Broast"
@@ -180,7 +180,7 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 4,
-                            CreationCategoryTime = new DateTime(2024, 9, 25, 18, 56, 58, 710, DateTimeKind.Local).AddTicks(3577),
+                            CreationCategoryTime = new DateTime(2024, 10, 7, 19, 54, 9, 220, DateTimeKind.Local).AddTicks(7570),
                             Description = "A selection of rich and creamy pasta dishes, cooked with authentic flavors.",
                             Icon = "",
                             Name = "Pasta"
@@ -188,7 +188,7 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 5,
-                            CreationCategoryTime = new DateTime(2024, 9, 25, 18, 56, 58, 710, DateTimeKind.Local).AddTicks(3579),
+                            CreationCategoryTime = new DateTime(2024, 10, 7, 19, 54, 9, 220, DateTimeKind.Local).AddTicks(7571),
                             Description = "Tasty wraps filled with a variety of meats and vegetables, wrapped in soft tortillas.",
                             Icon = "",
                             Name = "Wrap"
@@ -196,7 +196,7 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 6,
-                            CreationCategoryTime = new DateTime(2024, 9, 25, 18, 56, 58, 710, DateTimeKind.Local).AddTicks(3580),
+                            CreationCategoryTime = new DateTime(2024, 10, 7, 19, 54, 9, 220, DateTimeKind.Local).AddTicks(7573),
                             Description = "Fresh and healthy salads, made with crisp vegetables and delicious dressings.",
                             Icon = "",
                             Name = "Salad"
@@ -204,7 +204,7 @@ namespace BurgerToNightAPI.Migrations
                         new
                         {
                             Id = 7,
-                            CreationCategoryTime = new DateTime(2024, 9, 25, 18, 56, 58, 710, DateTimeKind.Local).AddTicks(3581),
+                            CreationCategoryTime = new DateTime(2024, 10, 7, 19, 54, 9, 220, DateTimeKind.Local).AddTicks(7574),
                             Description = "Special deals just hanging around the corner for you!",
                             Icon = "",
                             Name = "Deals"
@@ -351,6 +351,9 @@ namespace BurgerToNightAPI.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TotalSales")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -362,7 +365,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3760),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7784),
                             Description = "A classic Pepperoni Pizza topped with premium pepperoni slices, mozzarella cheese, and our signature tomato sauce.",
                             Image = "",
                             Name = "Pepperoni Pizza",
@@ -373,7 +376,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3763),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7788),
                             Description = "Simplicity at its best: the Margherita Pizza features fresh basil, tomatoes, mozzarella, and a drizzle of olive oil.",
                             Image = "",
                             Name = "Margherita Pizza",
@@ -384,7 +387,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 3,
                             CategoryId = 1,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3765),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7790),
                             Description = "BBQ Chicken Pizza loaded with grilled chicken, BBQ sauce, onions, and mozzarella cheese.",
                             Image = "",
                             Name = "BBQ Chicken Pizza",
@@ -395,7 +398,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 4,
                             CategoryId = 1,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3767),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7791),
                             Description = "A delightful Veggie Pizza topped with bell peppers, olives, mushrooms, onions, and mozzarella cheese.",
                             Image = "",
                             Name = "Veggie Pizza",
@@ -406,7 +409,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 5,
                             CategoryId = 2,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3768),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7792),
                             Description = "Our Classic Cheeseburger is made with a juicy beef patty, melted cheddar cheese, lettuce, tomato, and pickles.",
                             Image = "",
                             Name = "Classic Cheeseburger",
@@ -417,7 +420,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 6,
                             CategoryId = 2,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3770),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7794),
                             Description = "A mouthwatering Double Bacon Burger with double beef patties, crispy bacon, cheddar cheese, and smoky sauce.",
                             Image = "",
                             Name = "Double Bacon Burger",
@@ -428,7 +431,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 7,
                             CategoryId = 2,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3772),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7795),
                             Description = "The Mushroom Swiss Burger features a savory beef patty, Swiss cheese, sautéed mushrooms, and garlic aioli.",
                             Image = "",
                             Name = "Mushroom Swiss Burger",
@@ -439,7 +442,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 8,
                             CategoryId = 2,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3773),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7796),
                             Description = "A spicy twist on a classic, the Spicy Chicken Burger is packed with flavor and heat, topped with jalapeños and pepper jack cheese.",
                             Image = "",
                             Name = "Spicy Chicken Burger",
@@ -450,7 +453,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 9,
                             CategoryId = 3,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3775),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7798),
                             Description = "Golden crispy Chicken Broast, marinated in special spices and fried to perfection. Served with fries and coleslaw.",
                             Image = "",
                             Name = "Chicken Broast",
@@ -461,7 +464,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 10,
                             CategoryId = 3,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3776),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7799),
                             Description = "Tender and crispy Beef Broast, seasoned with a blend of herbs and spices. Served with a side of dipping sauce.",
                             Image = "",
                             Name = "Beef Broast",
@@ -472,7 +475,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 11,
                             CategoryId = 4,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3778),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7810),
                             Description = "Traditional Spaghetti Carbonara made with creamy sauce, crispy pancetta, and Parmesan cheese.",
                             Image = "",
                             Name = "Spaghetti Carbonara",
@@ -483,7 +486,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 12,
                             CategoryId = 4,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3780),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7811),
                             Description = "A rich and creamy Chicken Alfredo pasta with grilled chicken, fettuccine noodles, and Alfredo sauce.",
                             Image = "",
                             Name = "Chicken Alfredo",
@@ -494,7 +497,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 13,
                             CategoryId = 4,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3781),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7813),
                             Description = "Spicy and flavorful Penne Arrabbiata, made with penne pasta, garlic, red chili flakes, and tomato sauce.",
                             Image = "",
                             Name = "Penne Arrabbiata",
@@ -505,7 +508,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 14,
                             CategoryId = 4,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3783),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7814),
                             Description = "Creamy and indulgent Fettuccine Alfredo, made with rich Alfredo sauce and topped with Parmesan cheese.",
                             Image = "",
                             Name = "Fettuccine Alfredo",
@@ -516,7 +519,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 15,
                             CategoryId = 5,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3784),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7816),
                             Description = "A healthy and delicious Grilled Chicken Wrap with lettuce, tomatoes, cucumbers, and a tangy yogurt dressing.",
                             Image = "",
                             Name = "Grilled Chicken Wrap",
@@ -527,7 +530,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 16,
                             CategoryId = 5,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3786),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7817),
                             Description = "A tasty Falafel Wrap filled with crispy falafel, fresh vegetables, and a creamy tahini sauce.",
                             Image = "",
                             Name = "Falafel Wrap",
@@ -538,7 +541,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 17,
                             CategoryId = 5,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3794),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7818),
                             Description = "A flavorful Beef Shawarma Wrap, filled with seasoned beef, fresh vegetables, and garlic sauce, wrapped in a soft tortilla.",
                             Image = "",
                             Name = "Beef Shawarma Wrap",
@@ -549,7 +552,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 18,
                             CategoryId = 5,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3796),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7820),
                             Description = "A Grilled Veggie Wrap loaded with grilled vegetables, hummus, and fresh herbs, wrapped in a whole wheat tortilla.",
                             Image = "",
                             Name = "Grilled Veggie Wrap",
@@ -560,7 +563,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 19,
                             CategoryId = 6,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3797),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7821),
                             Description = "A fresh Caesar Salad with crisp romaine lettuce, croutons, Parmesan cheese, and Caesar dressing.",
                             Image = "",
                             Name = "Caesar Salad",
@@ -571,7 +574,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 20,
                             CategoryId = 6,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3799),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7823),
                             Description = "A refreshing Greek Salad made with cucumbers, tomatoes, olives, feta cheese, and a lemon-oregano dressing.",
                             Image = "",
                             Name = "Greek Salad",
@@ -582,7 +585,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 21,
                             CategoryId = 7,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3800),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7824),
                             Description = "A delicious deal with two juicy beef burgers, loaded with cheese, fresh veggies, and a side of crispy fries.",
                             Image = "",
                             Name = "Mega Burger Feast",
@@ -593,7 +596,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 22,
                             CategoryId = 7,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3802),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7826),
                             Description = "Get two large pizzas with a variety of toppings, plus a family-size portion of garlic bread and a liter of soda.",
                             Image = "",
                             Name = "Family Pizza Bundle",
@@ -604,7 +607,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 23,
                             CategoryId = 7,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3803),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7827),
                             Description = "Enjoy a bucket filled with 12 pieces of crispy fried chicken, a large side of coleslaw, and mashed potatoes with gravy.",
                             Image = "",
                             Name = "Chicken Bucket Special",
@@ -615,7 +618,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 24,
                             CategoryId = 7,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3805),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7828),
                             Description = "A box of 10 flavorful Wraps, with your choice of beef or chicken, served with salsa, guacamole, and chips.",
                             Image = "",
                             Name = "Wrap Fiesta Box",
@@ -626,7 +629,7 @@ namespace BurgerToNightAPI.Migrations
                         {
                             Id = 25,
                             CategoryId = 7,
-                            CreationDate = new DateTime(2024, 9, 25, 13, 56, 58, 710, DateTimeKind.Utc).AddTicks(3806),
+                            CreationDate = new DateTime(2024, 10, 7, 14, 54, 9, 220, DateTimeKind.Utc).AddTicks(7830),
                             Description = "Indulge in a cheesy delight with a large pizza smothered in four types of cheese, baked to perfection.",
                             Image = "",
                             Name = "Cheese Lover's Pizza",

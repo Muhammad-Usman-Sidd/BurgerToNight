@@ -23,19 +23,31 @@ namespace BurgerToNightAPI.Repository
         public async Task<List<Product>> GetTopSellingProducts(int topCount)
         {
             var topProducts = await _db.OrderDetails
-                .GroupBy(od => od.ProductId)
-                .Select(group => new
+            .GroupBy(od => od.ProductId)
+            .Select(group => new
+            {
+                ProductId = group.Key,
+                TotalSold = group.Sum(od => od.Quantity)
+            })
+            .OrderByDescending(g => g.TotalSold)
+            .Take(topCount)
+            .Join(_db.Products,
+                g => g.ProductId,
+                p => p.Id,
+                (g, p) => new Product
                 {
-                    ProductId = group.Key,
-                    TotalSold = group.Sum(od => od.Quantity)
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Description =p.Description,  
+                    PreparingTime = p.PreparingTime,
+                    CategoryId = p.CategoryId,
+                    productCategory =p.productCategory,
+                    CreationDate = p.CreationDate,
+                    Image = p.Image,
+                    TotalSales = g.TotalSold
                 })
-                .OrderByDescending(g => g.TotalSold)
-                .Take(topCount)
-                .Join(_db.Products,
-                    g => g.ProductId,
-                    p => p.Id,
-                    (g, p) => p)
-                .ToListAsync();
+            .ToListAsync();
 
             return topProducts;
         }

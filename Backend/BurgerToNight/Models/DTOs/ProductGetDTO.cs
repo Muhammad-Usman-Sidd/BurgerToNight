@@ -19,6 +19,7 @@ namespace BurgerToNightAPI.Models.DTOs
         public int? PreparingTime { get; set; }
         public string? Image { get; set; }
         public string Description { get; set; }
+        public int? TotalSales { get; set; }
 
     }
 }

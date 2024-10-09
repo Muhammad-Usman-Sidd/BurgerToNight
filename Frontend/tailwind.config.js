@@ -1,18 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html','./src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
-      fontFamily:{
-        sans:['Poppins','sans-serif'],
+      colors: {
+        primary: "#2b6cb0", // Darker shade of blue
+        secondary: "#1a365d", // Deep dark blue
       },
 
-      gridTemplateColumns:{
-        '70/30': '70%'
-      }
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "1rem",
+          sm: "3rem",
+        },
+      },
     },
-
   },
   plugins: [],
-}
-
+};

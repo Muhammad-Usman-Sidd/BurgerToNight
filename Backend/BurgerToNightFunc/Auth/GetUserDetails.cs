@@ -49,6 +49,7 @@ namespace BurgerToNightFunc.Auth
                     return response;
                 }
                 var userDTO = _mapper.Map<UserDTO>(user);
+                response.IsSuccess = true;
                 response.StatusCode = HttpStatusCode.OK;
                 response.Result = userDTO;
                 return response;

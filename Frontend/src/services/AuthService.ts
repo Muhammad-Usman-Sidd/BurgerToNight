@@ -1,49 +1,68 @@
-import BaseService from './BaseService';
-import { APIResponse } from '../models/APIResult';
-import { LoginDTO, RegistrationRequestDTO, ResetPasswordDTO } from '../models/AuthDtos';
+import BaseService from "./BaseService";
+import { APIResponse } from "../models/APIResult";
+import {
+  LoginDTO,
+  LoginResponseDTO,
+  RegistrationRequestDTO,
+  ResetPasswordDTO,
+  UserDTO,
+} from "../models/AuthDtos";
 
 interface IAuthService {
-    login<T>(dto: LoginDTO): Promise<APIResponse<T>>;
-    register<T>(dto: RegistrationRequestDTO): Promise<APIResponse<T>>;
-    resetPassword<T>(dto: ResetPasswordDTO): Promise<APIResponse<T>>;
-    getUserById<T>(Id: number): Promise<APIResponse<T>>;
+  login(dto: LoginDTO): Promise<APIResponse<LoginResponseDTO>>;
+  register(dto: RegistrationRequestDTO): Promise<APIResponse<UserDTO>>;
+  resetPassword<T>(dto: ResetPasswordDTO): Promise<APIResponse<T>>;
+  getUserById(Id: string): Promise<APIResponse<UserDTO>>;
+  getTopCustomers(): Promise<APIResponse<UserDTO[]>>;
 }
 
 class AuthService extends BaseService implements IAuthService {
-    constructor() {
-        super(import.meta.env.VITE_API_URL);
-    }
+  constructor() {
+    super(import.meta.env.VITE_API_URL);
+  }
 
-    async login<T>(dto: LoginDTO): Promise<APIResponse<T>> {
-        return this.sendRequest<T>({
-            Url: '/AuthLogin',
-            Method: 'POST',
-            Data: dto
-        });
-    }
+  async login(dto: LoginDTO): Promise<APIResponse<LoginResponseDTO>> {
+    return this.sendRequest<LoginResponseDTO>({
+      Url: "/AuthLogin",
+      Method: "POST",
+      Data: dto,
+    });
+  }
 
-    async register<T>(dto: RegistrationRequestDTO): Promise<APIResponse<T>> {
-        return this.sendRequest<T>({
-            Url: '/AuthRegister',
-            Method: 'POST',
-            Data: dto
-        });
-    }
+  async register(dto: RegistrationRequestDTO): Promise<APIResponse<UserDTO>> {
+    return this.sendRequest<UserDTO>({
+      Url: "/AuthRegister",
+      Method: "POST",
+      Data: dto,
+    });
+  }
 
-    async resetPassword<T>(dto: ResetPasswordDTO): Promise<APIResponse<T>> {
-        return this.sendRequest<T>({
-            Url: '/AuthResetPassword',
-            Method: 'POST',
-            Data: dto
-        });
-    }
+  async resetPassword<T>(dto: ResetPasswordDTO): Promise<APIResponse<T>> {
+    return this.sendRequest<T>({
+      Url: "/AuthResetPassword",
+      Method: "POST",
+      Data: dto,
+    });
+  }
 
-    async getUserById<T>(Id: number): Promise<APIResponse<T>> {
-        return this.sendRequest<T>({
-            Url: `/user/${Id}`,
-            Method: 'GET',
-        });
-    }
+  async getUserById(Id: string): Promise<APIResponse<UserDTO>> {
+    return this.sendRequest<UserDTO>({
+      Url: `/user/${Id}`,
+      Method: "GET",
+    });
+  }
+  async getAllUsers(): Promise<APIResponse<UserDTO[]>> {
+    return this.sendRequest<UserDTO[]>({
+      Url: `/users`,
+      Method: "GET",
+    });
+  }
+  async getTopCustomers(): Promise<APIResponse<UserDTO[]>> {
+    return this.sendRequest<UserDTO[]>({
+      Url: `/users/top-customers`,
+      Method: "GET",
+    });
+  }
 }
 
-export default AuthService;
+export default new AuthService();

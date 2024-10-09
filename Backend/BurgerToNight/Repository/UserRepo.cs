@@ -4,6 +4,7 @@ using BurgerToNightAPI.Models;
 using BurgerToNightAPI.Models.DTOs;
 using BurgerToNightAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -38,7 +39,11 @@ namespace BurgerToNightAPI.Repository
             }
             return false;
         }
-
+        public async Task<List<UserDTO>> GetAllUsersAsync()
+        {
+            var users =await _db.ApplicationUsers.ToListAsync();
+            return _mapper.Map<List<UserDTO>>(users);
+        } 
 
         public async Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO)
         {

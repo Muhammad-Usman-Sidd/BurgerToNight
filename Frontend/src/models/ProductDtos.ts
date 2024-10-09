@@ -1,15 +1,5 @@
-export interface ProductCreateDTO {
-  Name: string;
-  Description: string;
-  Price: number;
-  PreparingTime: string;
-  CategoryId: number | null;
-  productCategory: string,
-  Image: string;
-}
-
-export interface ProductUpdateDTO {
-  Id: number;
+export interface ProductCreateUpdateDTO {
+  Id?: number;
   Name: string;
   Description: string;
   Price: number;
@@ -25,6 +15,7 @@ export interface ProductGetDTO {
   Price: number;
   PreparingTime: string;
   CategoryId: number;
-  productCategory:string;
+  productCategory: string;
   Image: string;
+  TotalSales: number;
 }

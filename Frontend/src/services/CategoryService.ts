@@ -1,12 +1,15 @@
-import BaseService from './BaseService';
-import { APIResponse } from '../models/APIResult';
-import { CategoryGetDTO, CategoryCreateDTO, CategoryUpdateDTO } from '../models/CategoryDtos';
-
+import BaseService from "./BaseService";
+import { APIResponse } from "../models/APIResult";
+import {
+  CategoryCreateDTO,
+  CategoryGetDTO,
+  CategoryUpdateDTO,
+} from "../models/CategoryDtos";
 export interface ICategoryService {
   createCategory(dto: CategoryCreateDTO): Promise<APIResponse<CategoryGetDTO>>;
   deleteCategory(id: number): Promise<APIResponse<null>>;
   getAllCategories(): Promise<APIResponse<CategoryGetDTO[]>>;
-  updateCategory(dto:CategoryUpdateDTO):Promise<APIResponse<null>>;
+  updateCategory(dto: CategoryUpdateDTO): Promise<APIResponse<null>>;
 }
 
 class CategoryService extends BaseService implements ICategoryService {
@@ -14,37 +17,39 @@ class CategoryService extends BaseService implements ICategoryService {
     super(import.meta.env.VITE_API_URL);
   }
 
-  async createCategory(dto: CategoryCreateDTO): Promise<APIResponse<CategoryGetDTO>> {
+  async createCategory(
+    dto: CategoryCreateDTO
+  ): Promise<APIResponse<CategoryGetDTO>> {
     return this.sendRequest<CategoryGetDTO>({
       Url: `/CategoryAPI`,
-      Method: 'POST',
+      Method: "POST",
       Data: dto,
     });
   }
   async updateCategory(dto: CategoryUpdateDTO): Promise<APIResponse<null>> {
     return this.sendRequest<null>({
       Url: `/CategoryAPI/${dto.Id}`,
-      Method: 'PUT',
+      Method: "PUT",
       Data: dto,
     });
   }
   async deleteCategory(id: number): Promise<APIResponse<null>> {
     return this.sendRequest<null>({
       Url: `/CategoryAPI/${id}`,
-      Method: 'DELETE',
+      Method: "DELETE",
     });
   }
 
   async getAllCategories(): Promise<APIResponse<CategoryGetDTO[]>> {
     return this.sendRequest<CategoryGetDTO[]>({
       Url: `/CategoryAPI`,
-      Method: 'GET',
+      Method: "GET",
     });
   }
   async getCategory(id: number): Promise<APIResponse<CategoryGetDTO>> {
     return this.sendRequest<CategoryGetDTO>({
       Url: `/CategoryAPI/${id}`,
-      Method: 'GET'
+      Method: "GET",
     });
   }
 }

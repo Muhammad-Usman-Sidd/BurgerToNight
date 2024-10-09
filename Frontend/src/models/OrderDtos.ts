@@ -1,4 +1,4 @@
-import { OrderDetailCreateDTO,OrderDetailGetDTO } from "./OrderDetailDtos";
+import { OrderDetailCreateDTO, OrderDetailGetDTO } from "./OrderDetailDtos";
 
 export interface OrderGetDTO {
   Id: number;
@@ -8,14 +8,14 @@ export interface OrderGetDTO {
   OrderStatus: string;
   PaymentStatus: string;
   PaymentIntentId?: string;
-  PaymentDate: string;
+  PaymentDate?: string;
   PhoneNumber?: string;
   Address?: string;
   Name: string;
   Items: OrderDetailGetDTO[];
 }
 
-export interface OrderCreateDTO{
+export interface OrderCreateDTO {
   UserId: string;
   OrderTotal: number;
   PhoneNumber?: string;
@@ -24,8 +24,11 @@ export interface OrderCreateDTO{
   Items: OrderDetailCreateDTO[];
 }
 
-export interface OrderUpdateDTO{
-  Id:number
-  OrderStatus:string,
-  PaymentStatus:string
+export interface OrderUpdateDTO {
+  Id: number;
+  Name: string;
+  Address: string;
+  PhoneNumber: string;
+  OrderStatus: string;
+  PaymentStatus: string;
 }
