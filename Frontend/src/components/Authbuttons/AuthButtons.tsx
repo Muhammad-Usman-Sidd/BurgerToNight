@@ -17,6 +17,7 @@ const AuthButtons: React.FC = () => {
 
   const handleLogout = () => {
     setShowLogoutModal(true);
+    setDropdownOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -53,6 +54,7 @@ const AuthButtons: React.FC = () => {
                 </button>
                 <Link
                   to="/auth/reset-password"
+                  onClick={() => setDropdownOpen(false)}
                   className="block w-full text-left px-4 py-2 text-primary hover:bg-primary hover:text-white transition duration-200"
                 >
                   Reset Password
@@ -62,12 +64,14 @@ const AuthButtons: React.FC = () => {
               <>
                 <Link
                   to="/auth/sign-in"
+                  onClick={() => setDropdownOpen(false)}
                   className="block w-full text-left px-4 py-2 text-primary hover:bg-primary  hover:text-white transition duration-200"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/auth/sign-up"
+                  onClick={() => setDropdownOpen(false)}
                   className="block w-full text-left px-4 py-2 text-primary hover:bg-primary hover:text-white transition duration-200"
                 >
                   Sign Up

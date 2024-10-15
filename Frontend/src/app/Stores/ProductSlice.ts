@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 interface ProductState {
   products: ProductGetDTO[];
-  currentProduct: ProductCreateUpdateDTO | null;
+  currentProduct: any;
   topProducts: ProductGetDTO[];
   deals: ProductGetDTO[];
   totalItems: number;
@@ -89,6 +89,7 @@ export const fetchProductById = createAsyncThunk<
   if (isLoggedIn) {
     const response: APIResponse<ProductGetDTO> =
       await productService.getProduct(id);
+    console.log(response);
 
     if (response.IsSuccess) {
       dispatch(setCurrentProduct(response.Result));
@@ -221,6 +222,9 @@ const productSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchProductById.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(fetchProductById.rejected, (state) => {
         state.loading = false;
       });
 

@@ -26,29 +26,38 @@ const CategoriesListing = () => {
     <>
       <div data-aos="fade" className="container mt-14 mb-12">
         <h1 className="text-5xl font-bold text-center">Categories</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-          {category.categories?.map((category: CategoryGetDTO) => (
-            <div
-              key={category.Id}
-              className="p-5 bg-primary/40 rounded-lg shadow-lg"
-            >
-              <img
-                src={category.Icon}
-                alt={category.Name}
-                className="w-full h- object-cover rounded-md"
-              />
-              <h3 className="text-xl font-semibold mt-4">{category.Name}</h3>
-              <p className="text-gray-500 mt-2">{category.Description}</p>
-              <Button
-                onClick={() => {
-                  redirectToProducts(category.Name);
-                }}
+        {category.categories.length ? (
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+            {category.categories?.map((category: CategoryGetDTO) => (
+              <div
+                key={category.Id}
+                className="p-5 bg-primary/40 rounded-lg shadow-lg"
               >
-                View
-              </Button>
-            </div>
-          ))}
-        </div>
+                <img
+                  src={category.Icon}
+                  alt={category.Name}
+                  className="w-full h- object-cover rounded-md"
+                />
+                <h3 className="text-xl font-semibold mt-4">{category.Name}</h3>
+                <p className="text-gray-500 mt-2">{category.Description}</p>
+                <Button
+                  onClick={() => {
+                    redirectToProducts(category.Name);
+                  }}
+                >
+                  View
+                </Button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            className="flex justify-center
+          p-10 translate-y-2/3 text-xl"
+          >
+            Backend Is Not Working
+          </div>
+        )}
       </div>
     </>
   );

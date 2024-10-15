@@ -34,7 +34,7 @@ export const Modal: React.FC<ModalProps> = ({
             ✕
           </button>
         </div>
-        <div className="mb-6 text-black">{children}</div>
+        <div className="mb-6 text-gray-800 dark:text-gray-100">{children}</div>
         <div className="flex justify-end space-x-3">
           <Button
             className="rounded-md"

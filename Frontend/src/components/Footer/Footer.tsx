@@ -1,6 +1,6 @@
 import React from "react";
 import footerLogo from "../../assets/product/logo.png";
-import Banner from "../../assets/website/Footer BG.jpeg";
+import FooterImg from "../../assets/website/Footer BG.jpeg";
 import {
   FaFacebook,
   FaInstagram,
@@ -15,8 +15,8 @@ interface FooterLink {
   link: string;
 }
 
-const BannerImg: React.CSSProperties = {
-  backgroundImage: `url(${Banner})`,
+const Img: React.CSSProperties = {
+  backgroundImage: `url(${FooterImg})`,
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
@@ -63,7 +63,7 @@ const FooterLinks: FooterLink[] = [
 
 const Footer: React.FC = () => {
   return (
-    <div style={BannerImg} className="text-white pt-5">
+    <div style={Img} className="text-white pt-5">
       <div className="container mt-20">
         <div data-aos="zoom-in" className="grid md:grid-cols-3 pb-44 pt-5">
           <div className="py-8 px-4">

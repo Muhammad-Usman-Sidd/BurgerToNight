@@ -53,7 +53,7 @@ const SignUp: React.FC = () => {
         onSubmit={handleSignUp}
         className="max-w-md mx-auto mt-8 bg-gray-100 p-8 rounded-lg shadow-md dark:bg-gray-800/90"
       >
-        <div className="mb-4">
+        <div className="mb-4 dark:bg-gray-800">
           <label htmlFor="role" className="block">
             Role
           </label>
@@ -61,7 +61,7 @@ const SignUp: React.FC = () => {
             id="role"
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="w-full p-1 text-black border rounded-lg"
+            className="w-full p-1 text-black dark:text-white dark:bg-gray-800 border rounded-lg"
           >
             <option value="customer">Customer</option>
             <option value="admin">Admin</option>

@@ -55,7 +55,6 @@ export const readCurrentOrder = createAsyncThunk<
   const { isLoggedIn, user } = getState().auth;
   if (isLoggedIn && user) {
     const cart = getState().order.cart;
-
     if (!user.Name || !user.PhoneNumber || !user.Address) {
       throw new Error("User information is incomplete");
     }
@@ -95,8 +94,8 @@ export const checkout = createAsyncThunk<
       if (response.IsSuccess) {
         dispatch(clearCart());
         await dispatch(fetchUserPastOrders());
-        toast.success("Order placed successfully");
       }
+      toast.success("Order placed successfully");
     } catch (error) {
       toast.error(`Error : ${error}`);
     }
