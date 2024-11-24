@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Bar } from "react-chartjs-2";
-import { FaUsers, FaShoppingCart, FaBars } from "react-icons/fa";
+import { FaUsers, FaShoppingCart } from "react-icons/fa";
 import { FiTrendingUp } from "react-icons/fi";
-import { MdCategory, MdDashboard, MdInventory } from "react-icons/md";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -37,8 +36,6 @@ const AdminDashboard: React.FC = () => {
   const { orders, orderLoading } = order;
   const { topCustomers } = auth;
 
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
-
   useEffect(() => {
     dispatch(fetchProducts({}));
     dispatch(fetchTopCustomers());
@@ -51,8 +48,8 @@ const AdminDashboard: React.FC = () => {
       label: "CustomerId",
       field: "Id",
       render: (Id: string) => {
-        const formatedId = Id.slice(0, 4);
-        return <div>{formatedId}</div>;
+        const formattedId = Id.slice(0, 4);
+        return <div>{formattedId}</div>;
       },
     },
     {
@@ -63,12 +60,10 @@ const AdminDashboard: React.FC = () => {
       label: "TotalOrders",
       field: "TotalOrders",
     },
-
     {
       label: "TotalAmountSpent",
       field: "TotalAmountSpent",
     },
-
     {
       label: "PhoneNumber",
       field: "PhoneNumber",
@@ -78,7 +73,6 @@ const AdminDashboard: React.FC = () => {
       field: "Address",
     },
   ];
-
   const productData = {
     labels: topProducts.map((p) => p.Name),
     datasets: [
@@ -90,6 +84,31 @@ const AdminDashboard: React.FC = () => {
         borderWidth: 1,
       },
     ],
+  };
+
+  const productOptions = {
+    responsive: true,
+    plugins: {
+      legend: { display: true },
+      tooltip: { enabled: true },
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            size: 10,
+          },
+        },
+      },
+    },
+  };
+  const orderOptions = {
+    indexAxis: "y",
+    responsive: true,
+    plugins: {
+      legend: { display: true },
+      tooltip: { enabled: true },
+    },
   };
 
   const orderData = {
@@ -104,103 +123,68 @@ const AdminDashboard: React.FC = () => {
       },
     ],
   };
+
   if (loading || orderLoading) {
-    <Loader />;
+    return <Loader />;
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
-      <div
-        className={`fixed inset-0 bg-gray-300 dark:bg-gray-800 z-10 transform ${
-          isDrawerOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform lg:relative lg:translate-x-0 lg:flex lg:flex-col w-64 p-4`}
-      >
-        <button
-          className="absolute top-4 right-4 lg:hidden "
-          onClick={() => setDrawerOpen(false)}
-        >
-          X
-        </button>
-        <div className="flex items-center mb-8 ">
-          <MdDashboard className="text-4xl" />
-          <h1 className="text-2xl ml-4">Admin Panel</h1>
-        </div>
-        <nav>
-          <ul className="space-y-4">
-            <li className=" flex items-center">
-              <MdDashboard className="m-4" />
-              <a href="/admin">Dashboard</a>
-            </li>
-            <li className=" flex items-center">
-              <MdInventory className="m-4" />
-              <a href="/admin/products">Products</a>
-            </li>
-            <li className=" flex items-center">
-              <MdCategory className="m-4" />
-              <a href="/admin/categories">Categories</a>
-            </li>
-            <li className=" flex items-center">
-              <FaShoppingCart className="m-4" />
-              <a href="/admin/orders">Orders</a>
-            </li>
-            <li className=" flex items-center">
-              <FaUsers className="m-4" />
-              <a href="/admin/users">Customers</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 overflow-x-hidden">
+      <div className="flex-1 flex flex-col">
+        <header className="mx-4 p-4 rounded-lg bg-gray-200 dark:bg-gray-800/90 flex justify-between items-center">
+          <h1 className="text-xl font-bold">Admin Dashboard</h1>
+        </header>
 
-      <div className="flex-1 p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-          <button
-            className="lg:hidden text-2xl"
-            onClick={() => setDrawerOpen(!isDrawerOpen)}
-          >
-            <FaBars />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="p-4 shadow rounded-lg flex items-center bg-white dark:bg-gray-800">
-            <FiTrendingUp className="text-4xl text-blue-600 mr-4" />
-            <div>
-              <h2 className="text-xl font-bold">Total Sale</h2>
-              <p>${orders.reduce((sum, o) => sum + o.OrderTotal, 0)}</p>
+        <main className="flex-1 p-4 overflow-y-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div className="p-4 shadow rounded-lg flex items-center bg-white dark:bg-gray-800">
+              <FiTrendingUp className="text-3xl text-blue-600 mr-4" />
+              <div>
+                <h2 className="text-sm font-semibold">Total Sale</h2>
+                <p className="text-lg">
+                  ${orders.reduce((sum, o) => sum + o.OrderTotal, 0)}
+                </p>
+              </div>
+            </div>
+            <div className="p-4 shadow rounded-lg flex items-center bg-white dark:bg-gray-800">
+              <FaShoppingCart className="text-3xl text-green-600 mr-4" />
+              <div>
+                <h2 className="text-sm font-semibold">Total Orders</h2>
+                <p className="text-lg">{orders.length}</p>
+              </div>
+            </div>
+            <div className="p-4 shadow rounded-lg flex items-center bg-white dark:bg-gray-800">
+              <FaUsers className="text-3xl text-purple-600 mr-4" />
+              <div>
+                <h2 className="text-sm font-semibold">Top Customer</h2>
+                <p className="text-lg">{topCustomers[0]?.Name || "N/A"}</p>
+              </div>
             </div>
           </div>
-          <div className="p-4 shadow rounded-lg flex items-center bg-white dark:bg-gray-800">
-            <FaShoppingCart className="text-4xl text-green-600 mr-4" />
-            <div>
-              <h2 className="text-xl font-bold">Total Orders</h2>
-              <p>{orders.length}</p>
-            </div>
-          </div>
-          <div className="p-4 shadow rounded-lg flex items-center bg-white dark:bg-gray-800">
-            <FaUsers className="text-4xl text-purple-600 mr-4" />
-            <div>
-              <h2 className="text-xl font-bold">Top Customer</h2>
-              <p>{topCustomers.length > 0 && topCustomers[0].Name}</p>
-            </div>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-6 shadow rounded-lg bg-white dark:bg-gray-800">
-            <h2 className="text-xl font-semibold mb-4">Orders Overview</h2>
-            <Bar data={orderData} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 shadow rounded-lg bg-white dark:bg-gray-800">
+              <h2 className="text-sm font-semibold mb-4">Orders Overview</h2>
+              <div className="max-w-full overflow-x-auto">
+                <Bar data={orderData} options={orderOptions} />
+              </div>
+            </div>
+            <div className="p-4 shadow rounded-lg bg-white dark:bg-gray-800">
+              <h2 className="text-sm font-semibold mb-4">Top Products</h2>
+              <div className="max-w-full overflow-x-auto">
+                <Bar data={productData} options={productOptions} />
+              </div>
+            </div>
           </div>
-          <div className="p-6 shadow rounded-lg bg-white dark:bg-gray-800">
-            <h2 className="text-xl font-semibold mb-4">Top Products</h2>
-            <Bar data={productData} />
+
+          <div className="mt-4 max-w-full overflow-x-auto">
+            <TableWrapper
+              title="Top Customers"
+              columns={userColumns}
+              data={topCustomers}
+            />
           </div>
-        </div>
-        <TableWrapper
-          title="Top Customers"
-          columns={userColumns}
-          data={topCustomers}
-        />
+        </main>
       </div>
     </div>
   );

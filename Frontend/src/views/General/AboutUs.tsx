@@ -1,6 +1,6 @@
 import React from "react";
-import TeamPic from "../../assets/product/PizzaLargeBundle.webp";
-import AboutHeroPic from "../../assets/product/hero.jpg";
+import TeamPic from "../../assets/Images/MenuDeals/PizzaLargeBundle.webp";
+import AboutHeroPic from "../../assets/Images/MenuDeals/hero.jpg";
 
 const AboutUs: React.FC = () => {
   return (

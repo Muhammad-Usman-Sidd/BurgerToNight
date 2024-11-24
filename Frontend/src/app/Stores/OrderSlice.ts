@@ -91,8 +91,8 @@ export const checkout = createAsyncThunk<
   if (isLoggedIn && role === "customer") {
     try {
       const response = await orderService.placeOrder(currentOrder);
+      dispatch(clearCart());
       if (response.IsSuccess) {
-        dispatch(clearCart());
         await dispatch(fetchUserPastOrders());
       }
       toast.success("Order placed successfully");

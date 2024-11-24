@@ -1,6 +1,6 @@
 import React from "react";
 import { BeatLoader } from "react-spinners";
-import logo from "../../assets/product/logo.png";
+import logo from "../../assets/SupportingImages/logo.png";
 
 const Loader: React.FC = () => {
   return (

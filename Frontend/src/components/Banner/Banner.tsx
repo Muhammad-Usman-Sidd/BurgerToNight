@@ -1,4 +1,4 @@
-import BannerImg from "../../assets/ProductImages/Falafel Wrap.jpg";
+import BannerImg from "../../assets/Images/MenuItems/Falafel Wrap.jpg";
 import { GrSecure } from "react-icons/gr";
 import { IoFastFood } from "react-icons/io5";
 import { GiFoodTruck } from "react-icons/gi";

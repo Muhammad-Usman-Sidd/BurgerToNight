@@ -1,6 +1,6 @@
-import HeroPic1 from "../../assets/product/hero.jpg";
-import HeroPic2 from "../../assets/productImages/Grilled Chicken Wrap.jpg";
-import HeroPic3 from "../../assets/productImages/Chicken Broast.jpg";
+import HeroPic1 from "../../assets/Images/MenuDeals/hero.jpg";
+import HeroPic2 from "../../assets/Images/MenuItems/Grilled Chicken Wrap.jpg";
+import HeroPic3 from "../../assets/Images/MenuItems/Chicken Broast.jpg";
 import Slider from "react-slick";
 import React from "react";
 import { Link } from "react-router-dom";

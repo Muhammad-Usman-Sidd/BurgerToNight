@@ -1,4 +1,4 @@
-import Logo from "../../assets/product/logo.png";
+import Logo from "../../assets/SupportingImages/logo.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import DarkMode from "./DarkMode";
 import React, { useState } from "react";

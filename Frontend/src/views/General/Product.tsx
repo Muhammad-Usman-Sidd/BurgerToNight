@@ -10,7 +10,7 @@ const Product: React.FC = () => {
         <div className="flex justify-center">
           <Link
             to="/products"
-            className="text-center mt-10 cursor-pointer bg-primary text-white py-1 px-5 rounded-md"
+            className="text-center w-52 mt-10 cursor-pointer bg-primary text-white py-1 px-5 rounded-md"
           >
             View All
           </Link>

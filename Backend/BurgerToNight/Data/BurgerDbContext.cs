@@ -82,8 +82,6 @@ namespace BurgerToNightAPI.Data
                 }
             );
 
-
-
             modelBuilder.Entity<Product>().HasData(
                      new Product
                      {

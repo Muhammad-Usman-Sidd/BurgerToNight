@@ -29,9 +29,33 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="images\CategoryIcon\" />
-    <Folder Include="images\ProductImages\" />
-    <Folder Include="wwwroot\" />
+    <None Include="wwwroot\images\CategoryIcon\background pic.jpeg" />
+    <None Include="wwwroot\images\CategoryIcon\Broast.png" />
+    <None Include="wwwroot\images\CategoryIcon\burger.png" />
+    <None Include="wwwroot\images\CategoryIcon\DealsIcon.png" />
+    <None Include="wwwroot\images\CategoryIcon\pasta.png" />
+    <None Include="wwwroot\images\CategoryIcon\pasta.webp" />
+    <None Include="wwwroot\images\CategoryIcon\pizza.png" />
+    <None Include="wwwroot\images\CategoryIcon\Salad.png" />
+    <None Include="wwwroot\images\CategoryIcon\Wrap.png" />
+    <None Include="wwwroot\images\ProductImages\Beef broast.jpg" />
+    <None Include="wwwroot\images\ProductImages\Beef Shawarma Wra.jpg" />
+    <None Include="wwwroot\images\ProductImages\Big Bang.jpg" />
+    <None Include="wwwroot\images\ProductImages\Big Ben.jpeg" />
+    <None Include="wwwroot\images\ProductImages\Chicken Alfredo.jpg" />
+    <None Include="wwwroot\images\ProductImages\Chicken Broast.jpg" />
+    <None Include="wwwroot\images\ProductImages\Falafel Wrap.jpg" />
+    <None Include="wwwroot\images\ProductImages\Fish burger.jpeg" />
+    <None Include="wwwroot\images\ProductImages\Grilled Chicken Wrap.jpg" />
+    <None Include="wwwroot\images\ProductImages\Lamb burger.jpeg" />
+    <None Include="wwwroot\images\ProductImages\might zinger pic.jpeg" />
+    <None Include="wwwroot\images\ProductImages\pizza-cinematic.webp" />
+    <None Include="wwwroot\images\ProductImages\pizza-salami.webp" />
+    <None Include="wwwroot\images\ProductImages\pizza.jpg" />
+    <None Include="wwwroot\images\ProductImages\Salad.jpg" />
+    <None Include="wwwroot\images\ProductImages\Spaghetti Carbonara.jpg" />
+    <None Include="wwwroot\images\ProductImages\super bbq.jpeg" />
+    <None Include="wwwroot\images\ProductImages\zinger.jpeg" />
   </ItemGroup>
 
 </Project>

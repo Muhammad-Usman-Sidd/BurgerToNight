@@ -49,8 +49,7 @@ namespace BurgerToNightAPI.Repository
         {
             var user = _db.ApplicationUsers
                 .FirstOrDefault(u => u.UserName.ToLower() == loginRequestDTO.UserName.ToLower());
-            var IsValid = BCrypt.Net.BCrypt.Verify(loginRequestDTO.Password, user.PasswordHash);
-            if (user == null || IsValid == false)
+            if (user == null )
             {
                 return new LoginResponseDTO()
                 {
@@ -59,7 +58,17 @@ namespace BurgerToNightAPI.Repository
                     Role = string.Empty
                 };
             }
+            var IsValid = BCrypt.Net.BCrypt.Verify(loginRequestDTO.Password, user.PasswordHash);
 
+            if (!IsValid)
+            {
+                return new LoginResponseDTO()
+                {
+                    Token = "",
+                    User = null,
+                    Role = string.Empty
+                };
+            }
             var roles = await _userManager.GetRolesAsync(user);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);

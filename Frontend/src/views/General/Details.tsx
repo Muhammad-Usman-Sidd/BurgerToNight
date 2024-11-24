@@ -6,6 +6,7 @@ import { fetchProductById } from "../../app/Stores/ProductSlice";
 import Button from "../../components/Generics/Button";
 import { addToCart } from "../../app/Stores/OrderSlice";
 import Loader from "../../components/Loading/Loader";
+import { Link } from "react-router-dom";
 
 const Details: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +14,7 @@ const Details: React.FC = () => {
   const { currentProduct, loading } = useSelector(
     (state: RootState) => state.product
   );
-
+  const { role } = useSelector((state: RootState) => state.auth);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const Details: React.FC = () => {
         </div>
       </div>
 
-      <div className="mt-10 bg-white dark:bg-gray-800 p-10 shadow-lg rounded-2xl space-y-8 transition-colors duration-300">
+      <div className="mt-10 bg-primary/5 dark:bg-gray-800 p-10 shadow-lg rounded-2xl space-y-8 transition-colors duration-300">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="relative">
             <img
@@ -101,13 +102,22 @@ const Details: React.FC = () => {
             </div>
 
             <div>
-              <Button
-                variant="primary"
-                className="w-full rounded-none"
-                onClick={handleAddToCart}
-              >
-                Add to Cart
-              </Button>
+              {role === "admin" ? (
+                <Link
+                  to="/admin/products"
+                  className="flex items-center bg-primary/60 justify-center w-full p-2 dark:bg-white/65 dark:text-black text-white font-semibold rounded-lg dark:hover:bg-white/35 transition-all duration-300"
+                >
+                  Manage
+                </Link>
+              ) : (
+                <Button
+                  variant="primary"
+                  className="w-full rounded-none"
+                  onClick={handleAddToCart}
+                >
+                  Add to Cart
+                </Button>
+              )}
             </div>
           </div>
         </div>

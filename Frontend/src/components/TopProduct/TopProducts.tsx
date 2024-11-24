@@ -15,6 +15,7 @@ const TopProducts: React.FC = () => {
   const { topProducts, loading } = useSelector(
     (state: RootState) => state.product
   );
+  const { role } = useSelector((state: RootState) => state.auth);
 
   const addToCartFunction = (product: ProductGetDTO) => {
     dispatch(addToCart({ product, quantity: 1 }));
@@ -44,7 +45,7 @@ const TopProducts: React.FC = () => {
             <div
               key={data.Id}
               data-aos="zoom-in"
-              className="rounded-2xl bg-white dark:bg-gray-800 hover:bg-primary dark:hover:bg-primary hover:text-white relative shadow-xl duration-300 group max-w-[300px]"
+              className="rounded-2xl bg-primary/5 dark:bg-gray-800 hover:bg-primary dark:hover:bg-primary hover:text-white relative shadow-xl duration-300 group max-w-[300px]"
             >
               <Link to={`/product/${data.Id}`}>
                 <div className="h-[180px] w-[180px] overflow mx-auto">
@@ -65,9 +66,19 @@ const TopProducts: React.FC = () => {
                   <p className="text-gray-500 group-hover:text-white duration-300 text-sm line-clamp-2">
                     {data.Description}
                   </p>
-                  <Button onClick={() => addToCartFunction(data)}>
-                    Order Now
-                  </Button>
+
+                  {role === "admin" ? (
+                    <Link
+                      to="/admin/products"
+                      className="flex items-center justify-center w-full p-1 mt-3 dark:bg-white/65 dark:text-black text-white font-semibold rounded-full bg-primary/90 dark:hover:bg-white/35 transition-all"
+                    >
+                      Manage
+                    </Link>
+                  ) : (
+                    <Button onClick={() => addToCartFunction(data)}>
+                      Order Now
+                    </Button>
+                  )}
                 </div>
               </Link>
             </div>

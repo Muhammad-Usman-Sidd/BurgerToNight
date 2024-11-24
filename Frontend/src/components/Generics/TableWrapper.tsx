@@ -31,13 +31,13 @@ const TableWrapper: React.FC<TableWrapperProps> = ({
 }) => {
   return (
     <div className="pb-5">
-      <div className="flex justify-center items-center mt-6">
+      <div className="flex flex-row justify-between items-center mt-6">
+        <h4 className="text-4xl m-3 text-center">{title}</h4>
         {hasCreateAction && (
           <Button variant="primary" className="m-3" onClick={onCreateNew}>
             Create New
           </Button>
         )}
-        <h4 className="text-2xl m-3 text-center">{title}</h4>
       </div>
       <MainTable data={data} columns={columns} onRowClick={onEditAction} />
     </div>

@@ -33,6 +33,7 @@ import CheckoutPage from "./components/Sidebar/CheckoutPage";
 import ContactUs from "./views/General/ContactUs";
 import AdminDashboard from "./views/AdminDashBoard/AdminDashBoard";
 import UserOverview from "./views/AdminDashBoard/Users/Overview";
+import AdminLayout from "./views/AdminDashBoard/AdminLayout";
 
 const App: React.FC = () => {
   const { token, role } = useSelector((state: RootState) => state.auth);
@@ -83,33 +84,19 @@ const App: React.FC = () => {
             <Route
               path="/admin"
               element={
-                token && role === "admin" ? <AdminDashboard /> : <SignIn />
+                token && role === "admin" ? (
+                  <AdminLayout />
+                ) : (
+                  <Navigate to="/auth/sign-in" />
+                )
               }
-            />
-            <Route
-              path="/admin/products"
-              element={
-                token && role === "admin" ? <ProductOverview /> : <SignIn />
-              }
-            />
-            <Route
-              path="/admin/categories"
-              element={
-                token && role === "admin" ? <CategoryOverview /> : <SignIn />
-              }
-            />
-            <Route
-              path="/admin/orders"
-              element={
-                token && role === "admin" ? <OrderOverview /> : <SignIn />
-              }
-            />
-            <Route
-              path="/admin/users"
-              element={
-                token && role === "admin" ? <UserOverview /> : <SignIn />
-              }
-            />
+            >
+              <Route index element={<AdminDashboard />} />
+              <Route path="products" element={<ProductOverview />} />
+              <Route path="categories" element={<CategoryOverview />} />
+              <Route path="orders" element={<OrderOverview />} />
+              <Route path="users" element={<UserOverview />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

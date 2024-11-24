@@ -124,6 +124,7 @@ const Form: React.FC<FormProps> = ({ onClose, item }) => {
         <div className="mb-4">
           <label className="block ">Description</label>
           <Input
+            type="text"
             name="Description"
             placeholder="Product Description"
             value={product.Description}

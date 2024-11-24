@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Logo from "../../assets/product/logo.png";
+import Logo from "../../assets/SupportingImages/logo.png";
 
 const NotFound: React.FC = () => {
   return (

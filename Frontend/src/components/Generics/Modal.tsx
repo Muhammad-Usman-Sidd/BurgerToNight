@@ -22,7 +22,7 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md p-6 relative">
+      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-xl w-[600px] max-w-[700px] max-h-[90vh] p-6 relative overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
             {title}

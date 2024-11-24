@@ -66,11 +66,7 @@ const MainTable = ({
 
     if (typeof cellData === "string" && cellData.startsWith("data:image")) {
       return (
-        <img
-          src={cellData}
-          alt="Image"
-          style={{ width: "50px", height: "50px", objectFit: "cover" }}
-        />
+        <img src={cellData} alt="Image" className="w-12 h-12 object-cover" />
       );
     }
     return String(cellData);
@@ -92,9 +88,9 @@ const MainTable = ({
   }, [currentPagination, filteredData]);
 
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex flex-col w-full">
       <div className="w-full p-4">
-        <div className="flex justify-end mb-4 text-black dark:text-white">
+        <div className="flex justify-end mb-0 text-black dark:text-white">
           <Input
             type="text"
             value={filter}
@@ -103,7 +99,7 @@ const MainTable = ({
           />
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border-collapse border border-gray-300">
+          <table className="w-full table-auto border-collapse border border-gray-300">
             <thead className="bg-gray-200">
               <tr>
                 {columns.map((col, idx) => (
@@ -127,7 +123,7 @@ const MainTable = ({
                     {columns.map((col, colIndex) => (
                       <td
                         key={colIndex}
-                        className="px-4 py-2 border border-gray-300"
+                        className="px-4 py-2 border border-gray-300 text-sm sm:text-base"
                       >
                         {renderCellContent(row, col)}
                       </td>
@@ -147,20 +143,23 @@ const MainTable = ({
             </tbody>
           </table>
 
-          <div className="flex justify-between items-center mt-4">
-            <div>
+          <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
+            <div className="text-sm text-gray-600">
               Page {currentPagination.page} of {totalPages}
             </div>
-            <div className="flex space-x-2">
+            <div className="text-sm text-gray-500">
+              Showing {paginatedData.length} of {filteredData.length} items
+            </div>
+            <div className="flex space-x-2 mt-2 sm:mt-0">
               <button
-                className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50"
+                className="px-3 py-1 border border-gray-300 rounded text-sm sm:text-base disabled:opacity-50"
                 disabled={currentPagination.page === 1}
                 onClick={handlePreviousPage}
               >
                 Previous
               </button>
               <button
-                className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50"
+                className="px-3 py-1 border border-gray-300 rounded text-sm sm:text-base disabled:opacity-50"
                 disabled={currentPagination.page >= totalPages}
                 onClick={handleNextPage}
               >
