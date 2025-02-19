@@ -199,10 +199,10 @@ const authSlice = createSlice({
       state.user = { Id: "" };
     });
     builder.addCase(fetchTopCustomers.fulfilled, (state, action) => {
-      state.topCustomers = action.payload;
+      state.topCustomers = action.payload as any;
     });
     builder.addCase(fetchAllUsers.fulfilled, (state, action) => {
-      state.users = action.payload;
+      state.users = action.payload as any;
     });
   },
 });

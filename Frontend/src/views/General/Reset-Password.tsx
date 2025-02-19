@@ -15,7 +15,7 @@ const ResetPassword: React.FC = () => {
     e.preventDefault();
 
     const user: ResetPasswordDTO = {
-      UserId: localStorage.getItem("UserId"),
+      UserId: localStorage.getItem("UserId")!,
       CurrentPassword: currentPassword,
       NewPassword: newPassword,
       ConfirmPassword: confirmPassword,

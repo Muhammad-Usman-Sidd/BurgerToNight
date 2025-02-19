@@ -11,6 +11,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
 import { fetchProducts, fetchTopProducts } from "../../app/Stores/ProductSlice";
 import { fetchOrders } from "../../app/Stores/OrderSlice";
@@ -86,7 +87,7 @@ const AdminDashboard: React.FC = () => {
     ],
   };
 
-  const productOptions = {
+  const productOptions: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
       legend: { display: true },
@@ -102,7 +103,7 @@ const AdminDashboard: React.FC = () => {
       },
     },
   };
-  const orderOptions = {
+  const orderOptions: ChartOptions<"bar"> = {
     indexAxis: "y",
     responsive: true,
     plugins: {

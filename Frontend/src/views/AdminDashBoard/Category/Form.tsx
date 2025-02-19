@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../app/store";
 import { CategoryGetDTO } from "../../../models/CategoryDtos";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   createCategory,
   deleteCategory,
@@ -52,8 +52,8 @@ const CategoryForm: React.FC<FormProps> = ({ onClose, item }) => {
     navigate("/admin/categories");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e!.preventDefault();
     if (item) {
       await dispatch(updateCategory(category));
     } else {

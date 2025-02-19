@@ -5,7 +5,7 @@ interface ModalProps {
   title: string;
   btnTitle1: string;
   onClose: () => void;
-  onConfirm: () => any;
+  onConfirm: (event: React.FormEvent) => any;
   children: React.ReactNode;
   showDeleteButton?: boolean;
   onDelete?: () => void;

@@ -67,8 +67,8 @@ const Form: React.FC<FormProps> = ({ onClose, item }) => {
       navigate("/admin/products");
     }
   };
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event?: React.FormEvent) => {
+    event!.preventDefault();
     if (item) {
       await dispatch(updateProduct(product));
     } else {

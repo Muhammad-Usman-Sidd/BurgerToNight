@@ -1,7 +1,7 @@
 import React from "react";
 
 interface ButtonProps {
-  onClick?: () => void;
+  onClick?: (event: React.FormEvent) => void;
   children: React.ReactNode;
   variant?: "primary" | "light" | "dark" | "outline";
   size?: "small" | "medium" | "large";

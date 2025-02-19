@@ -4,7 +4,7 @@ export interface ProductCreateUpdateDTO {
   Description: string;
   Price: number;
   PreparingTime: string;
-  CategoryId: number | null;
+  CategoryId: number | undefined;
   Image: string;
 }
 

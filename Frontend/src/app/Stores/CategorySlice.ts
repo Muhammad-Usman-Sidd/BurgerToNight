@@ -82,7 +82,7 @@ export const updateCategory = createAsyncThunk(
         await CategoryService.updateCategory(DTO);
         toast.success("Product updated successfully");
         dispatch(fetchCategories());
-      } catch (error) {
+      } catch (error: any) {
         toast.error("Error updating product");
         return rejectWithValue(error.message);
       }

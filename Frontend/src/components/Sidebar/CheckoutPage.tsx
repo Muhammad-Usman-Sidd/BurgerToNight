@@ -6,7 +6,6 @@ import {
   readCurrentOrder,
   setCurrentOrder,
 } from "../../app/Stores/OrderSlice";
-import { OrderCreateDTO } from "../../models/OrderDtos";
 import { useNavigate } from "react-router-dom";
 import Input from "../Generics/Input";
 
@@ -16,13 +15,10 @@ const CheckoutPage: React.FC = () => {
   const { currentOrder, cart } = useSelector((state: RootState) => state.order);
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const [orderDetails, setOrderDetails] = useState<OrderCreateDTO>({
+  const [orderDetails, setOrderDetails] = useState({
     Name: currentOrder.Name,
-    UserId: currentOrder.UserId,
     PhoneNumber: currentOrder.PhoneNumber || "",
     Address: currentOrder.Address || "",
-    OrderTotal: currentOrder.OrderTotal,
-    Items: currentOrder.Items,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,8 +33,16 @@ const CheckoutPage: React.FC = () => {
 
   const handleCheckout = async () => {
     try {
-      dispatch(setCurrentOrder(orderDetails));
-      console.log(currentOrder);
+      dispatch(
+        setCurrentOrder({
+          Address: orderDetails.Address,
+          Name: orderDetails.Name,
+          PhoneNumber: orderDetails.PhoneNumber,
+          UserId: currentOrder.UserId,
+          OrderTotal: currentOrder.OrderTotal,
+          Items: currentOrder.Items,
+        })
+      );
       await dispatch(checkout());
       dispatch(setCurrentOrder(undefined));
       navigate("/orders");
@@ -54,7 +58,7 @@ const CheckoutPage: React.FC = () => {
       !currentOrder.PhoneNumber
     ) {
       setOrderDetails({
-        Name: user.Name,
+        Name: user.Name || "",
         PhoneNumber: user.PhoneNumber || "",
         Address: user.Address || "",
       });

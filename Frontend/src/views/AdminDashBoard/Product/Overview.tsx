@@ -34,12 +34,12 @@ const ProductOverview: React.FC = () => {
   ];
 
   const handleCreateNew = () => {
-    dispatch(setCurrentProduct(undefined));
+    dispatch(setCurrentProduct(null));
     setShowForm(true);
   };
 
   const handleEditAction = (product: Record<string, any>) => {
-    dispatch(setCurrentProduct(product));
+    dispatch(setCurrentProduct(product as any));
     setShowForm(true);
   };
 
