@@ -97,7 +97,7 @@ const AdminDashboard: React.FC = () => {
       x: {
         ticks: {
           font: {
-            size: 10,
+            size: 8,
           },
         },
       },
