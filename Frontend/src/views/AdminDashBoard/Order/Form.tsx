@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { OrderGetDTO, OrderUpdateDTO } from "../../../models/OrderDtos";
+import { OrderUpdateDTO } from "../../../models/OrderDtos";
 import { AppDispatch } from "../../../app/store";
 import { useNavigate } from "react-router-dom";
 import { deleteOrder, updateOrder } from "../../../app/Stores/OrderSlice";
