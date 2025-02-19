@@ -10,7 +10,7 @@ import Input from "../../../components/Generics/Input";
 
 interface FormProps {
   onClose: () => void;
-  item: OrderGetDTO;
+  item: any;
 }
 
 const OrderForm: React.FC<FormProps> = ({ onClose, item }) => {
