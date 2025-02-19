@@ -69,6 +69,7 @@ The following GIFs may appear laggy due to compression, but the actual website r
 ![Contact Page 2](https://github.com/user-attachments/assets/9585fc70-b5db-4ed6-88d2-aa2998c7ef89)
 
 #### Placing an Order
+
 ##### Details Page
 ![Details Page](https://github.com/user-attachments/assets/a7a419b8-6e37-44d7-9b08-1d1901b3d8d4)
 
